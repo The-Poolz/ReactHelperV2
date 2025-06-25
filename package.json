@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "bin": {
+    "get-abi": "./scripts/getAbi.js"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
