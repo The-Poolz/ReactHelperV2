@@ -18,8 +18,9 @@ This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](
 ## Updating supported wallets and chains
 
 Run `npm run update-poolz` to fetch the latest wallet list and chain IDs from
-`https://data.poolz.finance/graphql`. The script writes the information to
-`src/poolzData.ts`.
+`https://data.poolz.finance/graphql`. The script writes the information as
+TypeScript constants to two files: `generated/poolzChains.ts` and
+`generated/poolzWallets.ts`.
 
 ## Fetching contract ABIs
 
