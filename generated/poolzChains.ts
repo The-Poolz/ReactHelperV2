@@ -1,1 +1,12 @@
-export const poolzChains = [1, 56, 137, 128, 97, 42, 80001, 256, 43114, 43113] as const;
+export const poolzChains = [
+  40,
+  8453,
+  137,
+  1284,
+  43114,
+  3441005,
+  169,
+  1,
+  42161,
+  11155111
+] as const;
