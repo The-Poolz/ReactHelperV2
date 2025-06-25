@@ -5,7 +5,7 @@ import * as allChains from "viem/chains";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const query = `query Contract {
+const query = `query Contract($pagination: PaginationArg) {
   latestType {
     Version {
       ContractType {
@@ -16,7 +16,7 @@ const query = `query Contract {
       }
     }
   }
-  contractsOnChains {
+  contractsOnChains(pagination: $pagination) {
     Chain {
       chainId
     }
@@ -33,7 +33,7 @@ async function fetchPoolzData() {
   const res = await fetch("https://data.poolz.finance/graphql", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query, variables: { pagination: { limit: 100 } } }),
   });
   if (!res.ok) {
     throw new Error(`Unexpected response ${res.status} ${res.statusText}`);
