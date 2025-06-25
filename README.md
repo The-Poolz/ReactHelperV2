@@ -20,3 +20,9 @@ This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](
 Run `npm run update-poolz` to fetch the latest wallet list and chain IDs from
 `https://data.poolz.finance/graphql`. The script writes the information to
 `src/poolzData.ts`.
+
+## Fetching contract ABIs
+
+Run `pnpm get-abi <documentId>` to download a contract ABI from
+`https://data.poolz.finance/graphql`. The file will be saved under
+`generated/abi/` using the contract's `NameVersion` as the filename.
