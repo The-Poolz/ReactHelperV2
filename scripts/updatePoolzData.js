@@ -42,8 +42,10 @@ async function main() {
   const outDir = path.resolve(__dirname, "../generated");
   await mkdir(outDir, { recursive: true });
 
-  const chainsContent = `export const poolzChains = ${JSON.stringify(chains, null, 2)} as const;\n`;
-  const walletsContent = `export const poolzWallets = ${JSON.stringify(wallets, null, 2)} as const;\n`;
+  const toTs = (value) => JSON.stringify(value, null, 2).replace(/"([^"\n]+)":/g, "$1:");
+
+  const chainsContent = `export const poolzChains = ${toTs(chains)} as const;\n`;
+  const walletsContent = `export const poolzWallets = ${toTs(wallets)} as const;\n`;
 
   const chainsFile = path.join(outDir, "poolzChains.ts");
   const walletsFile = path.join(outDir, "poolzWallets.ts");
