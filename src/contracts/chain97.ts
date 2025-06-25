@@ -1,11 +1,11 @@
-import DealProviderAbi from "../../generated/abi/DealProvider.json" assert { type: "json" };
-import DispenserProviderAbi from "../../generated/abi/DispenserProvider.json" assert { type: "json" };
-import InvestProviderAbi from "../../generated/abi/InvestProvider.json" assert { type: "json" };
-import LockDealNFTAbi from "../../generated/abi/LockDealNFT.json" assert { type: "json" };
-import LockDealProviderAbi from "../../generated/abi/LockDealProvider.json" assert { type: "json" };
 import SimpleBuilderAbi from "../../generated/abi/SimpleBuilder.json" assert { type: "json" };
+import DealProviderAbi from "../../generated/abi/DealProvider.json" assert { type: "json" };
+import LockDealProviderAbi from "../../generated/abi/LockDealProvider.json" assert { type: "json" };
 import TimedDealProviderAbi from "../../generated/abi/TimedDealProvider.json" assert { type: "json" };
+import DispenserProviderAbi from "../../generated/abi/DispenserProvider.json" assert { type: "json" };
 import VaultManagerAbi from "../../generated/abi/VaultManager.json" assert { type: "json" };
+import LockDealNFTAbi from "../../generated/abi/LockDealNFT.json" assert { type: "json" };
+import InvestProviderAbi from "../../generated/abi/InvestProvider.json" assert { type: "json" };
 
 export const chain97Contracts = {
   SimpleBuilder: { address: "0xaE297EeC7A7782e81CC23E6A3B6C06621B12dF26", abi: SimpleBuilderAbi },
@@ -15,5 +15,5 @@ export const chain97Contracts = {
   DispenserProvider: { address: "0xa9c68640C1AA52E91A75F4c5e2786F68049541Ad", abi: DispenserProviderAbi },
   VaultManager: { address: "0xF0A8AAc3deB7596527A61697D0a9728E3A67D3B7", abi: VaultManagerAbi },
   LockDealNFT: { address: "0xe42876a77108E8B3B2af53907f5e533Cba2Ce7BE", abi: LockDealNFTAbi },
-  InvestProvider: { address: "0x1Bebef1aBf49F9e588850b9Dc0Bf1AC6872C33D2", abi: InvestProviderAbi },
+  InvestProvider: { address: "0x1Bebef1aBf49F9e588850b9Dc0Bf1AC6872C33D2", abi: InvestProviderAbi }
 } as const;
