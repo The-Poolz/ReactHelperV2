@@ -1,17 +1,17 @@
 import { chain1Contracts } from "./chain1";
-import { chain11155111Contracts } from "./chain11155111";
-import { chain1284Contracts } from "./chain1284";
+import { chain40Contracts } from "./chain40";
+import { chain56Contracts } from "./chain56";
+import { chain97Contracts } from "./chain97";
 import { chain137Contracts } from "./chain137";
 import { chain169Contracts } from "./chain169";
-import { chain2632500Contracts } from "./chain2632500";
-import { chain3441005Contracts } from "./chain3441005";
-import { chain40Contracts } from "./chain40";
+import { chain1284Contracts } from "./chain1284";
+import { chain8453Contracts } from "./chain8453";
 import { chain42161Contracts } from "./chain42161";
 import { chain43114Contracts } from "./chain43114";
-import { chain56Contracts } from "./chain56";
+import { chain2632500Contracts } from "./chain2632500";
+import { chain3441005Contracts } from "./chain3441005";
 import { chain7082400Contracts } from "./chain7082400";
-import { chain8453Contracts } from "./chain8453";
-import { chain97Contracts } from "./chain97";
+import { chain11155111Contracts } from "./chain11155111";
 
 export const contractsByChain = {
   1: chain1Contracts,

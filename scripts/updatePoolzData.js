@@ -119,6 +119,8 @@ async function main() {
 
   const contractsDir = path.resolve(__dirname, "../src/contracts");
   await mkdir(contractsDir, { recursive: true });
+  const indexImports = [];
+  const indexEntries = [];
   for (const [chainId, contracts] of Object.entries(contractsByChain)) {
     const imports = [];
     const entries = [];
@@ -129,7 +131,12 @@ async function main() {
     }
     const content = `${imports.join("\n")}\n\nexport const chain${chainId}Contracts = {\n${entries.join(",\n")}\n} as const;\n`;
     await writeFile(path.join(contractsDir, `chain${chainId}.ts`), content);
+    indexImports.push(`import { chain${chainId}Contracts } from "./chain${chainId}";`);
+    indexEntries.push(`  ${chainId}: chain${chainId}Contracts`);
   }
+
+  const indexContent = `${indexImports.sort().join("\n")}\n\nexport const contractsByChain = {\n${indexEntries.sort().join(",\n")}\n} as const;\n\nexport type ContractsByChain = typeof contractsByChain;\n`;
+  await writeFile(path.join(contractsDir, "index.ts"), indexContent);
 }
 
 main().catch((err) => {
