@@ -1,6 +1,6 @@
 import { createClient } from "viem";
 import { http, createConfig } from "wagmi";
-import { avalanche, avalancheFuji, bsc, bscTestnet, lukso, mainnet, polygon, polygonMumbai } from "wagmi/chains";
+import { mainnet, bsc, polygon, bscTestnet, lukso, polygonMumbai, avalanche, avalancheFuji } from "wagmi/chains";
 import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
 
 export const config = createConfig({
