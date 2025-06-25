@@ -15,15 +15,10 @@ helper functions.
 
 This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](https://github.com/wevm/wagmi/tree/main/packages/create-wagmi).
 
-## Updating supported wallets and chains
+## Generating Poolz data
 
-Run `npm run update-poolz` to fetch the latest wallet list and chain IDs from
-`https://data.poolz.finance/graphql`. The script writes the information as
-TypeScript constants to two files: `generated/poolzChains.ts` and
-`generated/poolzWallets.ts`.
-
-## Fetching contract ABIs
-
-Run `pnpm get-abi <documentId>` to download a contract ABI from
-`https://data.poolz.finance/graphql`. The file will be saved under
-`generated/abi/` using the contract's `NameVersion` as the filename.
+Run `pnpm update-poolz` to fetch contract information from
+`https://data.poolz.finance/graphql`. The script writes the list of supported
+chain IDs to `generated/poolzChains.ts`, stores all contract ABIs under
+`generated/abi/` and creates contract configuration files in `src/contracts/`.
+It also updates `src/wagmi.ts` to include the retrieved chains.

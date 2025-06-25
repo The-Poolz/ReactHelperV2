@@ -9,8 +9,7 @@
     "lint": "biome check .",
     "preview": "vite preview",
     "test": "node --test",
-    "update-poolz": "node scripts/updatePoolzData.js",
-    "get-abi": "node scripts/getAbi.js"
+    "update-poolz": "node scripts/updatePoolzData.js"
   },
   "dependencies": {
     "@tanstack/react-query": "5.45.1",
