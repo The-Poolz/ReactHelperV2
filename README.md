@@ -14,3 +14,9 @@ This repository is currently minimal and will be expanded with examples and
 helper functions.
 
 This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](https://github.com/wevm/wagmi/tree/main/packages/create-wagmi).
+
+## Updating supported wallets and chains
+
+Run `npm run update-poolz` to fetch the latest wallet list and chain IDs from
+`https://data.poolz.finance/graphql`. The script writes the information to
+`src/poolzData.ts`.
