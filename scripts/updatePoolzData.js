@@ -57,22 +57,35 @@ async function main() {
   const abiDir = path.resolve(__dirname, "../generated/abi");
   await mkdir(abiDir, { recursive: true });
 
-  const abis = {};
-  for (const item of data.latestType ?? []) {
-    const name = item.Version.ContractType.ContractType;
-    const abi = item.Version.ContractVersion.ABI;
-    abis[name] = abi;
-    await writeFile(path.join(abiDir, `${name}.json`), `${JSON.stringify(abi, null, 2)}\n`);
+  const latestTypes = Array.isArray(data.latestType) ? data.latestType : data.latestType ? [data.latestType] : [];
+  for (const item of latestTypes) {
+    const versions = Array.isArray(item.Version) ? item.Version : item.Version ? [item.Version] : [];
+    for (const version of versions) {
+      const name = version.ContractType?.ContractType;
+      const abi = version.ContractVersion?.ABI;
+      if (!name || !abi) continue;
+      await writeFile(path.join(abiDir, `${name}.json`), `${JSON.stringify(abi, null, 2)}\n`);
+    }
   }
 
   const chains = [];
   const contractsByChain = {};
-  for (const entry of data.contractsOnChains ?? []) {
-    const id = entry.Chain.chainId;
+  const contractEntries = Array.isArray(data.contractsOnChains)
+    ? data.contractsOnChains
+    : data.contractsOnChains
+      ? [data.contractsOnChains]
+      : [];
+  for (const entry of contractEntries) {
+    const id = entry.Chain?.chainId;
+    if (id == null) continue;
     chains.push(id);
     const map = contractsByChain[id] || {};
-    for (const c of entry.Contracts ?? []) {
-      map[c.ContractType.ContractType] = c.Address;
+    const cList = Array.isArray(entry.Contracts) ? entry.Contracts : entry.Contracts ? [entry.Contracts] : [];
+    for (const c of cList) {
+      const typeName = c.ContractType?.ContractType;
+      const address = c.Address;
+      if (!typeName || !address) continue;
+      map[typeName] = address;
     }
     contractsByChain[id] = map;
   }
