@@ -1,4 +1,5 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { spawn } from "node:child_process";
+import { mkdir, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -45,6 +46,33 @@ async function main() {
   const outFile = path.join(outDir, `${contract.NameVersion}.json`);
   await writeFile(outFile, `${JSON.stringify(contract.ABI, null, 2)}\n`);
   console.log(`Wrote ABI to ${outFile}`);
+
+  const wagmiConfig = path.resolve(__dirname, `../generated/${contract.NameVersion}.wagmi.config.js`);
+  const contractsDir = path.resolve(__dirname, "../generated/contracts");
+  await mkdir(contractsDir, { recursive: true });
+  const wagmiOutFile = `generated/contracts/${contract.NameVersion}.ts`;
+  const wagmiConfigContent = `import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+import abi from './abi/${contract.NameVersion}.json' assert { type: 'json' }
+
+export default defineConfig({
+  out: '${wagmiOutFile}',
+  contracts: [{ name: '${contract.NameVersion}', abi }],
+  plugins: [react()],
+})
+`;
+  await writeFile(wagmiConfig, wagmiConfigContent);
+  await new Promise((resolve, reject) => {
+    const child = spawn(path.resolve(__dirname, "../node_modules/.bin/wagmi"), ["generate", "--config", wagmiConfig], {
+      stdio: "inherit",
+    });
+    child.on("exit", (code) => {
+      if (code === 0) resolve();
+      else reject(new Error(`wagmi exited with code ${code}`));
+    });
+  });
+  await unlink(wagmiConfig).catch(() => {});
+  console.log(`Wrote wagmi contract to ${path.join(contractsDir, `${contract.NameVersion}.ts`)}`);
 }
 
 main().catch((err) => {
