@@ -63,7 +63,7 @@ export default defineConfig({
 `;
   await writeFile(wagmiConfig, wagmiConfigContent);
   await new Promise((resolve, reject) => {
-    const child = spawn(path.resolve(__dirname, "../node_modules/.bin/wagmi"), ["generate", "--config", wagmiConfig], {
+    const child = spawn("npx", ["wagmi", "generate", "--config", wagmiConfig], {
       stdio: "inherit",
     });
     child.on("exit", (code) => {
