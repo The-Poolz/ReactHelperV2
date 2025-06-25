@@ -23,6 +23,6 @@ Run `npm run update-poolz` to fetch the latest wallet list and chain IDs from
 
 ## Fetching contract ABIs
 
-Run `npx get-abi <documentId>` to download a contract ABI from
+Run `pnpm get-abi <documentId>` to download a contract ABI from
 `https://data.poolz.finance/graphql`. The file will be saved under
 `generated/abi/` using the contract's `NameVersion` as the filename.
