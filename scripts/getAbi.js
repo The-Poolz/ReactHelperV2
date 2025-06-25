@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { mkdir, unlink, writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -62,10 +63,11 @@ export default defineConfig({
 })
 `;
   await writeFile(wagmiConfig, wagmiConfigContent);
+  const require = createRequire(import.meta.url);
+  const wagmiCli = require.resolve("@wagmi/cli/dist/esm/cli.js");
   await new Promise((resolve, reject) => {
-    const child = spawn("npx", ["wagmi", "generate", "--config", wagmiConfig], {
-      stdio: "inherit",
-    });
+    const child = spawn(process.execPath, [wagmiCli, "generate", "--config", wagmiConfig], { stdio: "inherit" });
+    child.on("error", reject);
     child.on("exit", (code) => {
       if (code === 0) resolve();
       else reject(new Error(`wagmi exited with code ${code}`));
