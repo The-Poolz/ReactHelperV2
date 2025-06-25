@@ -39,10 +39,11 @@ async function main() {
   if (!contract) {
     throw new Error(`Contract not found for id ${id}`);
   }
+
   const outDir = path.resolve(__dirname, "../generated/abi");
   await mkdir(outDir, { recursive: true });
   const outFile = path.join(outDir, `${contract.NameVersion}.json`);
-  await writeFile(outFile, JSON.stringify(contract.ABI, null, 2));
+  await writeFile(outFile, `${JSON.stringify(contract.ABI, null, 2)}\n`);
   console.log(`Wrote ABI to ${outFile}`);
 }
 
