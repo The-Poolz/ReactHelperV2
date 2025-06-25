@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -38,12 +38,21 @@ async function main() {
     link: w.Link,
     iconUrl: w.Icon.url,
   }));
-  const content =
-    `export const poolzChains = ${JSON.stringify(chains, null, 2)} as const;\n` +
-    `export const poolzWallets = ${JSON.stringify(wallets, null, 2)} as const;\n`;
-  const outFile = path.resolve(__dirname, "../src/poolzData.ts");
-  await writeFile(outFile, content);
-  console.log(`Wrote data to ${outFile}`);
+
+  const outDir = path.resolve(__dirname, "../generated");
+  await mkdir(outDir, { recursive: true });
+
+  const chainsContent = `export const poolzChains = ${JSON.stringify(chains, null, 2)} as const;\n`;
+  const walletsContent = `export const poolzWallets = ${JSON.stringify(wallets, null, 2)} as const;\n`;
+
+  const chainsFile = path.join(outDir, "poolzChains.ts");
+  const walletsFile = path.join(outDir, "poolzWallets.ts");
+
+  await writeFile(chainsFile, chainsContent);
+  await writeFile(walletsFile, walletsContent);
+
+  console.log(`Wrote chains to ${chainsFile}`);
+  console.log(`Wrote wallets to ${walletsFile}`);
 }
 
 main().catch((err) => {
