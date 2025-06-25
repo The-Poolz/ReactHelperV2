@@ -1,6 +1,7 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import * as allChains from "viem/chains";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -55,6 +56,33 @@ async function main() {
 
   console.log(`Wrote chains to ${chainsFile}`);
   console.log(`Wrote wallets to ${walletsFile}`);
+
+  // Update src/wagmi.ts to use the latest Poolz chains
+  const chainIdToName = {};
+  for (const [name, chain] of Object.entries(allChains)) {
+    if (typeof chain === "object" && "id" in chain) {
+      chainIdToName[chain.id] = name;
+    }
+  }
+
+  const chainNames = chains.map((id) => chainIdToName[id]).filter(Boolean);
+
+  if (chainNames.length) {
+    const wagmiFile = path.resolve(__dirname, "../src/wagmi.ts");
+    let wagmiContent = await readFile(wagmiFile, "utf8");
+    wagmiContent = wagmiContent.replace(
+      /import {[^}]+} from "wagmi\/chains";/,
+      `import { ${chainNames.join(", ")} } from "wagmi/chains";`,
+    );
+    wagmiContent = wagmiContent.replace(
+      /chains: \[[^\]]+\], ?\/\/poolz main chain/,
+      `chains: [${chainNames.join(", ")}], //poolz chains`,
+    );
+    await writeFile(wagmiFile, wagmiContent);
+    console.log(`Updated ${wagmiFile}`);
+  } else {
+    console.warn("No matching chain definitions found to update wagmi.ts");
+  }
 }
 
 main().catch((err) => {
