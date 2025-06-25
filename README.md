@@ -26,6 +26,6 @@ TypeScript constants to two files: `generated/poolzChains.ts` and
 
 Run `pnpm get-abi <documentId>` to download a contract ABI from
 `https://data.poolz.finance/graphql`. The file will be saved under
-`generated/abi/` using the contract's `NameVersion` as the filename.
-A Wagmi contract file with the same name will also be generated in
-`generated/contracts/`.
+`generated/abi/` using the contract's name (without the version) as the
+filename. A Wagmi contract file with the same base name will also be generated
+in `generated/contracts/`.

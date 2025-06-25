@@ -44,21 +44,22 @@ async function main() {
 
   const outDir = path.resolve(__dirname, "../generated/abi");
   await mkdir(outDir, { recursive: true });
-  const outFile = path.join(outDir, `${contract.NameVersion}.json`);
+  const baseName = contract.NameVersion.split("@")[0];
+  const outFile = path.join(outDir, `${baseName}.json`);
   await writeFile(outFile, `${JSON.stringify(contract.ABI, null, 2)}\n`);
   console.log(`Wrote ABI to ${outFile}`);
 
-  const wagmiConfig = path.resolve(__dirname, `../generated/${contract.NameVersion}.wagmi.config.js`);
+  const wagmiConfig = path.resolve(__dirname, `../generated/${baseName}.wagmi.config.js`);
   const contractsDir = path.resolve(__dirname, "../generated/contracts");
   await mkdir(contractsDir, { recursive: true });
-  const wagmiOutFile = `generated/contracts/${contract.NameVersion}.ts`;
+  const wagmiOutFile = `generated/contracts/${baseName}.ts`;
   const wagmiConfigContent = `import { defineConfig } from '@wagmi/cli'
 import { react } from '@wagmi/cli/plugins'
-import abi from './abi/${contract.NameVersion}.json' assert { type: 'json' }
+import abi from './abi/${baseName}.json' assert { type: 'json' }
 
 export default defineConfig({
   out: '${wagmiOutFile}',
-  contracts: [{ name: '${contract.NameVersion}', abi }],
+  contracts: [{ name: '${baseName}', abi }],
   plugins: [react()],
 })
 `;
@@ -74,7 +75,7 @@ export default defineConfig({
     });
   });
   await unlink(wagmiConfig).catch(() => {});
-  console.log(`Wrote wagmi contract to ${path.join(contractsDir, `${contract.NameVersion}.ts`)}`);
+  console.log(`Wrote wagmi contract to ${path.join(contractsDir, `${baseName}.ts`)}`);
 }
 
 main().catch((err) => {
