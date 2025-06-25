@@ -1,13 +1,13 @@
 import { http, createConfig } from "wagmi";
-import { mainnet, sepolia } from "wagmi/chains";
+import { bsc } from "wagmi/chains";
 import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
+import { createClient } from 'viem'
 
 export const config = createConfig({
-  chains: [mainnet, sepolia],
+  chains: [bsc], //poolz main chain
   connectors: [injected(), coinbaseWallet(), walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID })],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
+  client({ chain }) {
+    return createClient({ chain, transport: http() })
   },
 });
 
