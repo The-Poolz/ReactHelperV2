@@ -19,3 +19,33 @@
     color: #181818;
   }
 }
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#root {
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+h2 {
+  margin: 1.5rem 0 0.5rem;
+}
+
+button {
+  background-color: #646cff;
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+button:hover {
+  background-color: #7a7cff;
+}
