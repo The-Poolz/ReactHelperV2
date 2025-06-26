@@ -1,5 +1,4 @@
 import { Buffer as NodeBuffer } from "buffer";
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { PoolzProvider } from "../../src/PoolzProvider";
 import App from "./App.tsx";
