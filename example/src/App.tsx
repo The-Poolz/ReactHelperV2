@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { Abi } from "viem";
 import { erc20Abi, formatUnits } from "viem";
 import { useAccount, useConnect, useDisconnect, useReadContract, useReadContracts } from "wagmi";
@@ -11,6 +11,8 @@ function App() {
   const account = useAccount();
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
+
+  const [showVaultId, setShowVaultId] = useState(false);
 
   const contracts =
     account.chainId !== undefined ? contractsByChain[account.chainId as keyof typeof contractsByChain] : undefined;
@@ -156,9 +158,13 @@ function App() {
         <div>
           <h2>LockDealNFT</h2>
           <div>balance: {balance.data ? balance.data.toString() : "0"}</div>
+          <button type="button" onClick={() => setShowVaultId((v) => !v)}>
+            {showVaultId ? "Hide" : "Show"} Vault IDs
+          </button>
           <table>
             <thead>
               <tr>
+                <th style={{ display: showVaultId ? undefined : "none" }}>Vault ID</th>
                 <th>NFT ID</th>
                 <th>Provider</th>
                 <th>Pool ID</th>
@@ -186,6 +192,7 @@ function App() {
                       const meta = tokenInfoMap[info.token];
                       return (
                         <tr key={`${id.toString()}-${j}`}>
+                          <td style={{ display: showVaultId ? undefined : "none" }}>{info.vaultId.toString()}</td>
                           <td>{id.toString()}</td>
                           <td>
                             <details>
