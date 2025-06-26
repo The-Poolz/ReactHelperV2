@@ -162,7 +162,6 @@ function App() {
                 <th>NFT ID</th>
                 <th>Provider</th>
                 <th>Pool ID</th>
-                <th>Vault ID</th>
                 <th>Token</th>
                 <th>Amount</th>
                 <th>Date</th>
@@ -195,12 +194,6 @@ function App() {
                             </details>
                           </td>
                           <td>{info.poolId.toString()}</td>
-                          <td>
-                            <details>
-                              <summary>show</summary>
-                              {info.vaultId.toString()}
-                            </details>
-                          </td>
                           <td>{meta ? meta.symbol : info.token}</td>
                           <td>
                             {meta
