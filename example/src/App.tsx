@@ -104,14 +104,50 @@ function App() {
         <div>
           <h2>LockDealNFT</h2>
           <div>balance: {balance.data ? balance.data.toString() : "0"}</div>
-          <ul>
-            {tokens.data?.map((token, i) => (
-              <li key={token.result?.toString() ?? i.toString()}>
-                {token.result?.toString()}
-                {fullData.data?.[i]?.result && <pre>{stringifyBigInt(fullData.data[i].result)}</pre>}
-              </li>
-            ))}
-          </ul>
+          <table>
+            <thead>
+              <tr>
+                <th>NFT ID</th>
+                <th>Provider</th>
+                <th>Name</th>
+                <th>Pool ID</th>
+                <th>Vault ID</th>
+                <th>Owner</th>
+                <th>Token</th>
+                <th>Params</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tokens.data?.map((token, i) => {
+                const id = token.result;
+                const infos = fullData.data?.[i]?.result as
+                  | {
+                      provider: string;
+                      name: string;
+                      poolId: bigint;
+                      vaultId: bigint;
+                      owner: string;
+                      token: string;
+                      params: readonly bigint[];
+                    }[]
+                  | undefined;
+                return id !== undefined && infos
+                  ? infos.map((info, j) => (
+                      <tr key={`${id.toString()}-${j}`}>
+                        <td>{id.toString()}</td>
+                        <td>{info.provider}</td>
+                        <td>{info.name}</td>
+                        <td>{info.poolId.toString()}</td>
+                        <td>{info.vaultId.toString()}</td>
+                        <td>{info.owner}</td>
+                        <td>{info.token}</td>
+                        <td>{info.params.map((p) => p.toString()).join(", ")}</td>
+                      </tr>
+                    ))
+                  : null;
+              })}
+            </tbody>
+          </table>
         </div>
       )}
     </>
