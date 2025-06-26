@@ -1,6 +1,10 @@
 import { useMemo } from "react";
+import type { Abi } from "viem";
 import { useAccount, useConnect, useDisconnect, useReadContract, useReadContracts } from "wagmi";
 import { contractsByChain } from "../../src/contracts";
+import type { config } from "../../src/wagmi";
+
+type ChainId = (typeof config.chains)[number]["id"];
 
 function App() {
   const account = useAccount();
@@ -12,10 +16,10 @@ function App() {
 
   const balance = useReadContract({
     address: contracts?.LockDealNFT.address,
-    abi: contracts?.LockDealNFT.abi,
+    abi: contracts?.LockDealNFT.abi as Abi,
     functionName: "balanceOf",
     args: account.address ? [account.address] : undefined,
-    chainId: account.chainId,
+    chainId: account.chainId as ChainId | undefined,
     query: { enabled: Boolean(account.status === "connected" && contracts) },
   });
 
@@ -24,10 +28,10 @@ function App() {
       balance.data && typeof balance.data === "bigint" && contracts && account.address
         ? Array.from({ length: Number(balance.data) }, (_, i) => ({
             address: contracts.LockDealNFT.address,
-            abi: contracts.LockDealNFT.abi,
+            abi: contracts.LockDealNFT.abi as Abi,
             functionName: "tokenOfOwnerByIndex",
             args: [account.address, BigInt(i)],
-            chainId: account.chainId,
+            chainId: account.chainId as ChainId | undefined,
           }))
         : [],
     [balance.data, contracts, account.address, account.chainId],
@@ -72,7 +76,7 @@ function App() {
       {account.status === "connected" && (
         <div>
           <h2>LockDealNFT</h2>
-          <div>balance: {balance.data ? balance.data.toString() : 0n}</div>
+          <div>balance: {balance.data ? balance.data.toString() : "0"}</div>
           <ul>
             {tokens.data?.map((token) => (
               <li key={token.result?.toString() ?? ""}>{token.result?.toString()}</li>
