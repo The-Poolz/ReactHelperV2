@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "vite --config example/vite.config.ts --root example",
+    "build": "tsc && vite build --config example/vite.config.ts --root example",
     "lint": "biome check .",
-    "preview": "vite preview",
+    "preview": "vite preview --config example/vite.config.ts --root example",
     "test": "node --test",
     "update-poolz": "node scripts/updatePoolzData.js"
   },

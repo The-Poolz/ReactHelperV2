@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useAccount, useConnect, useDisconnect, useReadContract, useReadContracts } from "wagmi";
-import { contractsByChain } from "./contracts";
+import { contractsByChain } from "../../src/contracts";
 
 function App() {
   const account = useAccount();

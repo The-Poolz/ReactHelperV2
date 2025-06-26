@@ -11,7 +11,10 @@ React apps that need to connect to Poolz smart contracts and fetch on-chain
 data.
 
 This repository is currently minimal and will be expanded with examples and
-helper functions.
+helper functions. An example Vite project lives under the `example` directory.
+Run `pnpm dev` from the repository root to start the demo application. The
+package exports a `PoolzProvider` component that wraps `WagmiProvider` and
+`@tanstack/react-query` so your app only needs to supply its content.
 
 This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](https://github.com/wevm/wagmi/tree/main/packages/create-wagmi).
 
