@@ -66,6 +66,9 @@ function App() {
     query: { enabled: fullDataCalls.length > 0 },
   });
 
+  const stringifyBigInt = (value: unknown) =>
+    JSON.stringify(value, (_, v) => (typeof v === "bigint" ? v.toString() : v), 2);
+
   return (
     <>
       <div>
@@ -105,7 +108,7 @@ function App() {
             {tokens.data?.map((token, i) => (
               <li key={token.result?.toString() ?? i.toString()}>
                 {token.result?.toString()}
-                {fullData.data?.[i]?.result && <pre>{JSON.stringify(fullData.data[i].result)}</pre>}
+                {fullData.data?.[i]?.result && <pre>{stringifyBigInt(fullData.data[i].result)}</pre>}
               </li>
             ))}
           </ul>
