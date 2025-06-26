@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { Abi } from "viem";
 import { erc20Abi, formatUnits } from "viem";
-import { useAccount, useConnect, useDisconnect, useReadContract, useReadContracts } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useReadContract, useReadContracts, useWriteContract } from "wagmi";
 import { contractsByChain } from "../../src/contracts";
 import type { config } from "../../src/wagmi";
 
@@ -11,6 +11,7 @@ function App() {
   const account = useAccount();
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
+  const { writeContract } = useWriteContract();
 
   const [showVaultId, setShowVaultId] = useState(false);
 
@@ -171,6 +172,7 @@ function App() {
                 <th>Token</th>
                 <th>Amount</th>
                 <th>Date</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -208,6 +210,22 @@ function App() {
                               : info.params[0].toString()}
                           </td>
                           <td>{new Date(Number(info.params[1]) * 1000).toLocaleString()}</td>
+                          <td>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                writeContract({
+                                  address: contracts.LockDealNFT.address,
+                                  abi: contracts.LockDealNFT.abi as Abi,
+                                  functionName: "safeTransferFrom",
+                                  args: [account.address as `0x${string}`, contracts.LockDealNFT.address, id],
+                                  chainId: account.chainId as ChainId,
+                                })
+                              }
+                            >
+                              Send
+                            </button>
+                          </td>
                         </tr>
                       );
                     })
