@@ -42,6 +42,30 @@ function App() {
     query: { enabled: tokenCalls.length > 0 },
   });
 
+  const fullDataCalls = useMemo(
+    () =>
+      tokens.data && contracts
+        ? tokens.data.reduce<typeof tokenCalls>((acc, token) => {
+            if (token.result !== undefined) {
+              acc.push({
+                address: contracts.LockDealNFT.address,
+                abi: contracts.LockDealNFT.abi as Abi,
+                functionName: "getFullData",
+                args: [token.result as bigint],
+                chainId: account.chainId as ChainId | undefined,
+              });
+            }
+            return acc;
+          }, [])
+        : [],
+    [tokens.data, contracts, account.chainId],
+  );
+
+  const fullData = useReadContracts({
+    contracts: fullDataCalls,
+    query: { enabled: fullDataCalls.length > 0 },
+  });
+
   return (
     <>
       <div>
@@ -78,8 +102,11 @@ function App() {
           <h2>LockDealNFT</h2>
           <div>balance: {balance.data ? balance.data.toString() : "0"}</div>
           <ul>
-            {tokens.data?.map((token) => (
-              <li key={token.result?.toString() ?? ""}>{token.result?.toString()}</li>
+            {tokens.data?.map((token, i) => (
+              <li key={token.result?.toString() ?? i.toString()}>
+                {token.result?.toString()}
+                {fullData.data?.[i]?.result && <pre>{JSON.stringify(fullData.data[i].result)}</pre>}
+              </li>
             ))}
           </ul>
         </div>
