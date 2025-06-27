@@ -25,3 +25,9 @@ Run `pnpm update-poolz` to fetch contract information from
 chain IDs to `generated/poolzChains.ts`, stores all contract ABIs under
 `generated/abi/` and creates contract configuration files in `src/contracts/`.
 It also updates `src/wagmi.ts` to include the retrieved chains.
+
+## Configuration
+
+`src/wagmi.ts` expects the environment variable `VITE_WC_PROJECT_ID` to be set.
+If it is missing, the module throws an error on startup so WalletConnect cannot
+be misconfigured.
