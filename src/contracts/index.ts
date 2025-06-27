@@ -27,7 +27,16 @@ export const contractsByChain = {
   56: chain56Contracts,
   7082400: chain7082400Contracts,
   8453: chain8453Contracts,
-  97: chain97Contracts
+  97: chain97Contracts,
 } as const;
 
 export type ContractsByChain = typeof contractsByChain;
+
+
+export function usePoolzContractInfo(chainId: number, contractName: string) {
+  const contracts = (contractsByChain as any)[chainId];
+  if (!contracts) return { smcAddress: undefined, abi: undefined };
+  const contract = contracts[contractName];
+  return { smcAddress: contract?.address, abi: contract?.abi };
+}
+
