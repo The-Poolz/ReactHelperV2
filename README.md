@@ -18,6 +18,12 @@ package exports a `PoolzProvider` component that wraps `WagmiProvider` and
 
 This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](https://github.com/wevm/wagmi/tree/main/packages/create-wagmi).
 
+## Setup
+
+1. Install **Node.js 20** (the same version used in CI).
+2. Run `pnpm install` before running any other commands.
+3. WalletConnect connections require the `VITE_WC_PROJECT_ID` environment variable.
+
 ## Generating Poolz data
 
 Run `pnpm update-poolz` to fetch contract information from
