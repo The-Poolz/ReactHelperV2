@@ -17,8 +17,25 @@ import {
 import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
 
 export const config = createConfig({
-  chains: [telos, base, polygon, moonbeam, avalanche, mantaTestnet, manta, mainnet, arbitrum, sepolia, bscTestnet, bsc], //poolz chains
-  connectors: [injected(), coinbaseWallet(), walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID })],
+  chains: [
+    telos,
+    base,
+    polygon,
+    moonbeam,
+    avalanche,
+    mantaTestnet,
+    manta,
+    mainnet,
+    arbitrum,
+    sepolia,
+    bscTestnet,
+    bsc,
+  ], //poolz chains
+  connectors: [
+    injected(),
+    coinbaseWallet(),
+    walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
+  ],
   client({ chain }) {
     return createClient({ chain, transport: http() });
   },
