@@ -13,11 +13,11 @@ export const isEnoughBalance = (
 
 export const isEnoughGasFee = (
   balance: string,
-  gasPrice: string,
+  gasFee: string,
   decimals: number = 18
 ) => {
   const _balance = new Decimal(formatUnits(BigInt(balance), decimals));
-  const _gasPrice = new Decimal(formatUnits(BigInt(gasPrice), decimals));
+  const _gasFee = new Decimal(formatUnits(BigInt(gasFee), decimals));
 
-  return !_gasPrice.greaterThan(_balance);
+  return !_gasFee.greaterThan(_balance);
 };
