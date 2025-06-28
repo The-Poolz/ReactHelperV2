@@ -1,4 +1,4 @@
-import { useWriteContract, usePublicClient } from "wagmi";
+import { useWriteContract, usePublicClient, useAccount } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
 import { usePoolzContractInfo } from "../contracts";
 
@@ -19,26 +19,21 @@ export interface PoolzTransactionParams extends TransactionCallbacks {
 export function useTransaction() {
   const { writeContractAsync } = useWriteContract();
   const publicClient = usePublicClient();
+  const { address: connectedAccount } = useAccount();
 
   return useMutation({
     mutationFn: async (params: PoolzTransactionParams) => {
-      const {
-        chainId,
-        contractName,
-        functionName,
-        args,
-        account,
-        waitConfirmations = 1,
-        onSuccess,
-      } = params;
+      const { chainId, contractName, functionName, args, account, waitConfirmations = 1, onSuccess } = params;
       const { smcAddress, abi } = usePoolzContractInfo(chainId, contractName);
       if (!smcAddress || !abi) throw new Error("No contract info available");
+      const accountToUse = account ?? connectedAccount;
+      if (!accountToUse) throw new Error("Wallet not connected");
       const hash = await writeContractAsync({
         address: smcAddress,
         abi,
         functionName,
         args,
-        account,
+        account: accountToUse,
       });
       const result = await publicClient.waitForTransactionReceipt({
         hash,
