@@ -36,7 +36,7 @@ export function useCheckGasFee(params: PoolzGasCheckParams) {
         account,
       });
       const gasFee = new Decimal(gasEstimated.toString())
-        .times(Number(gasPrice))
+        .times(new Decimal(gasPrice.toString()))
         .toString();
 
       if (!isEnoughGasFee(String(balance), gasFee)) {
