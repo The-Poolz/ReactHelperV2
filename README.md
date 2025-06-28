@@ -21,8 +21,10 @@ This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](
 ## Setup
 
 1. Install **Node.js 20** (the same version used in CI).
-2. Run `pnpm install` before running any other commands.
-3. WalletConnect connections require the `VITE_WC_PROJECT_ID` environment variable.
+2. Install dependencies by running `pnpm install`.
+3. After installing dependencies, run `pnpm lint` to check code style.
+4. Run `pnpm test` to execute the test suite.
+5. WalletConnect connections require the `VITE_WC_PROJECT_ID` environment variable.
 
 ## Generating Poolz data
 
