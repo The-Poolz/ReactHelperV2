@@ -1,18 +1,20 @@
 import { useAccount, usePublicClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
-import { usePoolzContractInfo } from "../contracts";
 
-interface ContractReadParams {
+import { usePoolzContractInfo } from "./usePoolzContractInfo";
+import { ContractFunctionName, ContractName } from "../contracts/contractTypes";
+
+interface ContractReadParams<T extends ContractName> {
   chainId: number;
-  contractName: string;
-  functionName: string;
+  contractName: T;
+  functionName: ContractFunctionName<T>;
 }
 
-export function useContractRead({
+export function useContractRead<T extends ContractName>({
   chainId,
   contractName,
   functionName,
-}: ContractReadParams) {
+}: ContractReadParams<T>) {
   const { address: account } = useAccount();
   const { smcAddress, abi } = usePoolzContractInfo(chainId, contractName);
   const publicClient = usePublicClient();

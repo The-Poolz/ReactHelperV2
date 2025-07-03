@@ -1,6 +1,7 @@
 import { useWriteContract, usePublicClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
-import { usePoolzContractInfo } from "../contracts";
+import { usePoolzContractInfo } from "./usePoolzContractInfo";
+import { ContractName, ContractFunctionName } from "../contracts/contractTypes";
 
 export interface TransactionCallbacks {
   onSuccess?: (receipt: any) => void;
@@ -9,8 +10,8 @@ export interface TransactionCallbacks {
 
 export interface PoolzTransactionParams extends TransactionCallbacks {
   chainId: number;
-  contractName: string;
-  functionName: string;
+  contractName: ContractName;
+  functionName: ContractFunctionName<ContractName>;
   args: any[];
   account?: `0x${string}`;
   waitConfirmations?: number;
