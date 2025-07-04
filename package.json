@@ -9,7 +9,8 @@
     "lint": "biome check src/*.ts src/*.tsx example test vite.config.ts",
     "preview": "vite preview example --config example/vite.config.ts",
     "test": "node --test",
-    "update-poolz": "node scripts/updatePoolzData.js"
+    "update-poolz": "node scripts/updatePoolzData.js",
+    "generate-contract-types": "node scripts/generateContractTypes.js"
   },
   "dependencies": {
     "@tanstack/react-query": "5.45.1",

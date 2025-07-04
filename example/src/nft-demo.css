@@ -1,0 +1,147 @@
+.nft-dashboard-container {
+  width: 100%;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px #0001;
+  padding: 32px;
+}
+.nft-dashboard-title {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.nft-dashboard-info {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+.nft-dashboard-info-block .label {
+  font-weight: 600;
+}
+.nft-dashboard-info-block .value {
+  font-family: monospace;
+  word-break: break-all;
+}
+.nft-contract-info {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.nft-contract-info .name {
+  font-size: 22px;
+  font-weight: 700;
+}
+.nft-contract-info .symbol {
+  color: #888;
+  font-weight: 400;
+}
+.nft-contract-info .supply {
+  color: #666;
+}
+.nft-load-btn {
+  display: block;
+  margin: 0 auto 24px auto;
+  padding: 8px 24px;
+  border-radius: 8px;
+  background: #2d72d9;
+  color: #fff;
+  border: 0;
+  font-weight: 600;
+  font-size: 16px;
+}
+.nft-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+.nft-card {
+  width: 200px;
+  background: #f8fafd;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px #0001;
+  padding: 16px;
+  text-align: center;
+}
+.nft-card-image {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.nft-card-noimage {
+  width: 180px;
+  height: 180px;
+  background: #eee;
+  border-radius: 8px;
+  margin: 0 auto 8px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bbb;
+}
+.nft-card-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+.nft-card-id {
+  color: #888;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.nft-card-owner {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+.nft-card-desc {
+  color: #444;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.nft-card-link {
+  margin-top: 8px;
+  color: #2d72d9;
+  font-size: 13px;
+  text-decoration: underline;
+}
+.nft-transfer-section {
+  margin-top: 32px;
+  text-align: center;
+}
+.nft-transfer-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.nft-transfer-input {
+  margin-right: 8px;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 220px;
+}
+.nft-transfer-tokenid {
+  width: 120px;
+}
+.nft-transfer-btn {
+  padding: 6px 18px;
+  border-radius: 8px;
+  background: #2d72d9;
+  color: #fff;
+  border: 0;
+  font-weight: 600;
+  font-size: 15px;
+}
+.nft-transfer-status {
+  margin-left: 12px;
+}
+.nft-status-blue { color: #2d72d9; }
+.nft-status-green { color: green; }
+.nft-status-red { color: red; }

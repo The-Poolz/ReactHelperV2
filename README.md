@@ -21,8 +21,10 @@ This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](
 ## Setup
 
 1. Install **Node.js 20** (the same version used in CI).
-2. Run `pnpm install` before running any other commands.
-3. WalletConnect connections require the `VITE_WC_PROJECT_ID` environment variable.
+2. Install dependencies by running `pnpm install`.
+3. After installing dependencies, run `pnpm lint` to check code style.
+4. Run `pnpm test` to execute the test suite.
+5. WalletConnect connections require the `VITE_WC_PROJECT_ID` environment variable.
 
 ## Generating Poolz data
 
@@ -37,3 +39,77 @@ It also updates `src/wagmi.ts` to include the retrieved chains.
 `src/wagmi.ts` expects the environment variable `VITE_WC_PROJECT_ID` to be set.
 If it is missing, the module throws an error on startup so WalletConnect cannot
 be misconfigured.
+
+## Custom React Hooks
+
+The `src/hooks/` folder provides a set of custom hooks to interact with Poolz smart contracts and blockchain data in a type-safe, convenient way. Below are the main hooks and usage examples:
+
+### useContractRead
+Type-safe read from any Poolz contract.
+```tsx
+const nameQuery = useContractRead({
+  chainId: 56,
+  contractName: "LockDealNFT",
+  functionName: "name",
+});
+// Usage: await nameQuery.mutateAsync([])
+```
+
+### useContractWrite
+Type-safe write to any Poolz contract.
+```tsx
+const transferMutation = useContractWrite({
+  chainId: 56,
+  contractName: "LockDealNFT",
+  functionName: "safeTransferFrom",
+});
+// Usage: transferMutation.mutate([from, to, tokenId])
+```
+
+### useERC20Info
+Get ERC20 token info (symbol, decimals, name).
+```tsx
+const { symbol, decimals, name } = useERC20Info(chainId, tokenAddress);
+```
+
+### useERC20Balance
+Get ERC20 token balance for an account.
+```tsx
+const balance = useERC20Balance(chainId, tokenAddress, account);
+```
+
+### useERC20Allowance
+Get ERC20 allowance for a spender.
+```tsx
+const allowance = useERC20Allowance(chainId, tokenAddress, owner, spender);
+```
+
+### useERC20Approve
+Approve ERC20 tokens for a spender.
+```tsx
+const approveMutation = useERC20Approve(chainId, tokenAddress);
+// Usage: approveMutation.mutate([spender, amount])
+```
+
+### useCheckGasFee
+Estimate and check if the account has enough gas for a contract call.
+```tsx
+const checkGas = useCheckGasFee({
+  chainId,
+  contractName: "LockDealNFT",
+  functionName: "safeTransferFrom",
+  account,
+  balance,
+});
+// Usage: checkGas.mutate([args...])
+```
+
+### usePoolzContractInfo
+Get contract address and ABI by chainId and contractName.
+```tsx
+const { smcAddress, abi } = usePoolzContractInfo(chainId, contractName);
+```
+
+---
+
+All hooks are fully type-safe and optimized for Poolz contracts. See the `example/` folder for more usage patterns.
