@@ -1,5 +1,5 @@
 import { contractsByChain } from "../contracts";
-import { ContractName } from "../contracts/contractFunctionTypes";
+import { ContractName } from "../contracts/contractTypes";
 
 export function usePoolzContractInfo(chainId: number, contractName: ContractName) {
   const contracts = (contractsByChain as any)[chainId];
