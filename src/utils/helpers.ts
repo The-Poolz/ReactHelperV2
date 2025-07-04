@@ -1,4 +1,3 @@
-import Decimal from "decimal.js";
 import { formatUnits } from "viem";
 
 export const isEnoughBalance = (
@@ -6,9 +5,9 @@ export const isEnoughBalance = (
   fee: string,
   decimals: number = 18
 ) => {
-  const _balance = new Decimal(formatUnits(BigInt(balance), decimals));
-  const _fee = new Decimal(formatUnits(BigInt(fee), decimals));
-  return !_fee.greaterThan(_balance);
+  const _balance = Number(formatUnits(BigInt(balance), decimals));
+  const _fee = Number(formatUnits(BigInt(fee), decimals));
+  return _fee <= _balance;
 };
 
 export const isEnoughGasFee = (
@@ -16,8 +15,7 @@ export const isEnoughGasFee = (
   gasFee: string,
   decimals: number = 18
 ) => {
-  const _balance = new Decimal(formatUnits(BigInt(balance), decimals));
-  const _gasFee = new Decimal(formatUnits(BigInt(gasFee), decimals));
-
-  return !_gasFee.greaterThan(_balance);
+  const _balance = Number(formatUnits(BigInt(balance), decimals));
+  const _gasFee = Number(formatUnits(BigInt(gasFee), decimals));
+  return _gasFee <= _balance;
 };

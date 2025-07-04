@@ -1,6 +1,5 @@
 import { usePublicClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
-import Decimal from "decimal.js";
 import { isEnoughGasFee } from "../utils/helpers";
 import { usePoolzContractInfo } from "./usePoolzContractInfo";
 import { ContractName, ContractFunctionName } from "../contracts/contractTypes";
@@ -36,9 +35,7 @@ export function useCheckGasFee(params: PoolzGasCheckParams) {
         args,
         account,
       });
-      const gasFee = new Decimal(gasEstimated.toString())
-        .times(new Decimal(gasPrice.toString()))
-        .toString();
+      const gasFee = (gasEstimated * gasPrice).toString();
 
       if (!isEnoughGasFee(String(balance), gasFee)) {
         throw new Error("Insufficient gas fee");
