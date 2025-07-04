@@ -5,6 +5,7 @@ import { useAccount, useConnect, useDisconnect, useReadContract, useReadContract
 import { contractsByChain } from "../../src/contracts";
 import type { config } from "../../src/wagmi";
 import LockDealNFTDemo from "./LockDealNFTDemo";
+import { useNFTMetadata, NFTMetadataModal, NFTIdButton } from "../../src";
 
 type ChainId = (typeof config.chains)[number]["id"];
 
@@ -13,6 +14,7 @@ function App() {
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
   const { writeContract } = useWriteContract();
+  const { selectedNFT, fetchMetadata, clearMetadata } = useNFTMetadata();
 
   const [showVaultId, setShowVaultId] = useState(false);
 
@@ -71,6 +73,30 @@ function App() {
     query: { enabled: fullDataCalls.length > 0 },
   });
 
+  const tokenURICalls = useMemo(
+    () =>
+      tokens.data && contracts
+        ? tokens.data.reduce<typeof tokenCalls>((acc, token) => {
+            if (token.result !== undefined) {
+              acc.push({
+                address: contracts.LockDealNFT.address,
+                abi: contracts.LockDealNFT.abi as Abi,
+                functionName: "tokenURI",
+                args: [token.result as bigint],
+                chainId: account.chainId as ChainId | undefined,
+              });
+            }
+            return acc;
+          }, [])
+        : [],
+    [tokens.data, contracts, account.chainId],
+  );
+
+  const tokenURIs = useReadContracts({
+    contracts: tokenURICalls,
+    query: { enabled: tokenURICalls.length > 0 },
+  });
+
   const tokenAddresses = useMemo(() => {
     const set = new Set<string>();
     if (fullData.data) {
@@ -121,9 +147,6 @@ function App() {
     }
     return map;
   }, [tokenInfo.data, tokenAddresses]);
-
-  const stringifyBigInt = (value: unknown) =>
-    JSON.stringify(value, (_, v) => (typeof v === "bigint" ? v.toString() : v), 2);
 
   return (
     <>
@@ -179,6 +202,7 @@ function App() {
             <tbody>
               {tokens.data?.map((token, i) => {
                 const id = token.result;
+                const tokenURI = tokenURIs.data?.[i]?.result as string | undefined;
                 const infos = fullData.data?.[i]?.result as
                   | {
                       provider: string;
@@ -196,7 +220,13 @@ function App() {
                       return (
                         <tr key={`${id.toString()}-${j}`}>
                           <td style={{ display: showVaultId ? undefined : "none" }}>{info.vaultId.toString()}</td>
-                          <td>{id.toString()}</td>
+                          <td>
+                            <NFTIdButton
+                              tokenId={id as bigint}
+                              tokenURI={tokenURI}
+                              onClick={fetchMetadata}
+                            />
+                          </td>
                           <td>
                             <details>
                               <summary>{info.name}</summary>
@@ -238,6 +268,8 @@ function App() {
       )}
 
       <LockDealNFTDemo />
+      {/* NFT Metadata Modal */}
+      <NFTMetadataModal nftData={selectedNFT} onClose={clearMetadata} />
     </>
   );
 }
