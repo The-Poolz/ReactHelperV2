@@ -4,6 +4,7 @@ import { erc20Abi, formatUnits } from "viem";
 import { useAccount, useConnect, useDisconnect, useReadContract, useReadContracts, useWriteContract } from "wagmi";
 import { contractsByChain } from "../../src/contracts";
 import type { config } from "../../src/wagmi";
+import LockDealNFTDemo from "./LockDealNFTDemo";
 
 type ChainId = (typeof config.chains)[number]["id"];
 
@@ -235,6 +236,8 @@ function App() {
           </table>
         </div>
       )}
+
+      <LockDealNFTDemo />
     </>
   );
 }

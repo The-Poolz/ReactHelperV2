@@ -1,18 +1,19 @@
 import { useWriteContract, useAccount, usePublicClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
-import { usePoolzContractInfo } from "../contracts";
+import { usePoolzContractInfo } from "./usePoolzContractInfo";
+import { ContractFunctionName, ContractName } from "../contracts/contractTypes";
 
-interface ContractWriteParams {
+interface ContractWriteParams<T extends ContractName> {
   chainId: number;
-  contractName: string;
-  functionName: string;
+  contractName: T;
+  functionName: ContractFunctionName<T>;
 }
 
-export function useContractWrite({
+export function useContractWrite<T extends ContractName>({
   chainId,
   contractName,
   functionName,
-}: ContractWriteParams) {
+}: ContractWriteParams<T>) {
   const { writeContractAsync } = useWriteContract();
   const { address: account } = useAccount();
   const publicClient = usePublicClient();

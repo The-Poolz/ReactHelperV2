@@ -1,13 +1,14 @@
 import { usePublicClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
-import { usePoolzContractInfo } from "../contracts";
 import Decimal from "decimal.js";
 import { isEnoughGasFee } from "../utils/helpers";
+import { usePoolzContractInfo } from "./usePoolzContractInfo";
+import { ContractName, ContractFunctionName } from "../contracts/contractTypes";
 
 export interface PoolzGasCheckParams {
   chainId: number;
-  contractName: string;
-  functionName: string;
+  contractName: ContractName
+  functionName:  ContractFunctionName<ContractName>;
   account?: `0x${string}`;
   balance: string | bigint;
   enabled?: boolean;

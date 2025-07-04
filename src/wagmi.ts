@@ -1,19 +1,6 @@
 import { createClient } from "viem";
 import { http, createConfig } from "wagmi";
-import {
-  arbitrum,
-  avalanche,
-  base,
-  bsc,
-  bscTestnet,
-  mainnet,
-  manta,
-  mantaTestnet,
-  moonbeam,
-  polygon,
-  sepolia,
-  telos,
-} from "wagmi/chains";
+import { telos, base, polygon, moonbeam, avalanche, mantaTestnet, manta, mainnet, arbitrum, sepolia, bscTestnet, bsc } from "wagmi/chains";
 import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
 
 const walletConnectProjectId = import.meta.env.VITE_WC_PROJECT_ID;

@@ -13,6 +13,7 @@ import { chain7082400Contracts } from "./chain7082400";
 import { chain8453Contracts } from "./chain8453";
 import { chain97Contracts } from "./chain97";
 
+
 export const contractsByChain = {
   11155111: chain11155111Contracts,
   1284: chain1284Contracts,
@@ -31,12 +32,3 @@ export const contractsByChain = {
 } as const;
 
 export type ContractsByChain = typeof contractsByChain;
-
-
-export function usePoolzContractInfo(chainId: number, contractName: string) {
-  const contracts = (contractsByChain as any)[chainId];
-  if (!contracts) return { smcAddress: undefined, abi: undefined };
-  const contract = contracts[contractName];
-  return { smcAddress: contract?.address, abi: contract?.abi };
-}
-

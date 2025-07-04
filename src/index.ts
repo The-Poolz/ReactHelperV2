@@ -2,7 +2,7 @@ export { config } from "./wagmi";
 export { contractsByChain } from "./contracts";
 export type { ContractsByChain } from "./contracts";
 export { PoolzProvider } from "./PoolzProvider";
-export { usePoolzContractInfo } from "./contracts";
+export { usePoolzContractInfo } from "./hooks/usePoolzContractInfo";
 
 export * from "./hooks/useContractRead";
 export * from "./hooks/useContractWrite";
