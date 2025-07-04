@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { defaultCORSHandler } from "../utils/corsHandler";
 
 export interface NFTMetadata {
   name?: string;
@@ -39,9 +38,13 @@ export function useNFTMetadata(): UseNFTMetadataReturn {
     try {
       console.log('Fetching metadata from:', tokenURI);
       
-      const metadataResponse = await defaultCORSHandler.fetchWithCORSFallback(tokenURI);
-      const metadata = await metadataResponse.json();
+      const metadataResponse = await fetch(tokenURI);
       
+      if (!metadataResponse.ok) {
+        throw new Error(`HTTP ${metadataResponse.status}: ${metadataResponse.statusText}`);
+      }
+      
+      const metadata = await metadataResponse.json();
       console.log('Metadata loaded:', metadata);
       
       setSelectedNFT({ tokenId, tokenURI, metadata, isLoading: false });
