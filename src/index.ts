@@ -18,3 +18,5 @@ export { NFTIdButton } from "./components/NFTIdButton";
 export type { NFTMetadata, NFTMetadataState, UseNFTMetadataReturn } from "./hooks/useNFTMetadata";
 export type { NFTMetadataModalProps } from "./components/NFTMetadataModal";
 export type { NFTIdButtonProps } from "./components/NFTIdButton";
+export { BalanceProvider, useBalanceContext } from './contexts/BalanceContext';
+export { useTokenBalance, useTokenBalances, useNativeBalance } from './hooks/useTokenBalance';

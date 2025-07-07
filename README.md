@@ -113,3 +113,44 @@ const { smcAddress, abi } = usePoolzContractInfo(chainId, contractName);
 ---
 
 All hooks are fully type-safe and optimized for Poolz contracts. See the `example/` folder for more usage patterns.
+
+## Usage
+
+### PoolzProvider
+Wrap your app with `PoolzProvider` to enable all wagmi, react-query, and Poolz context features:
+
+```tsx
+import { PoolzProvider } from 'react-helper-v2';
+
+function App() {
+  return (
+    <PoolzProvider>
+      {/* your app components */}
+    </PoolzProvider>
+  );
+}
+```
+
+- `PoolzProvider` automatically sets up:
+  - wagmi config (wallet connection, chain info)
+  - react-query client
+  - React.StrictMode
+
+### Balance Context
+
+To get ERC20 and native token balances for the connected wallet, use the context and hooks:
+
+```tsx
+import { BalanceProvider, useTokenBalance, useTokenBalances, useNativeBalance } from 'react-helper-v2';
+
+<BalanceProvider tokenAddresses={["0x...", "0x..."]}>
+  <YourComponent />
+</BalanceProvider>
+
+// In your component:
+const { formattedBalance, symbol } = useNativeBalance();
+const token = useTokenBalance("0x...");
+const tokens = useTokenBalances(["0x...", "0x..."]);
+```
+
+See `example/BalanceContextExample.tsx` for a full demo.

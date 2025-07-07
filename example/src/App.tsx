@@ -6,6 +6,7 @@ import { contractsByChain } from "../../src/contracts";
 import type { config } from "../../src/wagmi";
 import LockDealNFTDemo from "./LockDealNFTDemo";
 import { useNFTMetadata, NFTMetadataModal, NFTIdButton } from "../../src";
+import BalanceContextExample from "./BalanceContextExample";
 
 type ChainId = (typeof config.chains)[number]["id"];
 
@@ -268,6 +269,7 @@ function App() {
       )}
 
       <LockDealNFTDemo />
+      <BalanceContextExample />
       {/* NFT Metadata Modal */}
       <NFTMetadataModal nftData={selectedNFT} onClose={clearMetadata} />
     </>
