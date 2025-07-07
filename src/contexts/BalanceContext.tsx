@@ -3,7 +3,6 @@ import { useAccount, useConfig, usePublicClient } from 'wagmi';
 import { multicall } from 'wagmi/actions';
 import { formatUnits } from 'viem';
 import {
-  setTokenBalancesLoading,
   parseMulticallResults,
   getChainNativeSymbol,
   prepareMulticallContracts,
@@ -84,7 +83,6 @@ export const BalanceProvider: React.FC<BalanceProviderProps> = ({
     setIsRefreshing(true);
     try {
       const addressArray = lowerCaseAddresses(trackedAddresses);
-      setBalances(prev => setTokenBalancesLoading(prev, addressArray));
       const contracts = prepareMulticallContracts(addressArray, account);
       const results = await multicall(config, {
         contracts,
