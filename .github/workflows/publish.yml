@@ -23,6 +23,10 @@ jobs:
           TAG=${{ github.event.release.tag_name }}
           VERSION=${TAG#v}
           pnpm version --no-git-tag-version "$VERSION"
+      - name: Authenticate with npm registry
+        run: npm adduser
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: pnpm publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
