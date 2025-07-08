@@ -5,11 +5,15 @@ import { config } from "./wagmi";
 
 const queryClient = new QueryClient();
 
-export function PoolzProvider({ children }: Readonly<PropsWithChildren>): JSX.Element {
+export function PoolzProvider({
+  children,
+}: Readonly<PropsWithChildren>): JSX.Element {
   return (
     <React.StrictMode>
       <WagmiProvider config={config}>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </WagmiProvider>
     </React.StrictMode>
   );

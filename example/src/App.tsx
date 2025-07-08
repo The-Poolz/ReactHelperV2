@@ -4,6 +4,7 @@ import { erc20Abi, formatUnits } from "viem";
 import { useAccount, useConnect, useDisconnect, useReadContract, useReadContracts, useWriteContract } from "wagmi";
 import { contractsByChain } from "../../src/contracts";
 import type { config } from "../../src/wagmi";
+import LockDealNFTDemo from "./LockDealNFTDemo";
 import { useNFTMetadata, NFTMetadataModal, NFTIdButton } from "../../src";
 
 type ChainId = (typeof config.chains)[number]["id"];
@@ -266,6 +267,7 @@ function App() {
         </div>
       )}
 
+      <LockDealNFTDemo />
       {/* NFT Metadata Modal */}
       <NFTMetadataModal nftData={selectedNFT} onClose={clearMetadata} />
     </>
