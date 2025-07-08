@@ -23,6 +23,10 @@ jobs:
           TAG=${{ github.event.release.tag_name }}
           VERSION=${TAG#v}
           pnpm version --no-git-tag-version "$VERSION"
+      - name: Set git user
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
       - run: pnpm publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
