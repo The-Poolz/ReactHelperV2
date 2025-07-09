@@ -1,5 +1,6 @@
 import { chain11155111Contracts } from "./chain11155111";
 import { chain1284Contracts } from "./chain1284";
+import { chain130Contracts } from "./chain130";
 import { chain137Contracts } from "./chain137";
 import { chain169Contracts } from "./chain169";
 import { chain1Contracts } from "./chain1";
@@ -13,10 +14,10 @@ import { chain7082400Contracts } from "./chain7082400";
 import { chain8453Contracts } from "./chain8453";
 import { chain97Contracts } from "./chain97";
 
-
 export const contractsByChain = {
   11155111: chain11155111Contracts,
   1284: chain1284Contracts,
+  130: chain130Contracts,
   137: chain137Contracts,
   169: chain169Contracts,
   1: chain1Contracts,
@@ -28,7 +29,7 @@ export const contractsByChain = {
   56: chain56Contracts,
   7082400: chain7082400Contracts,
   8453: chain8453Contracts,
-  97: chain97Contracts,
+  97: chain97Contracts
 } as const;
 
 export type ContractsByChain = typeof contractsByChain;
