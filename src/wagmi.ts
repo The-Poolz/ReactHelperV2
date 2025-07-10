@@ -1,6 +1,6 @@
 import { createClient } from "viem";
 import { http, createConfig } from "wagmi";
-import { telos, base, polygon, moonbeam, avalanche, mantaTestnet, manta, mainnet, arbitrum, sepolia, bscTestnet, bsc } from "wagmi/chains";
+import { unichain, telos, polygon, moonbeam, avalanche, mantaTestnet, manta, mainnet, bscTestnet, sepolia, base, bsc, arbitrum } from "wagmi/chains";
 import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
 
 const walletConnectProjectId = import.meta.env.VITE_WC_PROJECT_ID;
@@ -10,12 +10,8 @@ if (!walletConnectProjectId) {
 }
 
 export const config = createConfig({
-  chains: [telos, base, polygon, moonbeam, avalanche, mantaTestnet, manta, mainnet, arbitrum, sepolia, bscTestnet, bsc], //poolz chains
-  connectors: [
-    injected(),
-    coinbaseWallet(),
-    walletConnect({ projectId: walletConnectProjectId }),
-  ],
+  chains: [unichain, telos, polygon, moonbeam, avalanche, mantaTestnet, manta, mainnet, bscTestnet, sepolia, base, bsc, arbitrum], //poolz chains
+  connectors: [injected(), coinbaseWallet()],
   client({ chain }) {
     return createClient({ chain, transport: http() });
   },
