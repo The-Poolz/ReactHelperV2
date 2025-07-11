@@ -34,25 +34,22 @@ export function useNFTMetadata(): UseNFTMetadataReturn {
   const fetchMetadata = async (tokenId: bigint, tokenURI: string) => {
     setIsLoading(true);
     setSelectedNFT({ tokenId, tokenURI, isLoading: true });
-    
+
     try {
-      console.log('Fetching metadata from:', tokenURI);
-      
       const metadataResponse = await fetch(tokenURI);
-      
+
       if (!metadataResponse.ok) {
         throw new Error(`HTTP ${metadataResponse.status}: ${metadataResponse.statusText}`);
       }
-      
+
       const metadata = await metadataResponse.json();
-      console.log('Metadata loaded:', metadata);
-      
+
       setSelectedNFT({ tokenId, tokenURI, metadata, isLoading: false });
     } catch (error) {
       console.error('Error fetching NFT metadata:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      setSelectedNFT({ 
-        tokenId, 
+      setSelectedNFT({
+        tokenId,
         tokenURI,
         metadata: undefined,
         error: `Failed to load metadata: ${errorMessage}`,

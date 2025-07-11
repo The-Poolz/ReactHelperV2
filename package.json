@@ -1,15 +1,28 @@
 {
   "name": "reacthelperv2",
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "source": "src/index.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.module.js",
+    "require": "./dist/index.js",
+    "default": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite example --config example/vite.config.ts",
-    "build": "tsc && vite build example --config example/vite.config.ts",
-    "lint": "biome check src/*.ts src/*.tsx example test vite.config.ts",
-    "preview": "vite preview example --config example/vite.config.ts",
-    "test": "node --test",
-    "update-poolz": "node scripts/updatePoolzData.js",
-    "generate-contract-types": "node scripts/generateContractTypes.js"
+    "clean": "rm -rf dist",
+    "prebuild": "pnpm clean",
+    "build": "pnpm prebuild && microbundle --jsx React.createElement && pnpm build:types",
+    "build:types": "tsc --project tsconfig.build.json --emitDeclarationOnly",
+    "test": "jest",
+    "contracts:update": "node scripts/updatePoolzData.js"
   },
   "dependencies": {
     "@tanstack/react-query": "5.45.1",
@@ -25,6 +38,7 @@
     "@vitejs/plugin-react": "^4.6.0",
     "@wagmi/cli": "latest",
     "buffer": "^6.0.3",
+    "microbundle": "^0.15.1",
     "typescript": "^5.8.3",
     "vite": "^5.4.19"
   }
