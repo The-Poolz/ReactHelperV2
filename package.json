@@ -1,6 +1,7 @@
 {
   "name": "reacthelperv2",
   "version": "1.0.0",
+  "type": "module",
   "source": "src/index.ts",
   "exports": {
     "types": "./dist/index.d.ts",
@@ -21,7 +22,8 @@
     "prebuild": "pnpm clean",
     "build": "pnpm prebuild && microbundle --jsx React.createElement && pnpm build:types",
     "build:types": "tsc --project tsconfig.build.json --emitDeclarationOnly",
-    "test": "jest",
+    "test": "node --test",
+    "contracts:update-types": "node scripts/generateContractTypes.js",
     "contracts:update": "node scripts/updatePoolzData.js"
   },
   "dependencies": {
