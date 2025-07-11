@@ -1,3 +1,4 @@
+import React from "react";
 import type { NFTMetadataState } from "../hooks/useNFTMetadata";
 import "./NFTMetadataModal.css";
 
@@ -38,18 +39,18 @@ export function NFTMetadataModal({ nftData, onClose }: NFTMetadataModalProps) {
         >
           ×
         </button>
-        
+
         <h3 className="nft-modal-title">
           NFT Metadata - Token ID: {nftData.tokenId.toString()}
         </h3>
-        
+
         <div className="nft-modal-section">
           <strong>Token URI:</strong>
           <br />
-          <a 
-            href={nftData.tokenURI} 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href={nftData.tokenURI}
+            target="_blank"
+            rel="noopener noreferrer"
             className="nft-modal-token-uri"
           >
             {nftData.tokenURI}
@@ -71,21 +72,21 @@ export function NFTMetadataModal({ nftData, onClose }: NFTMetadataModalProps) {
         {nftData.metadata && !nftData.isLoading && (
           <div>
             <strong>Metadata:</strong>
-            
+
             {/* Show NFT Name if available */}
             {nftData.metadata.name && (
               <div className="nft-modal-metadata-section">
                 <strong>Name:</strong> {nftData.metadata.name}
               </div>
             )}
-            
+
             {/* Show NFT Description if available */}
             {nftData.metadata.description && (
               <div className="nft-modal-metadata-section">
                 <strong>Description:</strong> {nftData.metadata.description}
               </div>
             )}
-            
+
             {/* Show NFT Image if available (with IPFS support) */}
             {nftData.metadata.image && (
               <div className="nft-modal-metadata-section">
@@ -104,14 +105,14 @@ export function NFTMetadataModal({ nftData, onClose }: NFTMetadataModalProps) {
                 </div>
               </div>
             )}
-            
+
             {/* Show attributes if available */}
             {nftData.metadata.attributes && Array.isArray(nftData.metadata.attributes) && (
               <div className="nft-modal-metadata-section">
                 <strong>Attributes:</strong>
                 <div className="nft-modal-attributes">
                   {nftData.metadata.attributes.map((attr, index) => (
-                    <div 
+                    <div
                       key={`${attr.trait_type ?? attr.key ?? 'attr'}-${index}`}
                       className="nft-modal-attribute"
                     >
@@ -121,7 +122,7 @@ export function NFTMetadataModal({ nftData, onClose }: NFTMetadataModalProps) {
                 </div>
               </div>
             )}
-            
+
             {/* Full JSON for debugging */}
             <details className="nft-modal-json-details">
               <summary className="nft-modal-json-summary">

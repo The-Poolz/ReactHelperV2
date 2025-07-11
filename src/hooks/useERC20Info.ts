@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { erc20Abi } from "viem";
 import { useConfig } from "wagmi";
 import { multicall } from "wagmi/actions";
+import type { QueryHookResult } from "../types/hookTypes";
 
 interface ERC20InfoParams {
   chainId: number;
@@ -9,11 +10,20 @@ interface ERC20InfoParams {
   enabled?: boolean;
 }
 
+export interface ERC20Info {
+  address: `0x${string}`;
+  name: string;
+  symbol: string;
+  decimals: number;
+}
+
+export type UseERC20InfoReturn = QueryHookResult<ERC20Info, Error>;
+
 export function useERC20Info({
   chainId,
   tokenAddress,
   enabled = true,
-}: ERC20InfoParams) {
+}: ERC20InfoParams): UseERC20InfoReturn {
   const config = useConfig();
 
   return useQuery({

@@ -9,7 +9,7 @@ import {
   lowerCaseAddresses,
 } from '../utils/balance-helper';
 
-interface TokenBalance {
+export interface TokenBalance {
   address: string;
   balance: string | bigint | number;
   formattedBalance: string;
@@ -19,7 +19,7 @@ interface TokenBalance {
   error?: string;
 }
 
-interface NativeBalance {
+export interface NativeBalance {
   balance: string | bigint;
   formattedBalance: string;
   symbol: string;
@@ -171,5 +171,3 @@ export const BalanceProvider: React.FC<BalanceProviderProps> = ({
     </BalanceContext.Provider>
   );
 };
-
-export type { TokenBalance };

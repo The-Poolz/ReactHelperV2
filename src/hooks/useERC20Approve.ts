@@ -1,23 +1,25 @@
 import { useWriteContract, useAccount, usePublicClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
-import { erc20Abi } from "viem";
+import { erc20Abi, TransactionReceipt } from "viem";
+import type { MutationHookResult } from "../types/hookTypes";
 
-interface ERC20ApproveParams {
+interface ERC20ApproveArgs {
   tokenAddress: `0x${string}`;
+  spender: `0x${string}`;
+  amount: string | bigint;
 }
 
-export function useERC20Approve({ tokenAddress }: ERC20ApproveParams) {
+export type UseERC20ApproveReturn = MutationHookResult<TransactionReceipt, Error, ERC20ApproveArgs, unknown>;
+
+export function useERC20Approve(): UseERC20ApproveReturn {
   const { writeContractAsync } = useWriteContract();
   const { address: account, isConnected } = useAccount();
   const publicClient = usePublicClient();
 
   return useMutation({
-    mutationFn: async (params: {
-      spender: `0x${string}`;
-      amount: string | bigint;
-    }) => {
-      const { spender, amount } = params;
-      if (!tokenAddress) throw new Error("No contract info available");
+    mutationFn: async (params: ERC20ApproveArgs) => {
+      const { tokenAddress, spender, amount } = params;
+      if (!tokenAddress) throw new Error("Token address is required");
       if (!isConnected || !account) throw new Error("Wallet not connected");
       const hash = await writeContractAsync({
         address: tokenAddress,
