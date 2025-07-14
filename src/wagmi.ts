@@ -3,10 +3,7 @@ import { http, createConfig } from "wagmi";
 import { unichain, telos, polygon, moonbeam, avalanche, mantaTestnet, manta, mainnet, bscTestnet, sepolia, base, bsc, arbitrum } from "wagmi/chains";
 import { coinbaseWallet, metaMask, injected } from "wagmi/connectors";
 
-// WalletConnect project ID - disabled for now
-// const walletConnectProjectId = import.meta.env.VITE_WC_PROJECT_ID || "";
 
-// Supported wallet configurations with specific connectors
 export const walletConfigs: Record<string, { name: string; connector: () => any; installUrl: string }> = {
   metamask: {
     name: "MetaMask",
@@ -53,31 +50,15 @@ export const walletConfigs: Record<string, { name: string; connector: () => any;
       },
     }),
   },
-  // WalletConnect hidden per user request
-  // walletconnect: {
-  //   name: "WalletConnect",
-  //   installUrl: "https://walletconnect.com/",
-  //   connector: () => walletConnect({
-  //     projectId: walletConnectProjectId,
-  //     metadata: {
-  //       name: "Poolz Interface",
-  //       description: "Poolz - Decentralized Token Sales Platform",
-  //       url: "https://www.poolz.finance/",
-  //       icons: ["https://www.poolz.finance/favicon.ico"],
-  //     },
-  //   }),
-  // },
+
 };
 
-// Create connectors for all supported wallets
 const createConnectors = () => {
   return [
     walletConfigs.metamask.connector(),
     walletConfigs.binance.connector(),
     walletConfigs.coinbase.connector(),
     walletConfigs.trust.connector(),
-    // WalletConnect removed per request
-    // ...(walletConnectProjectId ? [walletConfigs.walletconnect.connector()] : []),
   ];
 };
 
