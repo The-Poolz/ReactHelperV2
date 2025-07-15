@@ -19,7 +19,7 @@
     "globals": {
       "wagmi": "wagmi",
       "wagmi/chains": "wagmiChains",
-      "wagmi/connectors": "wagmiConnectors", 
+      "wagmi/connectors": "wagmiConnectors",
       "wagmi/actions": "wagmiActions",
       "@tanstack/react-query": "ReactQuery",
       "viem": "viem",
