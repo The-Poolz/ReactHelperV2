@@ -2,7 +2,7 @@ import { config } from "../wagmi";
 import { useCallback, useMemo, useState } from "react";
 import { useAccount, useChainId, usePublicClient } from "wagmi";
 import { namehash as ensNamehash, zeroAddress } from "viem";
-import { getEnsName } from "@wagmi/core";
+import { getEnsName } from "wagmi/actions";
 
 const SID_CONTRACTS: Record<number, string> = {
   56: "0x08CEd32a7f3eeC915Ba84415e9C07a7286977956",
