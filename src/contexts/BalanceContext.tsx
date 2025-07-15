@@ -64,7 +64,7 @@ export const BalanceProvider: React.FC<BalanceProviderProps> = ({
   const [nativeBalance, setNativeBalance] = useState<NativeBalance>({
     balance: 0n,
     formattedBalance: '0',
-    symbol: 'ETH',
+    symbol: 'BNB',
     isLoading: false,
   });
   const [trackedAddresses, setTrackedAddresses] = useState(new Set(tokenAddresses));

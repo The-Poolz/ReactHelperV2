@@ -4,6 +4,8 @@ export type { ContractsByChain } from "./contracts";
 export { PoolzProvider } from "./PoolzProvider";
 
 export { useWalletConnection } from "./hooks/useWalletConnection";
+export { usePublicClient } from "wagmi";
+export { useAccountInfo } from "./hooks/useAccountInfo";
 export { usePoolzContractInfo } from "./hooks/usePoolzContractInfo";
 export type { UsePoolzContractInfoReturn } from "./hooks/usePoolzContractInfo";
 
@@ -33,6 +35,9 @@ export { BalanceProvider, useBalanceContext } from './contexts/BalanceContext';
 export type { TokenBalance, NativeBalance } from './contexts/BalanceContext';
 export { useTokenBalance, useTokenBalances, useNativeBalance } from './hooks/useTokenBalance';
 
+// Utils
+export { getChainNativeSymbol } from './utils/balance-helper';
+
 export type {
   MutationHookResult,
   QueryHookResult,
@@ -41,3 +46,4 @@ export type {
   ContractTransactionResult,
   TokenBalanceInfo
 } from "./types/hookTypes";
+export { useSidNameForAddress } from "./hooks/useSidNameForAddress";
