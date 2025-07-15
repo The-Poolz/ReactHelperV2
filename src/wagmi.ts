@@ -1,21 +1,76 @@
 import { createClient } from "viem";
 import { http, createConfig } from "wagmi";
 import { unichain, telos, polygon, moonbeam, avalanche, mantaTestnet, manta, mainnet, bscTestnet, sepolia, base, bsc, arbitrum } from "wagmi/chains";
-import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
+import { coinbaseWallet, metaMask, injected } from "wagmi/connectors";
 
-const walletConnectProjectId = import.meta.env.VITE_WC_PROJECT_ID;
 
-if (!walletConnectProjectId) {
-  throw new Error("VITE_WC_PROJECT_ID environment variable is required");
-}
+export const walletConfigs: Record<string, { name: string; connector: () => any; installUrl: string }> = {
+  metamask: {
+    name: "MetaMask",
+    installUrl: "https://metamask.io/",
+    connector: () => metaMask({
+      dappMetadata: {
+        name: "Poolz Interface",
+        url: "https://www.poolz.finance/",
+        iconUrl: "https://www.poolz.finance/favicon.ico",
+      },
+    }),
+  },
+  coinbase: {
+    name: "Coinbase Wallet",
+    installUrl: "https://wallet.coinbase.com/",
+    connector: () => coinbaseWallet({
+      appName: "Poolz Interface",
+      appLogoUrl: "https://www.poolz.finance/favicon.ico",
+    }),
+  },
+  binance: {
+    name: "Binance Wallet",
+    installUrl: "https://www.binance.org/en/binance-wallet",
+    connector: () => injected({
+      target() {
+        return {
+          id: "binance",
+          name: "Binance Wallet",
+          provider: typeof window !== "undefined" ? window.BinanceChain : undefined,
+        };
+      },
+    }),
+  },
+  trust: {
+    name: "Trust Wallet",
+    installUrl: "https://trustwallet.com/",
+    connector: () => injected({
+      target() {
+        return {
+          id: "trust",
+          name: "Trust Wallet",
+          provider: typeof window !== "undefined" ? window.trustwallet : undefined,
+        };
+      },
+    }),
+  },
 
-export const config = createConfig({
+};
+
+const createConnectors = () => {
+  return [
+    walletConfigs.metamask.connector(),
+    walletConfigs.binance.connector(),
+    walletConfigs.coinbase.connector(),
+    walletConfigs.trust.connector(),
+  ];
+};
+
+export const config: any = createConfig({
   chains: [unichain, telos, polygon, moonbeam, avalanche, mantaTestnet, manta, mainnet, bscTestnet, sepolia, base, bsc, arbitrum], //poolz chains
-  connectors: [injected(), coinbaseWallet()],
+  connectors: createConnectors(),
   client({ chain }) {
     return createClient({ chain, transport: http() });
   },
 });
+
+// Clean production build - debug logs removed
 
 declare module "wagmi" {
   interface Register {

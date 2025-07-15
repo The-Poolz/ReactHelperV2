@@ -59,6 +59,7 @@ describe("PoolzProvider", () => {
       "wagmi/connectors": {
         injected: () => {},
         coinbaseWallet: () => {},
+        metaMask: () => {},
         walletConnect: () => () => {},
       },
       "wagmi/chains": new Proxy({}, { get: () => ({}) }),
@@ -71,6 +72,17 @@ describe("PoolzProvider", () => {
       ...commonMocks,
       wagmi: wagmiMock,
       "./wagmi": configModule,
+      "./contexts/BalanceContext": {
+        BalanceProvider: ({ children }) => children,
+        useBalanceContext: () => ({}),
+      },
+      "./utils/balance-helper": {
+        normalizeTokenAddresses: () => [],
+        buildTokenMulticallContracts: () => [],
+        setTokenBalancesLoading: () => ({}),
+        parseTokenMulticallResults: () => ({}),
+        getChainNativeSymbol: () => "ETH",
+      },
       "@tanstack/react-query": {
         QueryClient: class {},
         QueryClientProvider: (p) => p.children,

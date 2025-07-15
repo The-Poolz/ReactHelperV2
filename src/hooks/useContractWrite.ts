@@ -2,6 +2,8 @@ import { useWriteContract, useAccount, usePublicClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
 import { usePoolzContractInfo } from "./usePoolzContractInfo";
 import { ContractFunctionName, ContractName } from "../contracts/contractTypes";
+import { TransactionReceipt } from "viem";
+import type { MutationHookResult } from "../types/hookTypes";
 
 interface ContractWriteParams<T extends ContractName> {
   chainId: number;
@@ -9,11 +11,13 @@ interface ContractWriteParams<T extends ContractName> {
   functionName: ContractFunctionName<T>;
 }
 
+export type UseContractWriteReturn = MutationHookResult<TransactionReceipt, Error, any[], unknown>;
+
 export function useContractWrite<T extends ContractName>({
   chainId,
   contractName,
   functionName,
-}: ContractWriteParams<T>) {
+}: ContractWriteParams<T>): UseContractWriteReturn {
   const { writeContractAsync } = useWriteContract();
   const { address: account } = useAccount();
   const publicClient = usePublicClient();

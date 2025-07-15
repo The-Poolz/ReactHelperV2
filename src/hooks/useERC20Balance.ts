@@ -1,6 +1,7 @@
 import { useAccount, usePublicClient } from "wagmi";
 import { useQuery } from "@tanstack/react-query";
 import { erc20Abi } from "viem";
+import type { QueryHookResult } from "../types/hookTypes";
 
 interface ERC20BalanceParams {
   chainId: number;
@@ -9,12 +10,14 @@ interface ERC20BalanceParams {
   enabled?: boolean;
 }
 
+export type UseERC20BalanceReturn = QueryHookResult<string, Error>;
+
 export function useERC20Balance({
   chainId,
   tokenAddress,
   ownerAddress,
   enabled = true,
-}: ERC20BalanceParams) {
+}: ERC20BalanceParams): UseERC20BalanceReturn {
   const { address: account } = useAccount();
   const publicClient = usePublicClient();
 

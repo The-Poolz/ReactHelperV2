@@ -1,8 +1,8 @@
 import { useAccount, usePublicClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
-
 import { usePoolzContractInfo } from "./usePoolzContractInfo";
 import { ContractFunctionName, ContractName } from "../contracts/contractTypes";
+import type { MutationHookResult } from "../types/hookTypes";
 
 interface ContractReadParams<T extends ContractName> {
   chainId: number;
@@ -10,11 +10,13 @@ interface ContractReadParams<T extends ContractName> {
   functionName: ContractFunctionName<T>;
 }
 
+export type UseContractReadReturn<T = any> = MutationHookResult<T, Error, any[], unknown>;
+
 export function useContractRead<T extends ContractName>({
   chainId,
   contractName,
   functionName,
-}: ContractReadParams<T>) {
+}: ContractReadParams<T>): UseContractReadReturn {
   const { address: account } = useAccount();
   const { smcAddress, abi } = usePoolzContractInfo(chainId, contractName);
   const publicClient = usePublicClient();

@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
-import { useBalanceContext } from '../contexts/BalanceContext';
+import { useBalanceContext, type TokenBalance, type NativeBalance } from '../contexts/BalanceContext';
+
+// Re-export types from context for convenience
+export type { TokenBalance, NativeBalance } from '../contexts/BalanceContext';
 
 /**
  * Hook to get balance of a specific token
  * @param tokenAddress - The token address to get balance for
  * @returns TokenBalance object with balance, symbol, decimals, etc.
  */
-export const useTokenBalance = (tokenAddress: string) => {
+export const useTokenBalance = (tokenAddress: string): TokenBalance => {
   const { balances, addTokenAddress } = useBalanceContext();
 
   useEffect(() => {
@@ -31,7 +34,7 @@ export const useTokenBalance = (tokenAddress: string) => {
  * @param tokenAddresses - Array of token addresses
  * @returns Array of TokenBalance objects
  */
-export const useTokenBalances = (tokenAddresses: string[]) => {
+export const useTokenBalances = (tokenAddresses: string[]): TokenBalance[] => {
   const { balances, addTokenAddress } = useBalanceContext();
 
   useEffect(() => {
@@ -57,7 +60,7 @@ export const useTokenBalances = (tokenAddresses: string[]) => {
  * Hook to get native balance (ETH, BNB, MATIC, etc.)
  * @returns NativeBalance object with balance, symbol, etc.
  */
-export const useNativeBalance = () => {
+export const useNativeBalance = (): NativeBalance => {
   const { nativeBalance } = useBalanceContext();
   return nativeBalance;
 };

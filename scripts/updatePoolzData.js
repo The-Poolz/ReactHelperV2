@@ -59,10 +59,12 @@ async function main() {
 
   const latestTypes = Array.isArray(data.latestType) ? data.latestType : data.latestType ? [data.latestType] : [];
   for (const item of latestTypes) {
-    const versions = Array.isArray(item.Version) ? item.Version : item.Version ? [item.Version] : [];
+    if (!item || !item.Version) continue;
+    const versions = Array.isArray(item.Version) ? item.Version : [item.Version];
     for (const version of versions) {
-      const name = version.ContractType?.ContractType;
-      const abi = version.ContractVersion?.ABI;
+      if (!version || !version.ContractType || !version.ContractVersion) continue;
+      const name = version.ContractType.ContractType;
+      const abi = version.ContractVersion.ABI;
       if (!name || !abi) continue;
       await writeFile(path.join(abiDir, `${name}.json`), `${JSON.stringify(abi, null, 2)}\n`);
     }
@@ -76,13 +78,15 @@ async function main() {
       ? [data.contractsOnChains]
       : [];
   for (const entry of contractEntries) {
-    const id = entry.Chain?.chainId;
+    if (!entry || !entry.Chain) continue;
+    const id = entry.Chain.chainId;
     if (id == null) continue;
     chains.push(id);
     const map = contractsByChain[id] || {};
     const cList = Array.isArray(entry.Contracts) ? entry.Contracts : entry.Contracts ? [entry.Contracts] : [];
     for (const c of cList) {
-      const typeName = c.ContractType?.ContractType;
+      if (!c || !c.ContractType) continue;
+      const typeName = c.ContractType.ContractType;
       const address = c.Address;
       if (!typeName || !address) continue;
       map[typeName] = address;
@@ -126,7 +130,7 @@ async function main() {
     const entries = [];
     for (const [name, address] of Object.entries(contracts)) {
       const varName = `${toVar(name)}Abi`;
-      imports.push(`import ${varName} from "../../generated/abi/${name}.json" assert { type: "json" };`);
+      imports.push(`import ${varName} from "../../generated/abi/${name}.json";`);
       entries.push(`  ${toVar(name)}: { address: "${address}", abi: ${varName} }`);
     }
     const content = `${imports.join("\n")}\n\nexport const chain${chainId}Contracts = {\n${entries.join(",\n")}\n} as const;\n`;

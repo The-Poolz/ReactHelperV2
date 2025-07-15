@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { isEnoughGasFee } from "../utils/helpers";
 import { usePoolzContractInfo } from "./usePoolzContractInfo";
 import { ContractName, ContractFunctionName } from "../contracts/contractTypes";
+import type { MutationHookResult } from "../types/hookTypes";
 
 export interface PoolzGasCheckParams {
   chainId: number;
@@ -13,7 +14,15 @@ export interface PoolzGasCheckParams {
   enabled?: boolean;
 }
 
-export function useCheckGasFee(params: PoolzGasCheckParams) {
+export interface GasFeeResult {
+  gasEstimated: bigint;
+  gasPrice: bigint;
+  gasFee: string;
+}
+
+export type UseCheckGasFeeReturn = MutationHookResult<GasFeeResult, Error, any[], unknown>;
+
+export function useCheckGasFee(params: PoolzGasCheckParams): UseCheckGasFeeReturn {
   const publicClient = usePublicClient();
   const {
     chainId,

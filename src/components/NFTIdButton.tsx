@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import "./NFTIdButton.css";
 
 export interface NFTIdButtonProps {
@@ -12,15 +12,15 @@ export interface NFTIdButtonProps {
   readonly className?: string;
 }
 
-export function NFTIdButton({ 
-  tokenId, 
-  tokenURI, 
-  onClick, 
+export function NFTIdButton({
+  tokenId,
+  tokenURI,
+  onClick,
   disabled = false,
   children,
   variant = 'default',
   size = 'default',
-  className 
+  className
 }: NFTIdButtonProps) {
   const handleClick = () => {
     if (!disabled && tokenURI) {
@@ -30,19 +30,19 @@ export function NFTIdButton({
 
   const getClassNames = () => {
     const classes = ['nft-id-button'];
-    
+
     if (size !== 'default') {
       classes.push(`nft-id-button--${size}`);
     }
-    
+
     if (variant !== 'default') {
       classes.push(`nft-id-button--${variant}`);
     }
-    
+
     if (className) {
       classes.push(className);
     }
-    
+
     return classes.join(' ');
   };
 

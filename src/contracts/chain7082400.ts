@@ -1,9 +1,9 @@
-import VaultManagerAbi from "../../generated/abi/VaultManager.json" assert { type: "json" };
-import LockDealNFTAbi from "../../generated/abi/LockDealNFT.json" assert { type: "json" };
-import DealProviderAbi from "../../generated/abi/DealProvider.json" assert { type: "json" };
-import LockDealProviderAbi from "../../generated/abi/LockDealProvider.json" assert { type: "json" };
-import TimedDealProviderAbi from "../../generated/abi/TimedDealProvider.json" assert { type: "json" };
-import DispenserProviderAbi from "../../generated/abi/DispenserProvider.json" assert { type: "json" };
+import VaultManagerAbi from "../../generated/abi/VaultManager.json";
+import LockDealNFTAbi from "../../generated/abi/LockDealNFT.json";
+import DealProviderAbi from "../../generated/abi/DealProvider.json";
+import LockDealProviderAbi from "../../generated/abi/LockDealProvider.json";
+import TimedDealProviderAbi from "../../generated/abi/TimedDealProvider.json";
+import DispenserProviderAbi from "../../generated/abi/DispenserProvider.json";
 
 export const chain7082400Contracts = {
   VaultManager: { address: "0x3A3717a198f0b69155D666D61984e3BBeD084C48", abi: VaultManagerAbi },
