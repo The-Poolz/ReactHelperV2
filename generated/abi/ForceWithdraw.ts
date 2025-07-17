@@ -1,4 +1,4 @@
-[
+export const ForceWithdrawAbi = [
   {
     "type": "constructor",
     "inputs": [
@@ -307,4 +307,4 @@
     "outputs": [],
     "stateMutability": "nonpayable"
   }
-]
+] as const;

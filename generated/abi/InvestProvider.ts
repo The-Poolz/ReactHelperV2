@@ -1,4 +1,4 @@
-[
+export const InvestProviderAbi = [
   {
     "type": "constructor",
     "inputs": [
@@ -868,4 +868,4 @@
     ],
     "stateMutability": "nonpayable"
   }
-]
+] as const;

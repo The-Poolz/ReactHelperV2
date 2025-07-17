@@ -1,4 +1,4 @@
-[
+export const LockDealProviderAbi = [
   {
     "type": "constructor",
     "inputs": [
@@ -6,6 +6,11 @@
         "name": "_lockDealNFT",
         "type": "address",
         "internalType": "contract ILockDealNFT"
+      },
+      {
+        "name": "_provider",
+        "type": "address",
+        "internalType": "address"
       }
     ],
     "stateMutability": "nonpayable"
@@ -22,153 +27,9 @@
     ]
   },
   {
-    "name": "AmountMustBeGreaterThanZero",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "CallerNotApproved",
-    "type": "error",
-    "inputs": [
-      {
-        "name": "caller",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "receiver",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "poolId",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "ECDSAInvalidSignature",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "ECDSAInvalidSignatureLength",
-    "type": "error",
-    "inputs": [
-      {
-        "name": "length",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "ECDSAInvalidSignatureS",
-    "type": "error",
-    "inputs": [
-      {
-        "name": "s",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      }
-    ]
-  },
-  {
     "name": "FailedCall",
     "type": "error",
     "inputs": []
-  },
-  {
-    "name": "InvalidShortString",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "InvalidSignature",
-    "type": "error",
-    "inputs": [
-      {
-        "name": "poolId",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "receiver",
-        "type": "address",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "name": "InvalidTime",
-    "type": "error",
-    "inputs": [
-      {
-        "name": "currentTime",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "validUntil",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "NotEnoughTokensInPool",
-    "type": "error",
-    "inputs": [
-      {
-        "name": "requestedAmount",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "availableAmount",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "StringTooLong",
-    "type": "error",
-    "inputs": [
-      {
-        "name": "str",
-        "type": "string",
-        "internalType": "string"
-      }
-    ]
-  },
-  {
-    "name": "TokensAlreadyTaken",
-    "type": "error",
-    "inputs": [
-      {
-        "name": "poolId",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "receiver",
-        "type": "address",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "name": "ZeroParamsLength",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "EIP712DomainChanged",
-    "type": "event",
-    "inputs": [],
-    "anonymous": false
   },
   {
     "name": "FirewallAdminUpdated",
@@ -197,56 +58,6 @@
     "anonymous": false
   },
   {
-    "name": "PoolCreated",
-    "type": "event",
-    "inputs": [
-      {
-        "name": "poolId",
-        "type": "uint256",
-        "indexed": true,
-        "internalType": "uint256"
-      },
-      {
-        "name": "provider",
-        "type": "address",
-        "indexed": true,
-        "internalType": "contract ISimpleProvider"
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "name": "TokensDispensed",
-    "type": "event",
-    "inputs": [
-      {
-        "name": "poolId",
-        "type": "uint256",
-        "indexed": true,
-        "internalType": "uint256"
-      },
-      {
-        "name": "user",
-        "type": "address",
-        "indexed": true,
-        "internalType": "address"
-      },
-      {
-        "name": "amountTaken",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      },
-      {
-        "name": "leftAmount",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      }
-    ],
-    "anonymous": false
-  },
-  {
     "name": "UpdateParams",
     "type": "event",
     "inputs": [
@@ -264,32 +75,6 @@
       }
     ],
     "anonymous": false
-  },
-  {
-    "name": "BUILDER_TYPEHASH",
-    "type": "function",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "name": "MESSAGE_TYPEHASH",
-    "type": "function",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      }
-    ],
-    "stateMutability": "view"
   },
   {
     "name": "acceptFirewallAdmin",
@@ -336,101 +121,6 @@
         "name": "",
         "type": "uint256",
         "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "name": "dispenseLock",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "message",
-        "type": "tuple",
-        "components": [
-          {
-            "name": "poolId",
-            "type": "uint256",
-            "internalType": "uint256"
-          },
-          {
-            "name": "receiver",
-            "type": "address",
-            "internalType": "address"
-          },
-          {
-            "name": "validUntil",
-            "type": "uint256",
-            "internalType": "uint256"
-          },
-          {
-            "name": "data",
-            "type": "tuple[]",
-            "components": [
-              {
-                "name": "simpleProvider",
-                "type": "address",
-                "internalType": "contract ISimpleProvider"
-              },
-              {
-                "name": "params",
-                "type": "uint256[]",
-                "internalType": "uint256[]"
-              }
-            ],
-            "internalType": "struct IDispenserProvider.Builder[]"
-          }
-        ],
-        "internalType": "struct IDispenserProvider.MessageStruct"
-      },
-      {
-        "name": "signature",
-        "type": "bytes",
-        "internalType": "bytes"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "name": "eip712Domain",
-    "type": "function",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "fields",
-        "type": "bytes1",
-        "internalType": "bytes1"
-      },
-      {
-        "name": "name",
-        "type": "string",
-        "internalType": "string"
-      },
-      {
-        "name": "version",
-        "type": "string",
-        "internalType": "string"
-      },
-      {
-        "name": "chainId",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "verifyingContract",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "salt",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      },
-      {
-        "name": "extensions",
-        "type": "uint256[]",
-        "internalType": "uint256[]"
       }
     ],
     "stateMutability": "view"
@@ -506,30 +196,6 @@
     "stateMutability": "view"
   },
   {
-    "name": "isTaken",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool",
-        "internalType": "bool"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
     "name": "lockDealNFT",
     "type": "function",
     "inputs": [],
@@ -556,7 +222,7 @@
     "stateMutability": "view"
   },
   {
-    "name": "poolIdToAmount",
+    "name": "poolIdToTime",
     "type": "function",
     "inputs": [
       {
@@ -570,6 +236,19 @@
         "name": "",
         "type": "uint256",
         "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "provider",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract ISimpleProvider"
       }
     ],
     "stateMutability": "view"
@@ -677,7 +356,7 @@
     "type": "function",
     "inputs": [
       {
-        "name": "oldPoolId",
+        "name": "lockDealNFTPoolId",
         "type": "uint256",
         "internalType": "uint256"
       },
@@ -767,4 +446,4 @@
     ],
     "stateMutability": "nonpayable"
   }
-]
+] as const;

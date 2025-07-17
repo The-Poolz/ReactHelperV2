@@ -1,4 +1,4 @@
-[
+export const VaultManagerAbi = [
   {
     "type": "constructor",
     "inputs": [],
@@ -1024,4 +1024,4 @@
     "outputs": [],
     "stateMutability": "nonpayable"
   }
-]
+] as const;

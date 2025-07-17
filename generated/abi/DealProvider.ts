@@ -1,16 +1,11 @@
-[
+export const DealProviderAbi = [
   {
     "type": "constructor",
     "inputs": [
       {
-        "name": "_lockDealNFT",
+        "name": "_nftContract",
         "type": "address",
         "internalType": "contract ILockDealNFT"
-      },
-      {
-        "name": "_provider",
-        "type": "address",
-        "internalType": "address"
       }
     ],
     "stateMutability": "nonpayable"
@@ -222,7 +217,7 @@
     "stateMutability": "view"
   },
   {
-    "name": "poolIdToTime",
+    "name": "poolIdToAmount",
     "type": "function",
     "inputs": [
       {
@@ -236,19 +231,6 @@
         "name": "",
         "type": "uint256",
         "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "name": "provider",
-    "type": "function",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "contract ISimpleProvider"
       }
     ],
     "stateMutability": "view"
@@ -446,4 +428,4 @@
     ],
     "stateMutability": "nonpayable"
   }
-]
+] as const;

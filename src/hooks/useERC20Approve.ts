@@ -1,7 +1,6 @@
 import { useWriteContract, useAccount, usePublicClient } from "wagmi";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { erc20Abi, TransactionReceipt } from "viem";
-import type { MutationHookResult } from "../types/hookTypes";
 
 interface ERC20ApproveArgs {
   tokenAddress: `0x${string}`;
@@ -9,7 +8,7 @@ interface ERC20ApproveArgs {
   amount: string | bigint;
 }
 
-export type UseERC20ApproveReturn = MutationHookResult<TransactionReceipt, Error, ERC20ApproveArgs, unknown>;
+export type UseERC20ApproveReturn = UseMutationResult<TransactionReceipt, Error, ERC20ApproveArgs, unknown>;
 
 export function useERC20Approve(): UseERC20ApproveReturn {
   const { writeContractAsync } = useWriteContract();

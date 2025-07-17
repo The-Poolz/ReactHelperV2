@@ -14,7 +14,9 @@ import { chain7082400Contracts } from "./chain7082400";
 import { chain8453Contracts } from "./chain8453";
 import { chain97Contracts } from "./chain97";
 
-export const contractsByChain = {
+export type ChainContracts = typeof chain1Contracts | typeof chain40Contracts | typeof chain56Contracts | typeof chain97Contracts | typeof chain130Contracts | typeof chain137Contracts | typeof chain169Contracts | typeof chain1284Contracts | typeof chain8453Contracts | typeof chain42161Contracts | typeof chain43114Contracts | typeof chain2632500Contracts | typeof chain3441005Contracts | typeof chain7082400Contracts | typeof chain11155111Contracts;
+
+export const contractsByChain: { [chainId: number]: ChainContracts } = {
   11155111: chain11155111Contracts,
   1284: chain1284Contracts,
   130: chain130Contracts,

@@ -1,11 +1,10 @@
-import SimpleBuilderAbi from "../../generated/abi/SimpleBuilder.json";
-import DealProviderAbi from "../../generated/abi/DealProvider.json";
-import LockDealProviderAbi from "../../generated/abi/LockDealProvider.json";
-import TimedDealProviderAbi from "../../generated/abi/TimedDealProvider.json";
-import DispenserProviderAbi from "../../generated/abi/DispenserProvider.json";
-import VaultManagerAbi from "../../generated/abi/VaultManager.json";
-import LockDealNFTAbi from "../../generated/abi/LockDealNFT.json";
-import InvestProviderAbi from "../../generated/abi/InvestProvider.json";
+import { SimpleBuilderAbi } from "../../generated/abi/SimpleBuilder";
+import { DealProviderAbi } from "../../generated/abi/DealProvider";
+import { LockDealProviderAbi } from "../../generated/abi/LockDealProvider";
+import { TimedDealProviderAbi } from "../../generated/abi/TimedDealProvider";
+import { DispenserProviderAbi } from "../../generated/abi/DispenserProvider";
+import { VaultManagerAbi } from "../../generated/abi/VaultManager";
+import { LockDealNFTAbi } from "../../generated/abi/LockDealNFT";
 
 export const chain97Contracts = {
   SimpleBuilder: { address: "0xaE297EeC7A7782e81CC23E6A3B6C06621B12dF26", abi: SimpleBuilderAbi },
@@ -14,6 +13,5 @@ export const chain97Contracts = {
   TimedDealProvider: { address: "0xBE7C13C7F320979B44B01207Aa72Fe505fD87696", abi: TimedDealProviderAbi },
   DispenserProvider: { address: "0xa9c68640C1AA52E91A75F4c5e2786F68049541Ad", abi: DispenserProviderAbi },
   VaultManager: { address: "0xF0A8AAc3deB7596527A61697D0a9728E3A67D3B7", abi: VaultManagerAbi },
-  LockDealNFT: { address: "0xe42876a77108E8B3B2af53907f5e533Cba2Ce7BE", abi: LockDealNFTAbi },
-  InvestProvider: { address: "0x1Bebef1aBf49F9e588850b9Dc0Bf1AC6872C33D2", abi: InvestProviderAbi }
+  LockDealNFT: { address: "0xe42876a77108E8B3B2af53907f5e533Cba2Ce7BE", abi: LockDealNFTAbi }
 } as const;

@@ -1,4 +1,4 @@
-[
+export const TimedDealProviderAbi = [
   {
     "type": "constructor",
     "inputs": [
@@ -488,4 +488,4 @@
     ],
     "stateMutability": "nonpayable"
   }
-]
+] as const;

@@ -66,7 +66,7 @@ async function main() {
       const name = version.ContractType.ContractType;
       const abi = version.ContractVersion.ABI;
       if (!name || !abi) continue;
-      await writeFile(path.join(abiDir, `${name}.json`), `${JSON.stringify(abi, null, 2)}\n`);
+      await writeFile(path.join(abiDir, `${name}.ts`), `export const ${name}Abi = ${JSON.stringify(abi, null, 2)} as const;\n`);
     }
   }
 
@@ -129,8 +129,8 @@ async function main() {
     const imports = [];
     const entries = [];
     for (const [name, address] of Object.entries(contracts)) {
-      const varName = `${toVar(name)}Abi`;
-      imports.push(`import ${varName} from "../../generated/abi/${name}.json";`);
+      const varName = `${name}Abi`;
+      imports.push(`import { ${varName} } from "../../generated/abi/${name}";`);
       entries.push(`  ${toVar(name)}: { address: "${address}", abi: ${varName} }`);
     }
     const content = `${imports.join("\n")}\n\nexport const chain${chainId}Contracts = {\n${entries.join(",\n")}\n} as const;\n`;
@@ -139,7 +139,20 @@ async function main() {
     indexEntries.push(`  ${chainId}: chain${chainId}Contracts`);
   }
 
-  const indexContent = `${indexImports.sort().join("\n")}\n\nexport const contractsByChain = {\n${indexEntries.sort().join(",\n")}\n} as const;\n\nexport type ContractsByChain = typeof contractsByChain;\n`;
+  const chainContractTypes = Object.keys(contractsByChain)
+    .map(chainId => `typeof chain${chainId}Contracts`)
+    .join(" | ");
+
+  const indexContent = `${indexImports.sort().join("\n")}
+
+export type ChainContracts = ${chainContractTypes};
+
+export const contractsByChain: { [chainId: number]: ChainContracts } = {
+${indexEntries.sort().join(",\n")}
+} as const;
+
+export type ContractsByChain = typeof contractsByChain;
+`;
   await writeFile(path.join(contractsDir, "index.ts"), indexContent);
 }
 

@@ -1,9 +1,9 @@
-import DealProviderAbi from "../../generated/abi/DealProvider.json";
-import VaultManagerAbi from "../../generated/abi/VaultManager.json";
-import LockDealNFTAbi from "../../generated/abi/LockDealNFT.json";
-import LockDealProviderAbi from "../../generated/abi/LockDealProvider.json";
-import TimedDealProviderAbi from "../../generated/abi/TimedDealProvider.json";
-import DispenserProviderAbi from "../../generated/abi/DispenserProvider.json";
+import { DealProviderAbi } from "../../generated/abi/DealProvider";
+import { VaultManagerAbi } from "../../generated/abi/VaultManager";
+import { LockDealNFTAbi } from "../../generated/abi/LockDealNFT";
+import { LockDealProviderAbi } from "../../generated/abi/LockDealProvider";
+import { TimedDealProviderAbi } from "../../generated/abi/TimedDealProvider";
+import { DispenserProviderAbi } from "../../generated/abi/DispenserProvider";
 
 export const chain2632500Contracts = {
   DealProvider: { address: "0x9cfd8c7834Be0DfE41F3FE68C29124066D5Cd13b", abi: DealProviderAbi },

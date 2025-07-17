@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { Abi } from "viem";
 import { erc20Abi, formatUnits } from "viem";
 import {
@@ -11,12 +11,10 @@ import {
 } from "wagmi";
 import { contractsByChain } from "../../src/contracts";
 import type { config } from "../../src/wagmi";
-import LockDealNFTDemo from "./LockDealNFTDemo";
 import {
   useNFTMetadata,
   NFTMetadataModal,
   NFTIdButton,
-  useSidNameForAddress,
 } from "../../src";
 import BalanceContextExample from "./BalanceContextExample";
 
@@ -28,7 +26,6 @@ function App() {
   const { disconnect } = useDisconnect();
   const { writeContract } = useWriteContract();
   const { selectedNFT, fetchMetadata, clearMetadata } = useNFTMetadata();
-
   const [showVaultId, setShowVaultId] = useState(false);
 
   const contracts =
@@ -313,7 +310,6 @@ function App() {
         </div>
       )}
 
-      <LockDealNFTDemo />
       <BalanceContextExample />
       {/* NFT Metadata Modal */}
       <NFTMetadataModal nftData={selectedNFT} onClose={clearMetadata} />

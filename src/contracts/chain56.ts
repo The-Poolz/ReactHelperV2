@@ -1,11 +1,12 @@
-import LockDealNFTAbi from "../../generated/abi/LockDealNFT.json";
-import VaultManagerAbi from "../../generated/abi/VaultManager.json";
-import DealProviderAbi from "../../generated/abi/DealProvider.json";
-import SimpleBuilderAbi from "../../generated/abi/SimpleBuilder.json";
-import DispenserProviderAbi from "../../generated/abi/DispenserProvider.json";
-import LockDealProviderAbi from "../../generated/abi/LockDealProvider.json";
-import TimedDealProviderAbi from "../../generated/abi/TimedDealProvider.json";
-import InvestProviderAbi from "../../generated/abi/InvestProvider.json";
+import { LockDealNFTAbi } from "../../generated/abi/LockDealNFT";
+import { VaultManagerAbi } from "../../generated/abi/VaultManager";
+import { DealProviderAbi } from "../../generated/abi/DealProvider";
+import { SimpleBuilderAbi } from "../../generated/abi/SimpleBuilder";
+import { DispenserProviderAbi } from "../../generated/abi/DispenserProvider";
+import { LockDealProviderAbi } from "../../generated/abi/LockDealProvider";
+import { TimedDealProviderAbi } from "../../generated/abi/TimedDealProvider";
+import { InvestProviderAbi } from "../../generated/abi/InvestProvider";
+import { MultiSenderV2Abi } from "../../generated/abi/MultiSenderV2";
 
 export const chain56Contracts = {
   LockDealNFT: { address: "0x3d2C83bbBbfB54087d46B80585253077509c21AE", abi: LockDealNFTAbi },
@@ -15,5 +16,6 @@ export const chain56Contracts = {
   DispenserProvider: { address: "0x93441BF11A3Cc2352253013990d68F5A2b1EC3ed", abi: DispenserProviderAbi },
   LockDealProvider: { address: "0x2942ee88A75B0c87fC9eEB8DDc9066De84937786", abi: LockDealProviderAbi },
   TimedDealProvider: { address: "0x43b4CD03ED2504599Ed3Fb56780149A7E7960282", abi: TimedDealProviderAbi },
-  InvestProvider: { address: "0x80E7DCA0B053D044B0ff477C48e891B0aF01d545", abi: InvestProviderAbi }
+  InvestProvider: { address: "0x80E7DCA0B053D044B0ff477C48e891B0aF01d545", abi: InvestProviderAbi },
+  MultiSenderV2: { address: "0x114DAdDE8112A5c43aaBc6373473c282e14948Fa", abi: MultiSenderV2Abi }
 } as const;

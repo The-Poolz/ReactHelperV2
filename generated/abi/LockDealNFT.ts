@@ -1,4 +1,4 @@
-[
+export const LockDealNFTAbi = [
   {
     "type": "constructor",
     "inputs": [
@@ -1482,4 +1482,4 @@
     ],
     "stateMutability": "view"
   }
-]
+] as const;

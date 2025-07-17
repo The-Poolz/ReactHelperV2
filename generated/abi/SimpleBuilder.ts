@@ -1,4 +1,4 @@
-[
+export const SimpleBuilderAbi = [
   {
     "type": "constructor",
     "inputs": [
@@ -305,4 +305,4 @@
     "outputs": [],
     "stateMutability": "nonpayable"
   }
-]
+] as const;
