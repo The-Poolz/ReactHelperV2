@@ -4,7 +4,7 @@ import path from "node:path";
 import { describe, it } from "node:test";
 
 async function parsePoolzChains() {
-  const file = await readFile(path.join("generated", "poolzChains.ts"), "utf8");
+  const file = await readFile(path.join("src", "generated", "poolzChains.ts"), "utf8");
   const match = file.match(/\[(.*)\]/s);
   if (!match) throw new Error("Unable to parse poolzChains");
   return match[1]
