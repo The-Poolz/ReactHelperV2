@@ -21,8 +21,6 @@ export { useERC20Allowance } from "./hooks/useERC20Allowance";
 export type { UseERC20AllowanceReturn } from "./hooks/useERC20Allowance";
 export { useERC20Approve } from "./hooks/useERC20Approve";
 export type { UseERC20ApproveReturn } from "./hooks/useERC20Approve";
-export { useEstimateGasFee } from "./hooks/useEstimateGasFee";
-export type { GasFeeResult, UseEstimateGasFeeReturn } from "./hooks/useEstimateGasFee";
 export { useNFTMetadata } from "./hooks/useNFTMetadata";
 export { NFTMetadataModal } from "./components/NFTMetadataModal";
 export { NFTIdButton } from "./components/NFTIdButton";
@@ -32,6 +30,7 @@ export type { NFTIdButtonProps } from "./components/NFTIdButton";
 export { BalanceProvider, useBalanceContext } from './contexts/BalanceContext';
 export type { TokenBalance, NativeBalance } from './contexts/BalanceContext';
 export { useTokenBalance, useTokenBalances, useNativeBalance } from './hooks/useTokenBalance';
+export { useSidNameForAddress } from "./hooks/useSidNameForAddress";
 
 export type {
   QueryHookResult,

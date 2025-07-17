@@ -1,11 +1,11 @@
-import { VaultManagerAbi } from "../../generated/abi/VaultManager";
-import { LockDealNFTAbi } from "../../generated/abi/LockDealNFT";
-import { DealProviderAbi } from "../../generated/abi/DealProvider";
-import { LockDealProviderAbi } from "../../generated/abi/LockDealProvider";
-import { TimedDealProviderAbi } from "../../generated/abi/TimedDealProvider";
-import { SimpleBuilderAbi } from "../../generated/abi/SimpleBuilder";
-import { DispenserProviderAbi } from "../../generated/abi/DispenserProvider";
-import { MultiSenderV2Abi } from "../../generated/abi/MultiSenderV2";
+import { VaultManagerAbi } from "../generated/abi/VaultManager";
+import { LockDealNFTAbi } from "../generated/abi/LockDealNFT";
+import { DealProviderAbi } from "../generated/abi/DealProvider";
+import { LockDealProviderAbi } from "../generated/abi/LockDealProvider";
+import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
+import { SimpleBuilderAbi } from "../generated/abi/SimpleBuilder";
+import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
+import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
 
 export const chain1Contracts = {
   VaultManager: { address: "0x9ff1db30c66cd9d3311b4b22da49791610922b13", abi: VaultManagerAbi },

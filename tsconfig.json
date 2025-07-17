@@ -1,7 +1,8 @@
 {
-  "include": ["src", "generated", "node_modules/microbundle/index.d.ts"],
-  "exclude": ["dist", "node_modules", "example"],
+  "include": ["src", "node_modules/microbundle/index.d.ts"],
+  "exclude": ["dist", "node_modules"],
   "compilerOptions": {
+    "rootDir": "./src",
     "module": "ESNext",
     "target": "ESNext",
     "lib": ["dom", "ESNext"],
@@ -16,7 +17,6 @@
     "moduleResolution": "node",
     "jsx": "react",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true

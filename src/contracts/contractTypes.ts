@@ -48,23 +48,6 @@ export type DispenserProviderFunctionName =
   | 'supportsInterface'
   | 'withdraw';
 
-export type ForceWithdrawFunctionName =
-  | 'createPool'
-  | 'dealProvider'
-  | 'finilize'
-  | 'forceWithdraw'
-  | 'lockDealNFT'
-  | 'onERC721Received'
-  | 'owner'
-  | 'renounceOwnership'
-  | 'sourcePoolId'
-  | 'token'
-  | 'transferOwnership'
-  | 'transferTokens'
-  | 'vaultId'
-  | 'vaultManager'
-  | 'withdrawNFT';
-
 export type InvestProviderFunctionName =
   | 'INVEST_TYPEHASH'
   | 'acceptFirewallAdmin'
@@ -266,12 +249,11 @@ export type VaultManagerFunctionName =
   | 'vaultIdToVault'
   | 'withdrawByVaultId';
 
-export type ContractName = 'DealProvider' | 'DispenserProvider' | 'ForceWithdraw' | 'InvestProvider' | 'LockDealNFT' | 'LockDealProvider' | 'MultiSenderV2' | 'SimpleBuilder' | 'TimedDealProvider' | 'VaultManager';
+export type ContractName = 'DealProvider' | 'DispenserProvider' | 'InvestProvider' | 'LockDealNFT' | 'LockDealProvider' | 'MultiSenderV2' | 'SimpleBuilder' | 'TimedDealProvider' | 'VaultManager';
 
 export type ContractFunctionNameMap = {
   DealProvider: DealProviderFunctionName;
   DispenserProvider: DispenserProviderFunctionName;
-  ForceWithdraw: ForceWithdrawFunctionName;
   InvestProvider: InvestProviderFunctionName;
   LockDealNFT: LockDealNFTFunctionName;
   LockDealProvider: LockDealProviderFunctionName;
@@ -285,21 +267,19 @@ export type ContractFunctionName<T extends ContractName = ContractName> =
   T extends keyof ContractFunctionNameMap ? ContractFunctionNameMap[T] : never;
 
 // ABI type mappings for type-safe contract interactions
-import { DealProviderAbi } from "../../generated/abi/DealProvider";
-import { DispenserProviderAbi } from "../../generated/abi/DispenserProvider";
-import { ForceWithdrawAbi } from "../../generated/abi/ForceWithdraw";
-import { InvestProviderAbi } from "../../generated/abi/InvestProvider";
-import { LockDealNFTAbi } from "../../generated/abi/LockDealNFT";
-import { LockDealProviderAbi } from "../../generated/abi/LockDealProvider";
-import { MultiSenderV2Abi } from "../../generated/abi/MultiSenderV2";
-import { SimpleBuilderAbi } from "../../generated/abi/SimpleBuilder";
-import { TimedDealProviderAbi } from "../../generated/abi/TimedDealProvider";
-import { VaultManagerAbi } from "../../generated/abi/VaultManager";
+import { DealProviderAbi } from "../generated/abi/DealProvider";
+import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
+import { InvestProviderAbi } from "../generated/abi/InvestProvider";
+import { LockDealNFTAbi } from "../generated/abi/LockDealNFT";
+import { LockDealProviderAbi } from "../generated/abi/LockDealProvider";
+import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
+import { SimpleBuilderAbi } from "../generated/abi/SimpleBuilder";
+import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
+import { VaultManagerAbi } from "../generated/abi/VaultManager";
 
 export type ContractAbiMap = {
   DealProvider: typeof DealProviderAbi;
   DispenserProvider: typeof DispenserProviderAbi;
-  ForceWithdraw: typeof ForceWithdrawAbi;
   InvestProvider: typeof InvestProviderAbi;
   LockDealNFT: typeof LockDealNFTAbi;
   LockDealProvider: typeof LockDealProviderAbi;
