@@ -15,7 +15,8 @@
     "noEmit": false,
     "jsx": "react",
     "declaration": true,
-    "outDir": "./dist"
+    "declarationDir": "./dist/types",
+    "rootDir": "./src"
   },
   "include": ["src"],
   "exclude": ["src/contracts", "dist", "node_modules", "example"]

@@ -4,6 +4,8 @@ export type { ContractsByChain } from "./contracts";
 export { PoolzProvider } from "./PoolzProvider";
 
 export { useWalletConnection } from "./hooks/useWalletConnection";
+export { usePublicClient } from "wagmi";
+export { useAccountInfo } from "./hooks/useAccountInfo";
 export { usePoolzContractInfo } from "./hooks/usePoolzContractInfo";
 export type { UsePoolzContractInfoReturn } from "./hooks/usePoolzContractInfo";
 
@@ -36,3 +38,4 @@ export type {
   WalletConnectionResult,
   WalletOption,
 } from "./types/hookTypes";
+export { getChainNativeSymbol } from './utils/balance-helper';
