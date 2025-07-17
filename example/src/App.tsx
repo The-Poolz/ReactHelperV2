@@ -1,11 +1,21 @@
 import { useMemo, useState } from "react";
 import type { Abi } from "viem";
 import { erc20Abi, formatUnits } from "viem";
-import { useAccount, useConnect, useDisconnect, useReadContract, useReadContracts, useWriteContract } from "wagmi";
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useReadContract,
+  useReadContracts,
+  useWriteContract,
+} from "wagmi";
 import { contractsByChain } from "../../src/contracts";
 import type { config } from "../../src/wagmi";
-import LockDealNFTDemo from "./LockDealNFTDemo";
-import { useNFTMetadata, NFTMetadataModal, NFTIdButton } from "../../src";
+import {
+  useNFTMetadata,
+  NFTMetadataModal,
+  NFTIdButton,
+} from "../../src";
 import BalanceContextExample from "./BalanceContextExample";
 
 type ChainId = (typeof config.chains)[number]["id"];
@@ -16,11 +26,12 @@ function App() {
   const { disconnect } = useDisconnect();
   const { writeContract } = useWriteContract();
   const { selectedNFT, fetchMetadata, clearMetadata } = useNFTMetadata();
-
   const [showVaultId, setShowVaultId] = useState(false);
 
   const contracts =
-    account.chainId !== undefined ? contractsByChain[account.chainId as keyof typeof contractsByChain] : undefined;
+    account.chainId !== undefined
+      ? contractsByChain[account.chainId as keyof typeof contractsByChain]
+      : undefined;
 
   const balance = useReadContract({
     address: contracts?.LockDealNFT.address,
@@ -33,7 +44,10 @@ function App() {
 
   const tokenCalls = useMemo(
     () =>
-      balance.data && typeof balance.data === "bigint" && contracts && account.address
+      balance.data &&
+      typeof balance.data === "bigint" &&
+      contracts &&
+      account.address
         ? Array.from({ length: Number(balance.data) }, (_, i) => ({
             address: contracts.LockDealNFT.address,
             abi: contracts.LockDealNFT.abi as Abi,
@@ -42,7 +56,7 @@ function App() {
             chainId: account.chainId as ChainId | undefined,
           }))
         : [],
-    [balance.data, contracts, account.address, account.chainId],
+    [balance.data, contracts, account.address, account.chainId]
   );
 
   const tokens = useReadContracts({
@@ -66,7 +80,7 @@ function App() {
             return acc;
           }, [])
         : [],
-    [tokens.data, contracts, account.chainId],
+    [tokens.data, contracts, account.chainId]
   );
 
   const fullData = useReadContracts({
@@ -90,7 +104,7 @@ function App() {
             return acc;
           }, [])
         : [],
-    [tokens.data, contracts, account.chainId],
+    [tokens.data, contracts, account.chainId]
   );
 
   const tokenURIs = useReadContracts({
@@ -129,7 +143,7 @@ function App() {
           chainId: account.chainId as ChainId | undefined,
         },
       ]),
-    [tokenAddresses, account.chainId],
+    [tokenAddresses, account.chainId]
   );
 
   const tokenInfo = useReadContracts({
@@ -142,8 +156,11 @@ function App() {
     if (tokenInfo.data) {
       for (let i = 0; i < tokenAddresses.length; i++) {
         const symbol = tokenInfo.data[i * 2]?.result as string | undefined;
-        const decimals = tokenInfo.data[i * 2 + 1]?.result as number | undefined;
-        if (symbol && decimals !== undefined) map[tokenAddresses[i]] = { symbol, decimals };
+        const decimals = tokenInfo.data[i * 2 + 1]?.result as
+          | number
+          | undefined;
+        if (symbol && decimals !== undefined)
+          map[tokenAddresses[i]] = { symbol, decimals };
       }
     }
     return map;
@@ -172,7 +189,11 @@ function App() {
       <div>
         <h2>Connect</h2>
         {connectors.map((connector) => (
-          <button key={connector.uid} onClick={() => connect({ connector })} type="button">
+          <button
+            key={connector.uid}
+            onClick={() => connect({ connector })}
+            type="button"
+          >
             {connector.name}
           </button>
         ))}
@@ -190,7 +211,9 @@ function App() {
           <table>
             <thead>
               <tr>
-                <th style={{ display: showVaultId ? undefined : "none" }}>Vault ID</th>
+                <th style={{ display: showVaultId ? undefined : "none" }}>
+                  Vault ID
+                </th>
                 <th>NFT ID</th>
                 <th>Provider</th>
                 <th>Pool ID</th>
@@ -203,7 +226,9 @@ function App() {
             <tbody>
               {tokens.data?.map((token, i) => {
                 const id = token.result;
-                const tokenURI = tokenURIs.data?.[i]?.result as string | undefined;
+                const tokenURI = tokenURIs.data?.[i]?.result as
+                  | string
+                  | undefined;
                 const infos = fullData.data?.[i]?.result as
                   | {
                       provider: string;
@@ -220,7 +245,13 @@ function App() {
                       const meta = tokenInfoMap[info.token];
                       return (
                         <tr key={`${id.toString()}-${j}`}>
-                          <td style={{ display: showVaultId ? undefined : "none" }}>{info.vaultId.toString()}</td>
+                          <td
+                            style={{
+                              display: showVaultId ? undefined : "none",
+                            }}
+                          >
+                            {info.vaultId.toString()}
+                          </td>
                           <td>
                             <NFTIdButton
                               tokenId={id as bigint}
@@ -238,10 +269,17 @@ function App() {
                           <td>{meta ? meta.symbol : info.token}</td>
                           <td>
                             {meta
-                              ? `${formatUnits(info.params[0], meta.decimals)} ${meta.symbol}`
+                              ? `${formatUnits(
+                                  info.params[0],
+                                  meta.decimals
+                                )} ${meta.symbol}`
                               : info.params[0].toString()}
                           </td>
-                          <td>{new Date(Number(info.params[1]) * 1000).toLocaleString()}</td>
+                          <td>
+                            {new Date(
+                              Number(info.params[1]) * 1000
+                            ).toLocaleString()}
+                          </td>
                           <td>
                             <button
                               type="button"
@@ -250,7 +288,11 @@ function App() {
                                   address: contracts.LockDealNFT.address,
                                   abi: contracts.LockDealNFT.abi as Abi,
                                   functionName: "safeTransferFrom",
-                                  args: [account.address as `0x${string}`, contracts.LockDealNFT.address, id],
+                                  args: [
+                                    account.address as `0x${string}`,
+                                    contracts.LockDealNFT.address,
+                                    id,
+                                  ],
                                   chainId: account.chainId as ChainId,
                                 })
                               }
@@ -268,7 +310,6 @@ function App() {
         </div>
       )}
 
-      <LockDealNFTDemo />
       <BalanceContextExample />
       {/* NFT Metadata Modal */}
       <NFTMetadataModal nftData={selectedNFT} onClose={clearMetadata} />

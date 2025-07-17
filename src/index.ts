@@ -19,10 +19,8 @@ export { useERC20Allowance } from "./hooks/useERC20Allowance";
 export type { UseERC20AllowanceReturn } from "./hooks/useERC20Allowance";
 export { useERC20Approve } from "./hooks/useERC20Approve";
 export type { UseERC20ApproveReturn } from "./hooks/useERC20Approve";
-export { useCheckGasFee } from "./hooks/useCheckGasFee";
-export type { PoolzGasCheckParams, GasFeeResult, UseCheckGasFeeReturn } from "./hooks/useCheckGasFee";
-export { useTransaction } from "./hooks/useTransaction";
-export type { TransactionCallbacks, PoolzTransactionParams, UseTransactionReturn } from "./hooks/useTransaction";
+export { useEstimateGasFee } from "./hooks/useEstimateGasFee";
+export type { GasFeeResult, UseEstimateGasFeeReturn } from "./hooks/useEstimateGasFee";
 export { useNFTMetadata } from "./hooks/useNFTMetadata";
 export { NFTMetadataModal } from "./components/NFTMetadataModal";
 export { NFTIdButton } from "./components/NFTIdButton";
@@ -34,10 +32,7 @@ export type { TokenBalance, NativeBalance } from './contexts/BalanceContext';
 export { useTokenBalance, useTokenBalances, useNativeBalance } from './hooks/useTokenBalance';
 
 export type {
-  MutationHookResult,
   QueryHookResult,
   WalletConnectionResult,
   WalletOption,
-  ContractTransactionResult,
-  TokenBalanceInfo
 } from "./types/hookTypes";
