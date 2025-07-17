@@ -21,6 +21,7 @@ vite.config.js
 vite.config.d.ts
 
 # Generated files
+src/generated
 coverage/
 
 # Environment variables

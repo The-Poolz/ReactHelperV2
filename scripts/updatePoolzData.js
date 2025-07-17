@@ -54,7 +54,7 @@ function toTs(value) {
 async function main() {
   const data = await fetchPoolzData();
 
-  const abiDir = path.resolve(__dirname, "../generated/abi");
+  const abiDir = path.resolve(__dirname, "../src/generated/abi");
   await mkdir(abiDir, { recursive: true });
 
   const latestTypes = Array.isArray(data.latestType) ? data.latestType : data.latestType ? [data.latestType] : [];
@@ -94,7 +94,7 @@ async function main() {
     contractsByChain[id] = map;
   }
 
-  const outDir = path.resolve(__dirname, "../generated");
+  const outDir = path.resolve(__dirname, "../src/generated");
   await mkdir(outDir, { recursive: true });
   await writeFile(path.join(outDir, "poolzChains.ts"), `export const poolzChains = ${toTs(chains)} as const;\n`);
 
@@ -130,7 +130,7 @@ async function main() {
     const entries = [];
     for (const [name, address] of Object.entries(contracts)) {
       const varName = `${name}Abi`;
-      imports.push(`import { ${varName} } from "../../generated/abi/${name}";`);
+      imports.push(`import { ${varName} } from "../generated/abi/${name}";`);
       entries.push(`  ${toVar(name)}: { address: "${address}", abi: ${varName} }`);
     }
     const content = `${imports.join("\n")}\n\nexport const chain${chainId}Contracts = {\n${entries.join(",\n")}\n} as const;\n`;

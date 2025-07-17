@@ -31,11 +31,9 @@
     "dev": "vite example --config example/vite.config.ts",
     "clean": "rm -rf dist",
     "prebuild": "pnpm clean",
-    "build": "pnpm prebuild && microbundle --jsx React.createElement --format modern,cjs",
-    "prepublishOnly": "pnpm build",
+    "build": "pnpm clean && microbundle --jsx React.createElement --format modern,cjs",
     "test": "node --test",
-    "contracts:update-types": "node scripts/generateContractTypes.js",
-    "contracts:update": "node scripts/updatePoolzData.js"
+    "compile": "node scripts/updatePoolzData.js && node scripts/generateContractTypes.js"
   },
   "dependencies": {
     "@tanstack/react-query": "5.45.1",

@@ -1,11 +1,11 @@
-import { LockDealNFTAbi } from "../../generated/abi/LockDealNFT";
-import { VaultManagerAbi } from "../../generated/abi/VaultManager";
-import { DealProviderAbi } from "../../generated/abi/DealProvider";
-import { LockDealProviderAbi } from "../../generated/abi/LockDealProvider";
-import { TimedDealProviderAbi } from "../../generated/abi/TimedDealProvider";
-import { SimpleBuilderAbi } from "../../generated/abi/SimpleBuilder";
-import { DispenserProviderAbi } from "../../generated/abi/DispenserProvider";
-import { MultiSenderV2Abi } from "../../generated/abi/MultiSenderV2";
+import { LockDealNFTAbi } from "../generated/abi/LockDealNFT";
+import { VaultManagerAbi } from "../generated/abi/VaultManager";
+import { DealProviderAbi } from "../generated/abi/DealProvider";
+import { LockDealProviderAbi } from "../generated/abi/LockDealProvider";
+import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
+import { SimpleBuilderAbi } from "../generated/abi/SimpleBuilder";
+import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
+import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
 
 export const chain137Contracts = {
   LockDealNFT: { address: "0x9C36786836A594e3b355bA572A5Cd6841F69d86e", abi: LockDealNFTAbi },

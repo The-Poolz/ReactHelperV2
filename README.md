@@ -30,8 +30,8 @@ This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](
 
 Run `pnpm update-poolz` to fetch contract information from
 `https://data.poolz.finance/graphql`. The script writes the list of supported
-chain IDs to `generated/poolzChains.ts`, stores all contract ABIs under
-`generated/abi/` and creates contract configuration files in `src/contracts/`.
+chain IDs to `src/generated/poolzChains.ts`, stores all contract ABIs under
+`src/generated/abi/` and creates contract configuration files in `src/contracts/`.
 It also updates `src/wagmi.ts` to include the retrieved chains.
 
 ## Configuration

@@ -77,3 +77,10 @@ declare module "wagmi" {
     config: typeof config;
   }
 }
+
+declare global {
+  interface Window {
+    BinanceChain?: any;
+    trustwallet?: any;
+  }
+}

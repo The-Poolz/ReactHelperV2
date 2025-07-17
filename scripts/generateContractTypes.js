@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const abiDir = path.resolve(__dirname, '../generated/abi');
+const abiDir = path.resolve(__dirname, '../src/generated/abi');
 const outFile = path.resolve(__dirname, '../src/contracts/contractTypes.ts');
 
 const files = fs.readdirSync(abiDir).filter(f => f.endsWith('.ts'));
@@ -29,7 +29,7 @@ for (const file of files) {
   const uniqueFunctions = Array.from(new Set(functions));
   contractTypes.push(`export type ${contractName}FunctionName =${uniqueFunctions.map(fn => `\n  | '${fn}'`).join('')};`);
 
-  abiImports.push(`import { ${contractName}Abi } from "../../generated/abi/${contractName}";`);
+  abiImports.push(`import { ${contractName}Abi } from "../generated/abi/${contractName}";`);
   abiMapEntries.push(`  ${contractName}: typeof ${contractName}Abi;`);
 }
 
