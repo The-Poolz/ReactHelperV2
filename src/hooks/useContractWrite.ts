@@ -11,7 +11,7 @@ export interface UseContractWriteReturn {
   >(
     params: WriteContractParameters<abi, functionName, args>,
     options?: MutateOptions<any, Error, WriteContractParameters<abi, functionName, args>, unknown>
-  ) => Promise<any>;
+  ) => Promise<TransactionReceipt>;
   mutate: <
     const abi extends Abi | readonly unknown[],
     functionName extends ContractFunctionName<abi, "payable" | "nonpayable">,

@@ -1,56 +1,47 @@
-import { useQuery } from "@tanstack/react-query";
 import { erc20Abi } from "viem";
-import { useConfig } from "wagmi";
 import { multicall } from "wagmi/actions";
-import type { QueryHookResult } from "../types/hookTypes";
+import { config } from "../wagmi";
 
-interface ERC20InfoParams {
+export interface ERC20InfoParams {
   chainId: number;
-  tokenAddress: `0x${string}`;
-  enabled?: boolean;
+  tokenAddress: `0x${string}` | string;
 }
 
-export interface ERC20Info {
-  address: `0x${string}`;
+export interface IERC20Info {
+  address: `0x${string}` | string;
   name: string;
   symbol: string;
   decimals: number;
 }
 
-export type UseERC20InfoReturn = QueryHookResult<ERC20Info, Error>;
-
-export function useERC20Info({
-  chainId,
-  tokenAddress,
-  enabled = true,
-}: ERC20InfoParams): UseERC20InfoReturn {
-  const config = useConfig();
-
-  return useQuery({
-    queryKey: ["erc20Info", chainId, tokenAddress],
-    queryFn: async () => {
-      if (!tokenAddress) {
-        return { address: tokenAddress, name: "", symbol: "", decimals: 0 };
-      }
-
-      const results = await multicall(config, {
-        contracts: [
-          { address: tokenAddress, abi: erc20Abi, functionName: "name" },
-          { address: tokenAddress, abi: erc20Abi, functionName: "symbol" },
-          { address: tokenAddress, abi: erc20Abi, functionName: "decimals" },
-        ],
-        chainId: chainId as any,
-      });
-      const [name, symbol, decimals] = results.map((r: any) =>
-        r.status === "success" ? r.result : ""
-      );
-      return {
-        address: tokenAddress,
-        name,
-        symbol,
-        decimals: Number(decimals),
-      };
-    },
-    enabled: enabled && !!tokenAddress,
+/**
+ * Fetches ERC20 token info (name, symbol, decimals) using multicall.
+ * @param config wagmi config object
+ * @param params { chainId, tokenAddress }
+ * @returns Promise<IERC20Info>
+ */
+export async function getERC20Info(
+  { chainId, tokenAddress }: ERC20InfoParams
+): Promise<IERC20Info> {
+  if (!tokenAddress) {
+    return { address: tokenAddress, name: "", symbol: "", decimals: 0 };
+  }
+  const _tokenAddress = tokenAddress as `0x${string}`;
+  const results = await multicall(config, {
+    contracts: [
+      { address: _tokenAddress, abi: erc20Abi, functionName: "name" },
+      { address: _tokenAddress, abi: erc20Abi, functionName: "symbol" },
+      { address: _tokenAddress, abi: erc20Abi, functionName: "decimals" },
+    ],
+    chainId: chainId,
   });
+  const [name, symbol, decimals] = results.map((r: any) =>
+    r.status === "success" ? r.result : ""
+  );
+  return {
+    address: tokenAddress,
+    name,
+    symbol,
+    decimals: Number(decimals),
+  };
 }
