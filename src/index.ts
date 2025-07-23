@@ -4,12 +4,16 @@ export type { ContractsByChain } from "./contracts";
 export { PoolzProvider } from "./PoolzProvider";
 
 export { useWalletConnection } from "./hooks/useWalletConnection";
-export { usePublicClient, useWatchAsset, useReadContract, useSwitchChain} from "wagmi";
+export * from "wagmi";
 export { useAccountInfo } from "./hooks/useAccountInfo";
 export { usePoolzContractInfo } from "./hooks/usePoolzContractInfo";
 export type { UsePoolzContractInfoReturn } from "./hooks/usePoolzContractInfo";
 export { useContractWrite } from "./hooks/useContractWrite";
 export type { UseContractWriteReturn } from "./hooks/useContractWrite";
+
+export { useTokenApproval } from "./hooks/useTokenApproval";
+export type { UseTokenApprovalReturn, UseTokenApprovalOptions } from "./hooks/useTokenApproval";
+
 export { useERC20Balance, getERC20Balance } from "./hooks/useERC20Balance";
 export type { UseERC20BalanceReturn } from "./hooks/useERC20Balance";
 export { getERC20Info } from "./hooks/useERC20Info";

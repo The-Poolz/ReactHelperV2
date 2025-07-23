@@ -21,5 +21,6 @@ export function usePoolzContractInfo<T extends ContractName>({
   const contracts = contractsByChain[chainId];
   if (!contracts) return { smcAddress: zeroAddress, abi: undefined };
   const contract = contracts[contractName as keyof typeof contracts];
+  if (!contract) return { smcAddress: zeroAddress, abi: undefined };
   return { smcAddress: contract.address, abi: contract.abi };
 }

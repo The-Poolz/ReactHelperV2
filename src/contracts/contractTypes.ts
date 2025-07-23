@@ -22,6 +22,40 @@ export type DealProviderFunctionName =
   | 'supportsInterface'
   | 'withdraw';
 
+export type DelayVaultFunctionName =
+  | 'Allowance'
+  | 'DelayLimit'
+  | 'GetDelayLimits'
+  | 'GetMinDelays'
+  | 'GetMyTokens'
+  | 'GetMyTokensByRange'
+  | 'GetMyTokensLengthByUser'
+  | 'GetTokenFilterStatus'
+  | 'GetUsersDataByRange'
+  | 'GetUsersLengthByToken'
+  | 'GovernorContract'
+  | 'LockedDealAddress'
+  | 'MaxDelay'
+  | 'MyTokens'
+  | 'Pause'
+  | 'TokenToUsers'
+  | 'Unpause'
+  | 'VaultMap'
+  | 'getChecksum'
+  | 'owner'
+  | 'paused'
+  | 'redeemTokensFromVault'
+  | 'renounceOwnership'
+  | 'setGovernorContract'
+  | 'setLockedDealAddress'
+  | 'setMaxDelay'
+  | 'setMinDelays'
+  | 'setTokenStatusFilter'
+  | 'transferOwnership'
+  | 'CreateVault'
+  | 'Withdraw'
+  | 'approveTokenRedemption';
+
 export type DispenserProviderFunctionName =
   | 'BUILDER_TYPEHASH'
   | 'MESSAGE_TYPEHASH'
@@ -249,10 +283,11 @@ export type VaultManagerFunctionName =
   | 'vaultIdToVault'
   | 'withdrawByVaultId';
 
-export type ContractName = 'DealProvider' | 'DispenserProvider' | 'InvestProvider' | 'LockDealNFT' | 'LockDealProvider' | 'MultiSenderV2' | 'SimpleBuilder' | 'TimedDealProvider' | 'VaultManager';
+export type ContractName = 'DealProvider' | 'DelayVault' | 'DispenserProvider' | 'InvestProvider' | 'LockDealNFT' | 'LockDealProvider' | 'MultiSenderV2' | 'SimpleBuilder' | 'TimedDealProvider' | 'VaultManager';
 
 export type ContractFunctionNameMap = {
   DealProvider: DealProviderFunctionName;
+  DelayVault: DelayVaultFunctionName;
   DispenserProvider: DispenserProviderFunctionName;
   InvestProvider: InvestProviderFunctionName;
   LockDealNFT: LockDealNFTFunctionName;
@@ -268,6 +303,7 @@ export type ContractFunctionName<T extends ContractName = ContractName> =
 
 // ABI type mappings for type-safe contract interactions
 import { DealProviderAbi } from "../generated/abi/DealProvider";
+import { DelayVaultAbi } from "../generated/abi/DelayVault";
 import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
 import { InvestProviderAbi } from "../generated/abi/InvestProvider";
 import { LockDealNFTAbi } from "../generated/abi/LockDealNFT";
@@ -279,6 +315,7 @@ import { VaultManagerAbi } from "../generated/abi/VaultManager";
 
 export type ContractAbiMap = {
   DealProvider: typeof DealProviderAbi;
+  DelayVault: typeof DelayVaultAbi;
   DispenserProvider: typeof DispenserProviderAbi;
   InvestProvider: typeof InvestProviderAbi;
   LockDealNFT: typeof LockDealNFTAbi;
