@@ -1,11 +1,11 @@
-import { Abi } from "viem";
+import { Abi, zeroAddress } from "viem";
 import { contractsByChain } from "../contracts";
 import { ContractAbiMap, ContractName } from "../contracts/contractTypes";
 
 export interface UsePoolzContractInfoReturn<
   T extends ContractName = ContractName
 > {
-  smcAddress: `0x${string}` | undefined;
+  smcAddress: `0x${string}`;
   abi: ContractAbiMap[T] | Abi | undefined;
 }
 
@@ -19,7 +19,7 @@ export function usePoolzContractInfo<T extends ContractName>({
   contractName,
 }: UsePoolzContractInfoParams<T>): UsePoolzContractInfoReturn<T> {
   const contracts = contractsByChain[chainId];
-  if (!contracts) return { smcAddress: undefined, abi: undefined };
+  if (!contracts) return { smcAddress: zeroAddress, abi: undefined };
   const contract = contracts[contractName as keyof typeof contracts];
-  return { smcAddress: contract?.address, abi: contract?.abi };
+  return { smcAddress: contract.address, abi: contract.abi };
 }
