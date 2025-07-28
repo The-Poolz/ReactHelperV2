@@ -20,7 +20,7 @@ export function usePoolzContractInfo<T extends ContractName>({
 }: UsePoolzContractInfoParams<T>): UsePoolzContractInfoReturn<T> {
   const contracts = contractsByChain[chainId];
   if (!contracts) return { smcAddress: zeroAddress, abi: undefined };
-  const contract = contracts[contractName as keyof typeof contracts];
+  const contract = contracts[contractName as keyof typeof contracts] as { address: `0x${string}`; abi: ContractAbiMap[T] | Abi };
   if (!contract) return { smcAddress: zeroAddress, abi: undefined };
   return { smcAddress: contract.address, abi: contract.abi };
 }
