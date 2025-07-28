@@ -55,6 +55,7 @@ ${contractFunctionNameMapEntries}
 export type ContractFunctionName<T extends ContractName = ContractName> =
   T extends keyof ContractFunctionNameMap ? ContractFunctionNameMap[T] : never;
 
+import { Abi } from "viem";
 // ABI type mappings for type-safe contract interactions
 ${abiImports.join('\n')}
 
@@ -62,7 +63,7 @@ export type ContractAbiMap = {
 ${abiMapEntries.join('\n')}
 };
 
-export type ContractAbi<T extends ContractName> = T extends keyof ContractAbiMap ? ContractAbiMap[T] : never;
+export type ContractAbi<T extends ContractName> = T extends keyof ContractAbiMap ? Abi | ContractAbiMap[T] : never;
 `;
 
 fs.writeFileSync(outFile, content);

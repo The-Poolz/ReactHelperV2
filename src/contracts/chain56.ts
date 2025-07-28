@@ -7,6 +7,7 @@ import { LockDealProviderAbi } from "../generated/abi/LockDealProvider";
 import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
 import { InvestProviderAbi } from "../generated/abi/InvestProvider";
 import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
+import { LockedDealV2Abi } from "../generated/abi/LockedDealV2";
 
 export const chain56Contracts = {
   LockDealNFT: { address: "0x3d2C83bbBbfB54087d46B80585253077509c21AE", abi: LockDealNFTAbi },
@@ -17,5 +18,6 @@ export const chain56Contracts = {
   LockDealProvider: { address: "0x2942ee88A75B0c87fC9eEB8DDc9066De84937786", abi: LockDealProviderAbi },
   TimedDealProvider: { address: "0x43b4CD03ED2504599Ed3Fb56780149A7E7960282", abi: TimedDealProviderAbi },
   InvestProvider: { address: "0x80E7DCA0B053D044B0ff477C48e891B0aF01d545", abi: InvestProviderAbi },
-  MultiSenderV2: { address: "0x114DAdDE8112A5c43aaBc6373473c282e14948Fa", abi: MultiSenderV2Abi }
+  MultiSenderV2: { address: "0x114DAdDE8112A5c43aaBc6373473c282e14948Fa", abi: MultiSenderV2Abi },
+  LockedDealV2: { address: "0x436CE2ce8d8d2Ccc062f6e92faF410DB4d397905", abi: LockedDealV2Abi }
 } as const;

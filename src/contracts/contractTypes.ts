@@ -56,6 +56,38 @@ export type DelayVaultFunctionName =
   | 'Withdraw'
   | 'approveTokenRedemption';
 
+export type DelayVaultProviderFunctionName =
+  | 'balanceOf'
+  | 'beforeTransfer'
+  | 'createNewDelayVault'
+  | 'createNewDelayVaultWithSignature'
+  | 'currentParamsTargetLength'
+  | 'firewallAdmin'
+  | 'getParams'
+  | 'getSubProvidersPoolIds'
+  | 'getTotalAmount'
+  | 'getTypeToProviderData'
+  | 'getWithdrawPoolParams'
+  | 'getWithdrawableAmount'
+  | 'lockDealNFT'
+  | 'migrator'
+  | 'name'
+  | 'poolIdToAmount'
+  | 'registerPool'
+  | 'setFirewall'
+  | 'setFirewallAdmin'
+  | 'split'
+  | 'supportsInterface'
+  | 'theTypeOf'
+  | 'token'
+  | 'tokenOfOwnerByIndex'
+  | 'typeToProviderData'
+  | 'typesCount'
+  | 'upgradeType'
+  | 'userToAmount'
+  | 'userToType'
+  | 'withdraw';
+
 export type DispenserProviderFunctionName =
   | 'BUILDER_TYPEHASH'
   | 'MESSAGE_TYPEHASH'
@@ -180,6 +212,55 @@ export type LockDealProviderFunctionName =
   | 'supportsInterface'
   | 'withdraw';
 
+export type LockedDealV2FunctionName =
+  | 'AllPoolz'
+  | 'Allowance'
+  | 'ApproveAllowance'
+  | 'CreateMassPools'
+  | 'CreateNewPool'
+  | 'CreatePoolsWrtTime'
+  | 'Fee'
+  | 'FeeToken'
+  | 'GetAllMyPoolsData'
+  | 'GetAllMyPoolsId'
+  | 'GetMyPoolDataByToken'
+  | 'GetMyPoolsData'
+  | 'GetMyPoolsId'
+  | 'GetMyPoolsIdByToken'
+  | 'GetPoolsData'
+  | 'GovernerContract'
+  | 'Index'
+  | 'MyPoolz'
+  | 'PayFee'
+  | 'Reserve'
+  | 'SetFeeAmount'
+  | 'SetFeeToken'
+  | 'SplitPoolAmount'
+  | 'SplitPoolAmountFrom'
+  | 'TokenFeeWhiteListId'
+  | 'TokenFilterWhiteListId'
+  | 'TransferPoolOwnership'
+  | 'UserWhiteListId'
+  | 'WhiteList_Address'
+  | 'WithdrawFee'
+  | 'isTokenFilterOn'
+  | 'isTokenWhiteListed'
+  | 'isTokenWithFee'
+  | 'isUserPaysFee'
+  | 'maxTransactionLimit'
+  | 'owner'
+  | 'renounceOwnership'
+  | 'setGovernerContract'
+  | 'setMaxTransactionLimit'
+  | 'setTokenFeeWhiteListId'
+  | 'setTokenFilterWhiteListId'
+  | 'setUserWhiteListId'
+  | 'setWhiteListAddress'
+  | 'swapTokenFilter'
+  | 'transferOwnership'
+  | 'getWithdrawableAmount'
+  | 'WithdrawToken';
+
 export type MultiSenderV2FunctionName =
   | 'FeeAmount'
   | 'FeeReserve'
@@ -283,15 +364,17 @@ export type VaultManagerFunctionName =
   | 'vaultIdToVault'
   | 'withdrawByVaultId';
 
-export type ContractName = 'DealProvider' | 'DelayVault' | 'DispenserProvider' | 'InvestProvider' | 'LockDealNFT' | 'LockDealProvider' | 'MultiSenderV2' | 'SimpleBuilder' | 'TimedDealProvider' | 'VaultManager';
+export type ContractName = 'DealProvider' | 'DelayVault' | 'DelayVaultProvider' | 'DispenserProvider' | 'InvestProvider' | 'LockDealNFT' | 'LockDealProvider' | 'LockedDealV2' | 'MultiSenderV2' | 'SimpleBuilder' | 'TimedDealProvider' | 'VaultManager';
 
 export type ContractFunctionNameMap = {
   DealProvider: DealProviderFunctionName;
   DelayVault: DelayVaultFunctionName;
+  DelayVaultProvider: DelayVaultProviderFunctionName;
   DispenserProvider: DispenserProviderFunctionName;
   InvestProvider: InvestProviderFunctionName;
   LockDealNFT: LockDealNFTFunctionName;
   LockDealProvider: LockDealProviderFunctionName;
+  LockedDealV2: LockedDealV2FunctionName;
   MultiSenderV2: MultiSenderV2FunctionName;
   SimpleBuilder: SimpleBuilderFunctionName;
   TimedDealProvider: TimedDealProviderFunctionName;
@@ -301,13 +384,16 @@ export type ContractFunctionNameMap = {
 export type ContractFunctionName<T extends ContractName = ContractName> =
   T extends keyof ContractFunctionNameMap ? ContractFunctionNameMap[T] : never;
 
+import { Abi } from "viem";
 // ABI type mappings for type-safe contract interactions
 import { DealProviderAbi } from "../generated/abi/DealProvider";
 import { DelayVaultAbi } from "../generated/abi/DelayVault";
+import { DelayVaultProviderAbi } from "../generated/abi/DelayVaultProvider";
 import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
 import { InvestProviderAbi } from "../generated/abi/InvestProvider";
 import { LockDealNFTAbi } from "../generated/abi/LockDealNFT";
 import { LockDealProviderAbi } from "../generated/abi/LockDealProvider";
+import { LockedDealV2Abi } from "../generated/abi/LockedDealV2";
 import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
 import { SimpleBuilderAbi } from "../generated/abi/SimpleBuilder";
 import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
@@ -316,14 +402,16 @@ import { VaultManagerAbi } from "../generated/abi/VaultManager";
 export type ContractAbiMap = {
   DealProvider: typeof DealProviderAbi;
   DelayVault: typeof DelayVaultAbi;
+  DelayVaultProvider: typeof DelayVaultProviderAbi;
   DispenserProvider: typeof DispenserProviderAbi;
   InvestProvider: typeof InvestProviderAbi;
   LockDealNFT: typeof LockDealNFTAbi;
   LockDealProvider: typeof LockDealProviderAbi;
+  LockedDealV2: typeof LockedDealV2Abi;
   MultiSenderV2: typeof MultiSenderV2Abi;
   SimpleBuilder: typeof SimpleBuilderAbi;
   TimedDealProvider: typeof TimedDealProviderAbi;
   VaultManager: typeof VaultManagerAbi;
 };
 
-export type ContractAbi<T extends ContractName> = T extends keyof ContractAbiMap ? ContractAbiMap[T] : never;
+export type ContractAbi<T extends ContractName> = T extends keyof ContractAbiMap ? Abi | ContractAbiMap[T] : never;

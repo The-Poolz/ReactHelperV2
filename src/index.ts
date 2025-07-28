@@ -40,3 +40,4 @@ export type {
 } from "./types/hookTypes";
 export { getChainNativeSymbol } from './utils/balance-helper';
 export { getAvailableNets } from './utils/helpers';
+export type { ContractAbi } from "./contracts/contractTypes";

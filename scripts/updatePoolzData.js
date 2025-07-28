@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const query = `query Contract($pagination: PaginationArg) {
   latestType {
-    Version {
+    Version(pagination: $pagination) {
       ContractType {
         ContractType
       }
@@ -33,7 +33,7 @@ async function fetchPoolzData() {
   const res = await fetch("https://data.poolz.finance/graphql", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, variables: { pagination: { limit: 100 } } }),
+    body: JSON.stringify({ query, variables: { pagination: { limit: 1000 } } }),
   });
   if (!res.ok) {
     throw new Error(`Unexpected response ${res.status} ${res.statusText}`);
