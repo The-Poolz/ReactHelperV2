@@ -34,7 +34,8 @@ for (const file of files) {
 }
 
 const contractNames = files.map(f => f.replace('.ts', ''));
-const contractNameUnion = contractNames.map(name => `'${name}'`).join(' | ');
+const contractNamesConst = `export const contractNames = [${contractNames.map(name => `\'${name}\'`).join(', ')}] as const;`;
+const contractNameUnion = 'typeof contractNames[number]';
 
 // Generate a mapping type: ContractFunctionNameMap
 const contractFunctionNameMapEntries = contractNames.map(
@@ -45,6 +46,8 @@ const content = `// AUTO-GENERATED FILE. DO NOT EDIT.
 // Run scripts/generateContractTypes.js to update.
 
 ${contractTypes.join('\n\n')}
+
+${contractNamesConst}
 
 export type ContractName = ${contractNameUnion};
 
@@ -67,4 +70,4 @@ export type ContractAbi<T extends ContractName> = T extends keyof ContractAbiMap
 `;
 
 fs.writeFileSync(outFile, content);
-console.log('Generated contract types with ABI mappings!');
+console.log('Generated contract types with ABI mappings and contractNames!');

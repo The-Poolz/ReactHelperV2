@@ -364,7 +364,9 @@ export type VaultManagerFunctionName =
   | 'vaultIdToVault'
   | 'withdrawByVaultId';
 
-export type ContractName = 'DealProvider' | 'DelayVault' | 'DelayVaultProvider' | 'DispenserProvider' | 'InvestProvider' | 'LockDealNFT' | 'LockDealProvider' | 'LockedDealV2' | 'MultiSenderV2' | 'SimpleBuilder' | 'TimedDealProvider' | 'VaultManager';
+export const contractNames = ['DealProvider', 'DelayVault', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'MultiSenderV2', 'SimpleBuilder', 'TimedDealProvider', 'VaultManager'] as const;
+
+export type ContractName = typeof contractNames[number];
 
 export type ContractFunctionNameMap = {
   DealProvider: DealProviderFunctionName;
