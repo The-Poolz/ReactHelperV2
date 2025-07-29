@@ -3,7 +3,6 @@ import { usePoolzContractInfo } from "./usePoolzContractInfo";
 import {
   ContractName,
   ContractFunctionName,
-  ContractAbiMap,
   contractNames,
 } from "../contracts/contractTypes";
 import { WriteContractParameters, ReadContractParameters } from "wagmi/actions";
@@ -52,7 +51,7 @@ export function usePoolzContract() {
       }
       return publicClient.readContract({
         address: smcAddress,
-        abi: abi as ContractAbiMap[T],
+        abi,
         ...params,
       } as any);
     };
@@ -63,7 +62,7 @@ export function usePoolzContract() {
       }
       const hash = await writeContractAsync({
         address: smcAddress,
-        abi: abi as ContractAbiMap[T],
+        abi,
         ...params,
       } as any);
       const receipt = await publicClient.waitForTransactionReceipt({ hash });
@@ -76,7 +75,7 @@ export function usePoolzContract() {
       }
       const contracts = params.calls.map((call) => ({
         address: smcAddress,
-        abi: abi as ContractAbiMap[T],
+        abi,
         functionName: call.functionName,
         args: call.args || [],
       })) as any;
