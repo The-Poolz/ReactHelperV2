@@ -4,31 +4,36 @@ import {
   ContractName,
   ContractFunctionName,
   contractNames,
+  ContractAbi,
 } from "../contracts/contractTypes";
 import { WriteContractParameters, ReadContractParameters } from "wagmi/actions";
-import { TransactionReceipt } from "viem";
-
-interface ReadContractParams<T extends ContractName>
-  extends Omit<ReadContractParameters, "address" | "abi" | "functionName"> {
-  functionName: ContractFunctionName<T>;
-}
-
-interface WriteContractParams<T extends ContractName>
-  extends Omit<WriteContractParameters, "address" | "abi" | "functionName"> {
-  functionName: ContractFunctionName<T>;
-}
+import { ContractFunctionArgs, TransactionReceipt } from "viem";
 
 interface MulticallReadParams<T extends ContractName> {
   calls: {
     functionName: ContractFunctionName<T>;
-    args: any[];
+    args?: ContractFunctionArgs<ContractAbi<T>, 'nonpayable' | 'payable'>;
   }[];
 }
 
+type TypedWriteContract<T extends ContractName> = <F extends ContractFunctionName<T>>(
+  params: {
+    functionName: F;
+    args?: ContractFunctionArgs<ContractAbi<T>, 'nonpayable' | 'payable'>;
+  } & Omit<WriteContractParameters, "address" | "abi" | "functionName" | "args">
+) => Promise<TransactionReceipt>;
+
+type TypedReadContract<T extends ContractName> = <F extends ContractFunctionName<T>>(
+  params: {
+    functionName: F;
+    args?: readonly unknown[];
+  } & Omit<ReadContractParameters, "address" | "abi" | "functionName" | "args">
+) => Promise<any>;
+
 type PoolzContractMethods<T extends ContractName> = {
   smcAddress: `0x${string}`;
-  readContract: (params: ReadContractParams<T>) => Promise<any>;
-  writeContract: (params: WriteContractParams<T>) => Promise<TransactionReceipt>;
+  readContract: TypedReadContract<T>;
+  writeContract: TypedWriteContract<T>;
   multicall: (params: MulticallReadParams<T>) => Promise<any>;
 };
 
@@ -45,7 +50,7 @@ export function usePoolzContract() {
     const { smcAddress, abi } = getContractInfo({ chainId, contractName });
     const { writeContractAsync } = useWriteContract();
 
-    const readContract = async (params: ReadContractParams<T>) => {
+    const readContract: TypedReadContract<T> = async (params) => {
       if (!smcAddress || !abi || !account) {
         throw new Error("Wallet or contract info missing");
       }
@@ -56,7 +61,7 @@ export function usePoolzContract() {
       } as any);
     };
 
-    const writeContract = async (params: WriteContractParams<T>): Promise<TransactionReceipt> => {
+    const writeContract: TypedWriteContract<T> = async (params) => {
       if (!smcAddress || !abi || !account) {
         throw new Error("Wallet or contract info missing");
       }
