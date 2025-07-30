@@ -1,393 +1,387 @@
 // AUTO-GENERATED FILE. DO NOT EDIT.
 // Run scripts/generateContractTypes.js to update.
 
-export type DealProviderFunctionName =
-  | 'acceptFirewallAdmin'
-  | 'createNewPool'
-  | 'currentParamsTargetLength'
-  | 'firewallAdmin'
-  | 'getParams'
-  | 'getSubProvidersPoolIds'
-  | 'getWithdrawableAmount'
-  | 'lockDealNFT'
-  | 'name'
-  | 'poolIdToAmount'
-  | 'registerPool'
-  | 'safeFunctionCall'
-  | 'setApprovedVennPolicy'
-  | 'setApprovedVennPolicyFee'
-  | 'setFirewall'
-  | 'setFirewallAdmin'
-  | 'split'
-  | 'supportsInterface'
-  | 'withdraw';
-
-export type DelayVaultFunctionName =
-  | 'Allowance'
-  | 'DelayLimit'
-  | 'GetDelayLimits'
-  | 'GetMinDelays'
-  | 'GetMyTokens'
-  | 'GetMyTokensByRange'
-  | 'GetMyTokensLengthByUser'
-  | 'GetTokenFilterStatus'
-  | 'GetUsersDataByRange'
-  | 'GetUsersLengthByToken'
-  | 'GovernorContract'
-  | 'LockedDealAddress'
-  | 'MaxDelay'
-  | 'MyTokens'
-  | 'Pause'
-  | 'TokenToUsers'
-  | 'Unpause'
-  | 'VaultMap'
-  | 'getChecksum'
-  | 'owner'
-  | 'paused'
-  | 'redeemTokensFromVault'
-  | 'renounceOwnership'
-  | 'setGovernorContract'
-  | 'setLockedDealAddress'
-  | 'setMaxDelay'
-  | 'setMinDelays'
-  | 'setTokenStatusFilter'
-  | 'transferOwnership'
-  | 'CreateVault'
-  | 'Withdraw'
-  | 'approveTokenRedemption';
-
-export type DelayVaultProviderFunctionName =
-  | 'balanceOf'
-  | 'beforeTransfer'
-  | 'createNewDelayVault'
-  | 'createNewDelayVaultWithSignature'
-  | 'currentParamsTargetLength'
-  | 'firewallAdmin'
-  | 'getParams'
-  | 'getSubProvidersPoolIds'
-  | 'getTotalAmount'
-  | 'getTypeToProviderData'
-  | 'getWithdrawPoolParams'
-  | 'getWithdrawableAmount'
-  | 'lockDealNFT'
-  | 'migrator'
-  | 'name'
-  | 'poolIdToAmount'
-  | 'registerPool'
-  | 'setFirewall'
-  | 'setFirewallAdmin'
-  | 'split'
-  | 'supportsInterface'
-  | 'theTypeOf'
-  | 'token'
-  | 'tokenOfOwnerByIndex'
-  | 'typeToProviderData'
-  | 'typesCount'
-  | 'upgradeType'
-  | 'userToAmount'
-  | 'userToType'
-  | 'withdraw';
-
-export type DispenserProviderFunctionName =
-  | 'BUILDER_TYPEHASH'
-  | 'MESSAGE_TYPEHASH'
-  | 'acceptFirewallAdmin'
-  | 'createNewPool'
-  | 'currentParamsTargetLength'
-  | 'dispenseLock'
-  | 'eip712Domain'
-  | 'firewallAdmin'
-  | 'getParams'
-  | 'getSubProvidersPoolIds'
-  | 'getWithdrawableAmount'
-  | 'isTaken'
-  | 'lockDealNFT'
-  | 'name'
-  | 'poolIdToAmount'
-  | 'registerPool'
-  | 'safeFunctionCall'
-  | 'setApprovedVennPolicy'
-  | 'setApprovedVennPolicyFee'
-  | 'setFirewall'
-  | 'setFirewallAdmin'
-  | 'split'
-  | 'supportsInterface'
-  | 'withdraw';
-
-export type InvestProviderFunctionName =
-  | 'INVEST_TYPEHASH'
-  | 'acceptFirewallAdmin'
-  | 'createNewPool'
-  | 'currentParamsTargetLength'
-  | 'dispenserProvider'
-  | 'eip712Domain'
-  | 'firewallAdmin'
-  | 'getNonce'
-  | 'getParams'
-  | 'getSubProvidersPoolIds'
-  | 'getUserInvests'
-  | 'getWithdrawableAmount'
-  | 'invest'
-  | 'lockDealNFT'
-  | 'name'
-  | 'poolIdToInvests'
-  | 'poolIdToPool'
-  | 'registerPool'
-  | 'safeFunctionCall'
-  | 'setApprovedVennPolicy'
-  | 'setApprovedVennPolicyFee'
-  | 'setFirewall'
-  | 'setFirewallAdmin'
-  | 'split'
-  | 'supportsInterface'
-  | 'vaultManager'
-  | 'withdraw';
-
-export type LockDealNFTFunctionName =
-  | 'acceptFirewallAdmin'
-  | 'approve'
-  | 'approvePoolTransfers'
-  | 'approvedContracts'
-  | 'approvedPoolUserTransfers'
-  | 'balanceOf'
-  | 'baseURI'
-  | 'cloneVaultId'
-  | 'firewallAdmin'
-  | 'getApproved'
-  | 'getData'
-  | 'getFullData'
-  | 'getUserDataByTokens'
-  | 'getWithdrawableAmount'
-  | 'isApprovedForAll'
-  | 'mintAndTransfer'
-  | 'mintForProvider'
-  | 'name'
-  | 'onERC721Received'
-  | 'owner'
-  | 'ownerOf'
-  | 'poolIdToProvider'
-  | 'poolIdToVaultId'
-  | 'renounceOwnership'
-  | 'royaltyInfo'
-  | 'safeFunctionCall'
-  | 'safeMintAndTransfer'
-  | 'safeTransferFrom'
-  | 'setApprovalForAll'
-  | 'setApprovedContract'
-  | 'setApprovedTarget'
-  | 'setBaseURI'
-  | 'setFirewall'
-  | 'setFirewallAdmin'
-  | 'supportsInterface'
-  | 'symbol'
-  | 'tokenByIndex'
-  | 'tokenOf'
-  | 'tokenOfOwnerByIndex'
-  | 'tokenURI'
-  | 'totalSupply'
-  | 'transferFrom'
-  | 'transferOwnership'
-  | 'updateAllMetadata'
-  | 'vaultManager';
-
-export type LockDealProviderFunctionName =
-  | 'acceptFirewallAdmin'
-  | 'createNewPool'
-  | 'currentParamsTargetLength'
-  | 'firewallAdmin'
-  | 'getParams'
-  | 'getSubProvidersPoolIds'
-  | 'getWithdrawableAmount'
-  | 'lockDealNFT'
-  | 'name'
-  | 'poolIdToTime'
-  | 'provider'
-  | 'registerPool'
-  | 'safeFunctionCall'
-  | 'setApprovedVennPolicy'
-  | 'setApprovedVennPolicyFee'
-  | 'setFirewall'
-  | 'setFirewallAdmin'
-  | 'split'
-  | 'supportsInterface'
-  | 'withdraw';
-
-export type LockedDealV2FunctionName =
-  | 'AllPoolz'
-  | 'Allowance'
-  | 'ApproveAllowance'
-  | 'CreateMassPools'
-  | 'CreateNewPool'
-  | 'CreatePoolsWrtTime'
-  | 'Fee'
-  | 'FeeToken'
-  | 'GetAllMyPoolsData'
-  | 'GetAllMyPoolsId'
-  | 'GetMyPoolDataByToken'
-  | 'GetMyPoolsData'
-  | 'GetMyPoolsId'
-  | 'GetMyPoolsIdByToken'
-  | 'GetPoolsData'
-  | 'GovernerContract'
-  | 'Index'
-  | 'MyPoolz'
-  | 'PayFee'
-  | 'Reserve'
-  | 'SetFeeAmount'
-  | 'SetFeeToken'
-  | 'SplitPoolAmount'
-  | 'SplitPoolAmountFrom'
-  | 'TokenFeeWhiteListId'
-  | 'TokenFilterWhiteListId'
-  | 'TransferPoolOwnership'
-  | 'UserWhiteListId'
-  | 'WhiteList_Address'
-  | 'WithdrawFee'
-  | 'isTokenFilterOn'
-  | 'isTokenWhiteListed'
-  | 'isTokenWithFee'
-  | 'isUserPaysFee'
-  | 'maxTransactionLimit'
-  | 'owner'
-  | 'renounceOwnership'
-  | 'setGovernerContract'
-  | 'setMaxTransactionLimit'
-  | 'setTokenFeeWhiteListId'
-  | 'setTokenFilterWhiteListId'
-  | 'setUserWhiteListId'
-  | 'setWhiteListAddress'
-  | 'swapTokenFilter'
-  | 'transferOwnership'
-  | 'getWithdrawableAmount'
-  | 'WithdrawToken';
-
-export type MultiSenderV2FunctionName =
-  | 'FeeAmount'
-  | 'FeeReserve'
-  | 'FeeToken'
-  | 'GovernorContract'
-  | 'MultiSendERC20Direct'
-  | 'MultiSendERC20DirectSameValue'
-  | 'MultiSendERC20Indirect'
-  | 'MultiSendERC20IndirectSameValue'
-  | 'MultiSendETH'
-  | 'MultiSendETHSameValue'
-  | 'Pause'
-  | 'Unpause'
-  | 'WhiteListAddress'
-  | 'WhiteListId'
-  | 'WithdrawFee'
-  | 'acceptFirewallAdmin'
-  | 'addUsers'
-  | 'firewallAdmin'
-  | 'getCredits'
-  | 'owner'
-  | 'paused'
-  | 'removeUsers'
-  | 'renounceOwnership'
-  | 'safeFunctionCall'
-  | 'setApprovedTarget'
-  | 'setFee'
-  | 'setFirewall'
-  | 'setFirewallAdmin'
-  | 'setGovernorContract'
-  | 'setupNewWhitelist'
-  | 'transferOwnership';
-
-export type SimpleBuilderFunctionName =
-  | 'acceptFirewallAdmin'
-  | 'buildMassPools'
-  | 'firewallAdmin'
-  | 'lockDealNFT'
-  | 'onERC721Received'
-  | 'safeFunctionCall'
-  | 'setApprovedTarget'
-  | 'setFirewall'
-  | 'setFirewallAdmin';
-
-export type TimedDealProviderFunctionName =
-  | 'acceptFirewallAdmin'
-  | 'beforeTransfer'
-  | 'createNewPool'
-  | 'currentParamsTargetLength'
-  | 'firewallAdmin'
-  | 'getParams'
-  | 'getSubProvidersPoolIds'
-  | 'getWithdrawableAmount'
-  | 'lockDealNFT'
-  | 'name'
-  | 'poolIdToAmount'
-  | 'poolIdToTime'
-  | 'provider'
-  | 'registerPool'
-  | 'safeFunctionCall'
-  | 'setApprovedVennPolicy'
-  | 'setApprovedVennPolicyFee'
-  | 'setFirewall'
-  | 'setFirewallAdmin'
-  | 'split'
-  | 'supportsInterface'
-  | 'withdraw';
-
-export type VaultManagerFunctionName =
-  | 'acceptFirewallAdmin'
-  | 'createNewVault'
-  | 'depositByToken'
-  | 'firewallAdmin'
-  | 'getAllVaultBalanceByToken'
-  | 'getCurrentVaultBalanceByToken'
-  | 'getCurrentVaultIdByToken'
-  | 'getTotalVaultsByToken'
-  | 'getVaultBalanceByVaultId'
-  | 'isDepositActiveForVaultId'
-  | 'isWithdrawalActiveForVaultId'
-  | 'nonces'
-  | 'owner'
-  | 'renounceOwnership'
-  | 'royaltyInfo'
-  | 'safeDeposit'
-  | 'safeFunctionCall'
-  | 'setActiveStatusForVaultId'
-  | 'setApprovedTarget'
-  | 'setFirewall'
-  | 'setFirewallAdmin'
-  | 'setTradeStartTime'
-  | 'setTrustee'
-  | 'supportsInterface'
-  | 'tokenToVaultIds'
-  | 'totalVaults'
-  | 'transferOwnership'
-  | 'trustee'
-  | 'updateTrustee'
-  | 'vaultIdToTokenAddress'
-  | 'vaultIdToTradeStartTime'
-  | 'vaultIdToVault'
-  | 'withdrawByVaultId';
+// Contract schemas with function names and args combined
+export type ContractSchemas = {
+  DealProvider: {
+    'acceptFirewallAdmin': readonly [];
+    'createNewPool': readonly [addresses: `0x${string}`[], params: bigint, signature: `0x${string}`];
+    'currentParamsTargetLength': readonly [];
+    'firewallAdmin': readonly [];
+    'getParams': readonly [poolId: bigint];
+    'getSubProvidersPoolIds': readonly [bigint];
+    'getWithdrawableAmount': readonly [poolId: bigint];
+    'lockDealNFT': readonly [];
+    'name': readonly [];
+    'poolIdToAmount': readonly [bigint];
+    'registerPool': readonly [poolId: bigint, params: bigint];
+    'safeFunctionCall': readonly [vennPolicy: `0x${string}`, vennPolicyPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedVennPolicy': readonly [vennPolicy: `0x${string}`, status: boolean];
+    'setApprovedVennPolicyFee': readonly [fee: bigint];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'split': readonly [lockDealNFTPoolId: bigint, newPoolId: bigint, ratio: bigint];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+    'withdraw': readonly [poolId: bigint] | readonly [poolId: bigint, amount: bigint];
+  };
+  DelayVault: {
+    'Allowance': readonly [`0x${string}`, `0x${string}`];
+    'DelayLimit': readonly [`0x${string}`];
+    'GetDelayLimits': readonly [_token: `0x${string}`];
+    'GetMinDelays': readonly [_token: `0x${string}`, _amount: bigint];
+    'GetMyTokens': readonly [_user: `0x${string}`];
+    'GetMyTokensByRange': readonly [_user: `0x${string}`, _from: bigint, _to: bigint];
+    'GetMyTokensLengthByUser': readonly [_user: `0x${string}`];
+    'GetTokenFilterStatus': readonly [_token: `0x${string}`];
+    'GetUsersDataByRange': readonly [_token: `0x${string}`, _from: bigint, _to: bigint];
+    'GetUsersLengthByToken': readonly [_token: `0x${string}`];
+    'GovernorContract': readonly [];
+    'LockedDealAddress': readonly [];
+    'MaxDelay': readonly [];
+    'MyTokens': readonly [`0x${string}`, bigint];
+    'Pause': readonly [];
+    'TokenToUsers': readonly [`0x${string}`, bigint];
+    'Unpause': readonly [];
+    'VaultMap': readonly [`0x${string}`, `0x${string}`];
+    'getChecksum': readonly [];
+    'owner': readonly [];
+    'paused': readonly [];
+    'redeemTokensFromVault': readonly [_token: `0x${string}`, _owner: `0x${string}`, _amount: bigint];
+    'renounceOwnership': readonly [];
+    'setGovernorContract': readonly [_address: `0x${string}`];
+    'setLockedDealAddress': readonly [_lockedDealAddress: `0x${string}`];
+    'setMaxDelay': readonly [_maxDelay: bigint];
+    'setMinDelays': readonly [_token: `0x${string}`, _amounts: bigint, _startDelays: bigint, _cliffDelays: bigint, _finishDelays: bigint];
+    'setTokenStatusFilter': readonly [_token: `0x${string}`, _status: boolean];
+    'transferOwnership': readonly [newOwner: `0x${string}`];
+    'CreateVault': readonly [_token: `0x${string}`, _amount: bigint, _startDelay: bigint, _cliffDelay: bigint, _finishDelay: bigint];
+    'Withdraw': readonly [_token: `0x${string}`];
+    'approveTokenRedemption': readonly [_token: `0x${string}`, _status: boolean];
+  };
+  DelayVaultProvider: {
+    'balanceOf': readonly [user: `0x${string}`];
+    'beforeTransfer': readonly [from: `0x${string}`, to: `0x${string}`, poolId: bigint];
+    'createNewDelayVault': readonly [owner: `0x${string}`, params: bigint];
+    'createNewDelayVaultWithSignature': readonly [owner: `0x${string}`, params: bigint, signature: `0x${string}`];
+    'currentParamsTargetLength': readonly [];
+    'firewallAdmin': readonly [];
+    'getParams': readonly [poolId: bigint];
+    'getSubProvidersPoolIds': readonly [bigint];
+    'getTotalAmount': readonly [user: `0x${string}`];
+    'getTypeToProviderData': readonly [theType: bigint];
+    'getWithdrawPoolParams': readonly [amount: bigint, theType: bigint];
+    'getWithdrawableAmount': readonly [poolId: bigint];
+    'lockDealNFT': readonly [];
+    'migrator': readonly [];
+    'name': readonly [];
+    'poolIdToAmount': readonly [bigint];
+    'registerPool': readonly [poolId: bigint, params: bigint];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'split': readonly [oldPoolId: bigint, newPoolId: bigint, ratio: bigint];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+    'theTypeOf': readonly [amount: bigint];
+    'token': readonly [];
+    'tokenOfOwnerByIndex': readonly [user: `0x${string}`, index: bigint];
+    'typeToProviderData': readonly [bigint];
+    'typesCount': readonly [];
+    'upgradeType': readonly [newType: bigint];
+    'userToAmount': readonly [`0x${string}`];
+    'userToType': readonly [`0x${string}`];
+    'withdraw': readonly [tokenId: bigint];
+  };
+  DispenserProvider: {
+    'BUILDER_TYPEHASH': readonly [];
+    'MESSAGE_TYPEHASH': readonly [];
+    'acceptFirewallAdmin': readonly [];
+    'createNewPool': readonly [addresses: `0x${string}`[], params: bigint, signature: `0x${string}`];
+    'currentParamsTargetLength': readonly [];
+    'dispenseLock': readonly [message: any, signature: `0x${string}`];
+    'eip712Domain': readonly [];
+    'firewallAdmin': readonly [];
+    'getParams': readonly [poolId: bigint];
+    'getSubProvidersPoolIds': readonly [bigint];
+    'getWithdrawableAmount': readonly [poolId: bigint];
+    'isTaken': readonly [bigint, `0x${string}`];
+    'lockDealNFT': readonly [];
+    'name': readonly [];
+    'poolIdToAmount': readonly [bigint];
+    'registerPool': readonly [poolId: bigint, params: bigint];
+    'safeFunctionCall': readonly [vennPolicy: `0x${string}`, vennPolicyPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedVennPolicy': readonly [vennPolicy: `0x${string}`, status: boolean];
+    'setApprovedVennPolicyFee': readonly [fee: bigint];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'split': readonly [oldPoolId: bigint, newPoolId: bigint, ratio: bigint];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+    'withdraw': readonly [poolId: bigint] | readonly [poolId: bigint, amount: bigint];
+  };
+  InvestProvider: {
+    'INVEST_TYPEHASH': readonly [];
+    'acceptFirewallAdmin': readonly [];
+    'createNewPool': readonly [poolAmount: bigint, sourcePoolId: bigint] | readonly [poolAmount: bigint, investSigner: `0x${string}`, dispenserSigner: `0x${string}`, sourcePoolId: bigint];
+    'currentParamsTargetLength': readonly [];
+    'dispenserProvider': readonly [];
+    'eip712Domain': readonly [];
+    'firewallAdmin': readonly [];
+    'getNonce': readonly [poolId: bigint, user: `0x${string}`];
+    'getParams': readonly [poolId: bigint];
+    'getSubProvidersPoolIds': readonly [poolId: bigint];
+    'getUserInvests': readonly [poolId: bigint, user: `0x${string}`];
+    'getWithdrawableAmount': readonly [bigint];
+    'invest': readonly [poolId: bigint, amount: bigint, validUntil: bigint, signature: `0x${string}`];
+    'lockDealNFT': readonly [];
+    'name': readonly [];
+    'poolIdToInvests': readonly [bigint, `0x${string}`, bigint];
+    'poolIdToPool': readonly [bigint];
+    'registerPool': readonly [poolId: bigint, params: bigint];
+    'safeFunctionCall': readonly [vennPolicy: `0x${string}`, vennPolicyPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedVennPolicy': readonly [vennPolicy: `0x${string}`, status: boolean];
+    'setApprovedVennPolicyFee': readonly [fee: bigint];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'split': readonly [oldPoolId: bigint, newPoolId: bigint, ratio: bigint];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+    'vaultManager': readonly [];
+    'withdraw': readonly [bigint];
+  };
+  LockDealNFT: {
+    'acceptFirewallAdmin': readonly [];
+    'approve': readonly [to: `0x${string}`, tokenId: bigint];
+    'approvePoolTransfers': readonly [status: boolean];
+    'approvedContracts': readonly [`0x${string}`];
+    'approvedPoolUserTransfers': readonly [`0x${string}`];
+    'balanceOf': readonly [owner: `0x${string}`, tokens: `0x${string}`[]] | readonly [owner: `0x${string}`];
+    'baseURI': readonly [];
+    'cloneVaultId': readonly [destinationPoolId: bigint, sourcePoolId: bigint];
+    'firewallAdmin': readonly [];
+    'getApproved': readonly [tokenId: bigint];
+    'getData': readonly [poolId: bigint];
+    'getFullData': readonly [poolId: bigint];
+    'getUserDataByTokens': readonly [user: `0x${string}`, tokens: `0x${string}`[], from: bigint, to: bigint];
+    'getWithdrawableAmount': readonly [poolId: bigint];
+    'isApprovedForAll': readonly [owner: `0x${string}`, operator: `0x${string}`];
+    'mintAndTransfer': readonly [owner: `0x${string}`, token: `0x${string}`, amount: bigint, provider: `0x${string}`];
+    'mintForProvider': readonly [owner: `0x${string}`, provider: `0x${string}`];
+    'name': readonly [];
+    'onERC721Received': readonly [`0x${string}`, from: `0x${string}`, poolId: bigint, data: `0x${string}`];
+    'owner': readonly [];
+    'ownerOf': readonly [tokenId: bigint];
+    'poolIdToProvider': readonly [bigint];
+    'poolIdToVaultId': readonly [bigint];
+    'renounceOwnership': readonly [];
+    'royaltyInfo': readonly [tokenId: bigint, salePrice: bigint];
+    'safeFunctionCall': readonly [target: `0x${string}`, targetPayload: `0x${string}`, data: `0x${string}`];
+    'safeMintAndTransfer': readonly [owner: `0x${string}`, token: `0x${string}`, from: `0x${string}`, amount: bigint, provider: `0x${string}`, data: `0x${string}`];
+    'safeTransferFrom': readonly [from: `0x${string}`, to: `0x${string}`, tokenId: bigint] | readonly [from: `0x${string}`, to: `0x${string}`, tokenId: bigint, data: `0x${string}`];
+    'setApprovalForAll': readonly [operator: `0x${string}`, approved: boolean];
+    'setApprovedContract': readonly [contractAddress: `0x${string}`, status: boolean];
+    'setApprovedTarget': readonly [target: `0x${string}`, status: boolean];
+    'setBaseURI': readonly [newBaseURI: string];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+    'symbol': readonly [];
+    'tokenByIndex': readonly [index: bigint];
+    'tokenOf': readonly [poolId: bigint];
+    'tokenOfOwnerByIndex': readonly [owner: `0x${string}`, index: bigint] | readonly [owner: `0x${string}`, tokens: `0x${string}`[], index: bigint];
+    'tokenURI': readonly [tokenId: bigint];
+    'totalSupply': readonly [];
+    'transferFrom': readonly [from: `0x${string}`, to: `0x${string}`, tokenId: bigint];
+    'transferOwnership': readonly [newOwner: `0x${string}`];
+    'updateAllMetadata': readonly [];
+    'vaultManager': readonly [];
+  };
+  LockDealProvider: {
+    'acceptFirewallAdmin': readonly [];
+    'createNewPool': readonly [addresses: `0x${string}`[], params: bigint, signature: `0x${string}`];
+    'currentParamsTargetLength': readonly [];
+    'firewallAdmin': readonly [];
+    'getParams': readonly [poolId: bigint];
+    'getSubProvidersPoolIds': readonly [bigint];
+    'getWithdrawableAmount': readonly [poolId: bigint];
+    'lockDealNFT': readonly [];
+    'name': readonly [];
+    'poolIdToTime': readonly [bigint];
+    'provider': readonly [];
+    'registerPool': readonly [poolId: bigint, params: bigint];
+    'safeFunctionCall': readonly [vennPolicy: `0x${string}`, vennPolicyPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedVennPolicy': readonly [vennPolicy: `0x${string}`, status: boolean];
+    'setApprovedVennPolicyFee': readonly [fee: bigint];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'split': readonly [lockDealNFTPoolId: bigint, newPoolId: bigint, ratio: bigint];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+    'withdraw': readonly [poolId: bigint] | readonly [poolId: bigint, amount: bigint];
+  };
+  LockedDealV2: {
+    'AllPoolz': readonly [bigint];
+    'Allowance': readonly [bigint, `0x${string}`];
+    'ApproveAllowance': readonly [_PoolId: bigint, _Amount: bigint, _Spender: `0x${string}`];
+    'CreateMassPools': readonly [_Token: `0x${string}`, _StartTime: bigint, _CliffTime: bigint, _FinishTime: bigint, _StartAmount: bigint, _Owner: `0x${string}`[]];
+    'CreateNewPool': readonly [_Token: `0x${string}`, _StartTime: bigint, _CliffTime: bigint, _FinishTime: bigint, _StartAmount: bigint, _Owner: `0x${string}`];
+    'CreatePoolsWrtTime': readonly [_Token: `0x${string}`, _StartTime: bigint, _CliffTime: bigint, _FinishTime: bigint, _StartAmount: bigint, _Owner: `0x${string}`[]];
+    'Fee': readonly [];
+    'FeeToken': readonly [];
+    'GetAllMyPoolsData': readonly [_UserAddress: `0x${string}`];
+    'GetAllMyPoolsId': readonly [_UserAddress: `0x${string}`];
+    'GetMyPoolDataByToken': readonly [_UserAddress: `0x${string}`, _Tokens: `0x${string}`[]];
+    'GetMyPoolsData': readonly [_UserAddress: `0x${string}`];
+    'GetMyPoolsId': readonly [_UserAddress: `0x${string}`];
+    'GetMyPoolsIdByToken': readonly [_UserAddress: `0x${string}`, _Tokens: `0x${string}`[]];
+    'GetPoolsData': readonly [_ids: bigint];
+    'GovernerContract': readonly [];
+    'Index': readonly [];
+    'MyPoolz': readonly [`0x${string}`, bigint];
+    'PayFee': readonly [_fee: bigint];
+    'Reserve': readonly [`0x${string}`];
+    'SetFeeAmount': readonly [_amount: bigint];
+    'SetFeeToken': readonly [_token: `0x${string}`];
+    'SplitPoolAmount': readonly [_PoolId: bigint, _NewAmount: bigint, _NewOwner: `0x${string}`];
+    'SplitPoolAmountFrom': readonly [_PoolId: bigint, _Amount: bigint, _Address: `0x${string}`];
+    'TokenFeeWhiteListId': readonly [];
+    'TokenFilterWhiteListId': readonly [];
+    'TransferPoolOwnership': readonly [_PoolId: bigint, _NewOwner: `0x${string}`];
+    'UserWhiteListId': readonly [];
+    'WhiteList_Address': readonly [];
+    'WithdrawFee': readonly [_token: `0x${string}`, _to: `0x${string}`];
+    'isTokenFilterOn': readonly [];
+    'isTokenWhiteListed': readonly [_tokenAddress: `0x${string}`];
+    'isTokenWithFee': readonly [_tokenAddress: `0x${string}`];
+    'isUserPaysFee': readonly [_UserAddress: `0x${string}`];
+    'maxTransactionLimit': readonly [];
+    'owner': readonly [];
+    'renounceOwnership': readonly [];
+    'setGovernerContract': readonly [_address: `0x${string}`];
+    'setMaxTransactionLimit': readonly [_newLimit: bigint];
+    'setTokenFeeWhiteListId': readonly [_id: bigint];
+    'setTokenFilterWhiteListId': readonly [_id: bigint];
+    'setUserWhiteListId': readonly [_id: bigint];
+    'setWhiteListAddress': readonly [_address: `0x${string}`];
+    'swapTokenFilter': readonly [];
+    'transferOwnership': readonly [newOwner: `0x${string}`];
+    'getWithdrawableAmount': readonly [_PoolId: bigint];
+    'WithdrawToken': readonly [_PoolId: bigint];
+  };
+  MultiSenderV2: {
+    'FeeAmount': readonly [];
+    'FeeReserve': readonly [`0x${string}`];
+    'FeeToken': readonly [];
+    'GovernorContract': readonly [];
+    'MultiSendERC20Direct': readonly [_token: `0x${string}`, _multiSendData: any[]];
+    'MultiSendERC20DirectSameValue': readonly [_token: `0x${string}`, _users: `0x${string}`[], _amount: bigint];
+    'MultiSendERC20Indirect': readonly [_token: `0x${string}`, _totalAmount: bigint, _multiSendData: any[]];
+    'MultiSendERC20IndirectSameValue': readonly [_token: `0x${string}`, _users: `0x${string}`[], _amount: bigint];
+    'MultiSendETH': readonly [_multiSendData: any[]];
+    'MultiSendETHSameValue': readonly [_users: `0x${string}`[], _amount: bigint];
+    'Pause': readonly [];
+    'Unpause': readonly [];
+    'WhiteListAddress': readonly [];
+    'WhiteListId': readonly [];
+    'WithdrawFee': readonly [_token: `0x${string}`, _to: `0x${string}`];
+    'acceptFirewallAdmin': readonly [];
+    'addUsers': readonly [_users: `0x${string}`[], _credits: bigint];
+    'firewallAdmin': readonly [];
+    'getCredits': readonly [_user: `0x${string}`];
+    'owner': readonly [];
+    'paused': readonly [];
+    'removeUsers': readonly [_users: `0x${string}`[]];
+    'renounceOwnership': readonly [];
+    'safeFunctionCall': readonly [target: `0x${string}`, targetPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedTarget': readonly [target: `0x${string}`, status: boolean];
+    'setFee': readonly [_token: `0x${string}`, _amount: bigint];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'setGovernorContract': readonly [_address: `0x${string}`];
+    'setupNewWhitelist': readonly [_whiteListAddress: `0x${string}`];
+    'transferOwnership': readonly [newOwner: `0x${string}`];
+  };
+  SimpleBuilder: {
+    'acceptFirewallAdmin': readonly [];
+    'buildMassPools': readonly [addressParams: `0x${string}`[], userData: any, params: bigint, signature: `0x${string}`];
+    'firewallAdmin': readonly [];
+    'lockDealNFT': readonly [];
+    'onERC721Received': readonly [`0x${string}`, `0x${string}`, bigint, `0x${string}`];
+    'safeFunctionCall': readonly [target: `0x${string}`, targetPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedTarget': readonly [target: `0x${string}`, status: boolean];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+  };
+  TimedDealProvider: {
+    'acceptFirewallAdmin': readonly [];
+    'beforeTransfer': readonly [from: `0x${string}`, to: `0x${string}`, poolId: bigint];
+    'createNewPool': readonly [addresses: `0x${string}`[], params: bigint, signature: `0x${string}`];
+    'currentParamsTargetLength': readonly [];
+    'firewallAdmin': readonly [];
+    'getParams': readonly [poolId: bigint];
+    'getSubProvidersPoolIds': readonly [bigint];
+    'getWithdrawableAmount': readonly [poolId: bigint];
+    'lockDealNFT': readonly [];
+    'name': readonly [];
+    'poolIdToAmount': readonly [bigint];
+    'poolIdToTime': readonly [bigint];
+    'provider': readonly [];
+    'registerPool': readonly [poolId: bigint, params: bigint];
+    'safeFunctionCall': readonly [vennPolicy: `0x${string}`, vennPolicyPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedVennPolicy': readonly [vennPolicy: `0x${string}`, status: boolean];
+    'setApprovedVennPolicyFee': readonly [fee: bigint];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'split': readonly [lockDealNFTPoolId: bigint, newPoolId: bigint, ratio: bigint];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+    'withdraw': readonly [poolId: bigint] | readonly [poolId: bigint, amount: bigint];
+  };
+  VaultManager: {
+    'acceptFirewallAdmin': readonly [];
+    'createNewVault': readonly [_tokenAddress: `0x${string}`, _tradeStartTime: bigint, _royaltyReceiver: `0x${string}`, _feeNumerator: bigint] | readonly [_tokenAddress: `0x${string}`, _royaltyReceiver: `0x${string}`, _feeNumerator: bigint] | readonly [_tokenAddress: `0x${string}`, _tradeStartTime: bigint] | readonly [_tokenAddress: `0x${string}`];
+    'depositByToken': readonly [_tokenAddress: `0x${string}`, _amount: bigint];
+    'firewallAdmin': readonly [];
+    'getAllVaultBalanceByToken': readonly [_tokenAddress: `0x${string}`, from: bigint, count: bigint];
+    'getCurrentVaultBalanceByToken': readonly [_tokenAddress: `0x${string}`];
+    'getCurrentVaultIdByToken': readonly [_tokenAddress: `0x${string}`];
+    'getTotalVaultsByToken': readonly [_tokenAddress: `0x${string}`];
+    'getVaultBalanceByVaultId': readonly [_vaultId: bigint];
+    'isDepositActiveForVaultId': readonly [bigint];
+    'isWithdrawalActiveForVaultId': readonly [bigint];
+    'nonces': readonly [`0x${string}`];
+    'owner': readonly [];
+    'renounceOwnership': readonly [];
+    'royaltyInfo': readonly [tokenId: bigint, salePrice: bigint];
+    'safeDeposit': readonly [_tokenAddress: `0x${string}`, _amount: bigint, _from: `0x${string}`, _signature: `0x${string}`];
+    'safeFunctionCall': readonly [target: `0x${string}`, targetPayload: `0x${string}`, data: `0x${string}`];
+    'setActiveStatusForVaultId': readonly [_vaultId: bigint, _depositStatus: boolean, _withdrawStatus: boolean];
+    'setApprovedTarget': readonly [target: `0x${string}`, status: boolean];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'setTradeStartTime': readonly [_vaultId: bigint, _tradeStartTime: bigint];
+    'setTrustee': readonly [_address: `0x${string}`];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+    'tokenToVaultIds': readonly [`0x${string}`, bigint];
+    'totalVaults': readonly [];
+    'transferOwnership': readonly [newOwner: `0x${string}`];
+    'trustee': readonly [];
+    'updateTrustee': readonly [_address: `0x${string}`];
+    'vaultIdToTokenAddress': readonly [_vaultId: bigint];
+    'vaultIdToTradeStartTime': readonly [bigint];
+    'vaultIdToVault': readonly [bigint];
+    'withdrawByVaultId': readonly [_vaultId: bigint, _to: `0x${string}`, _amount: bigint];
+  };
+};
 
 export const contractNames = ['DealProvider', 'DelayVault', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'MultiSenderV2', 'SimpleBuilder', 'TimedDealProvider', 'VaultManager'] as const;
 
 export type ContractName = typeof contractNames[number];
 
-export type ContractFunctionNameMap = {
-  DealProvider: DealProviderFunctionName;
-  DelayVault: DelayVaultFunctionName;
-  DelayVaultProvider: DelayVaultProviderFunctionName;
-  DispenserProvider: DispenserProviderFunctionName;
-  InvestProvider: InvestProviderFunctionName;
-  LockDealNFT: LockDealNFTFunctionName;
-  LockDealProvider: LockDealProviderFunctionName;
-  LockedDealV2: LockedDealV2FunctionName;
-  MultiSenderV2: MultiSenderV2FunctionName;
-  SimpleBuilder: SimpleBuilderFunctionName;
-  TimedDealProvider: TimedDealProviderFunctionName;
-  VaultManager: VaultManagerFunctionName;
-};
+// Utility types extracted from schemas
+export type ContractFunctionName<T extends ContractName> = keyof ContractSchemas[T];
 
-export type ContractFunctionName<T extends ContractName = ContractName> =
-  T extends keyof ContractFunctionNameMap ? ContractFunctionNameMap[T] : never;
+export type ContractFunctionArgs<
+  T extends ContractName,
+  F extends ContractFunctionName<T>
+> = ContractSchemas[T][F];
 
 import { Abi } from "viem";
-// ABI type mappings for type-safe contract interactions
+// ABI mappings
 import { DealProviderAbi } from "../generated/abi/DealProvider";
 import { DelayVaultAbi } from "../generated/abi/DelayVault";
 import { DelayVaultProviderAbi } from "../generated/abi/DelayVaultProvider";
@@ -416,4 +410,4 @@ export type ContractAbiMap = {
   VaultManager: typeof VaultManagerAbi;
 };
 
-export type ContractAbi<T extends ContractName> = T extends keyof ContractAbiMap ? Abi | ContractAbiMap[T] : never;
+export type ContractAbi<T extends ContractName> = T extends keyof ContractAbiMap ? ContractAbiMap[T] : Abi;

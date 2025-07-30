@@ -13,9 +13,35 @@ const outFile = path.resolve(__dirname, '../src/contracts/contractTypes.ts');
 
 const files = fs.readdirSync(abiDir).filter(f => f.endsWith('.ts'));
 
-const contractTypes = [];
+const contractSchemas = [];
 const abiImports = [];
 const abiMapEntries = [];
+const contractMapEntries = [];
+
+// Helper function to convert Solidity type to TypeScript type
+function solidityToTSType(solidityType) {
+  if (solidityType.startsWith('uint') || solidityType.startsWith('int')) {
+    return 'bigint';
+  }
+  if (solidityType === 'address') {
+    return '`0x${string}`';
+  }
+  if (solidityType === 'bool') {
+    return 'boolean';
+  }
+  if (solidityType === 'string') {
+    return 'string';
+  }
+  if (solidityType === 'bytes' || solidityType.startsWith('bytes')) {
+    return '`0x${string}`';
+  }
+  if (solidityType.endsWith('[]')) {
+    const baseType = solidityType.slice(0, -2);
+    return `${solidityToTSType(baseType)}[]`;
+  }
+  // Default fallback
+  return 'any';
+}
 
 for (const file of files) {
   const contractName = file.replace('.ts', '');
@@ -25,48 +51,88 @@ for (const file of files) {
   if (!match) continue;
 
   const abi = JSON.parse(match[1]);
-  const functions = abi.filter((item) => item.type === 'function').map((item) => item.name);
-  const uniqueFunctions = Array.from(new Set(functions));
-  contractTypes.push(`export type ${contractName}FunctionName =${uniqueFunctions.map(fn => `\n  | '${fn}'`).join('')};`);
+  const functions = abi.filter((item) => item.type === 'function');
+  const functionsByName = {};
+
+  // Group functions by name (handle overloads)
+  functions.forEach(func => {
+    if (!functionsByName[func.name]) {
+      functionsByName[func.name] = [];
+    }
+    functionsByName[func.name].push(func);
+  });
+
+  const functionEntries = [];
+  Object.entries(functionsByName).forEach(([funcName, funcs]) => {
+    if (funcs.length === 1) {
+      // Single function, no overloads
+      const func = funcs[0];
+      const inputs = func.inputs || [];
+      if (inputs.length === 0) {
+        functionEntries.push(`    '${funcName}': readonly [];`);
+      } else {
+        const args = inputs.map(input => {
+          const tsType = solidityToTSType(input.type);
+          return input.name ? `${input.name}: ${tsType}` : tsType;
+        }).join(', ');
+        functionEntries.push(`    '${funcName}': readonly [${args}];`);
+      }
+    } else {
+      // Multiple overloads - use union type
+      const overloadTypes = funcs.map(func => {
+        const inputs = func.inputs || [];
+        if (inputs.length === 0) {
+          return 'readonly []';
+        }
+        const args = inputs.map(input => {
+          const tsType = solidityToTSType(input.type);
+          return input.name ? `${input.name}: ${tsType}` : tsType;
+        }).join(', ');
+        return `readonly [${args}]`;
+      });
+      functionEntries.push(`    '${funcName}': ${overloadTypes.join(' | ')};`);
+    }
+  });
+
+  contractSchemas.push(`  ${contractName}: {\n${functionEntries.join('\n')}\n  };`);
 
   abiImports.push(`import { ${contractName}Abi } from "../generated/abi/${contractName}";`);
   abiMapEntries.push(`  ${contractName}: typeof ${contractName}Abi;`);
+  contractMapEntries.push(contractName);
 }
 
-const contractNames = files.map(f => f.replace('.ts', ''));
-const contractNamesConst = `export const contractNames = [${contractNames.map(name => `\'${name}\'`).join(', ')}] as const;`;
-const contractNameUnion = 'typeof contractNames[number]';
-
-// Generate a mapping type: ContractFunctionNameMap
-const contractFunctionNameMapEntries = contractNames.map(
-  name => `  ${name}: ${name}FunctionName;`
-).join('\n');
+const contractNames = contractMapEntries;
+const contractNamesConst = `export const contractNames = [${contractNames.map(name => `'${name}'`).join(', ')}] as const;`;
 
 const content = `// AUTO-GENERATED FILE. DO NOT EDIT.
 // Run scripts/generateContractTypes.js to update.
 
-${contractTypes.join('\n\n')}
+// Contract schemas with function names and args combined
+export type ContractSchemas = {
+${contractSchemas.join('\n')}
+};
 
 ${contractNamesConst}
 
-export type ContractName = ${contractNameUnion};
+export type ContractName = typeof contractNames[number];
 
-export type ContractFunctionNameMap = {
-${contractFunctionNameMapEntries}
-};
+// Utility types extracted from schemas
+export type ContractFunctionName<T extends ContractName> = keyof ContractSchemas[T];
 
-export type ContractFunctionName<T extends ContractName = ContractName> =
-  T extends keyof ContractFunctionNameMap ? ContractFunctionNameMap[T] : never;
+export type ContractFunctionArgs<
+  T extends ContractName,
+  F extends ContractFunctionName<T>
+> = ContractSchemas[T][F];
 
 import { Abi } from "viem";
-// ABI type mappings for type-safe contract interactions
+// ABI mappings
 ${abiImports.join('\n')}
 
 export type ContractAbiMap = {
 ${abiMapEntries.join('\n')}
 };
 
-export type ContractAbi<T extends ContractName> = T extends keyof ContractAbiMap ? Abi | ContractAbiMap[T] : never;
+export type ContractAbi<T extends ContractName> = T extends keyof ContractAbiMap ? ContractAbiMap[T] : Abi;
 `;
 
 fs.writeFileSync(outFile, content);

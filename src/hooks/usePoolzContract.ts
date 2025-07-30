@@ -4,29 +4,33 @@ import {
   ContractName,
   ContractFunctionName,
   contractNames,
-  ContractAbi,
+  ContractFunctionArgs,
 } from "../contracts/contractTypes";
 import { WriteContractParameters, ReadContractParameters } from "wagmi/actions";
-import { ContractFunctionArgs, TransactionReceipt } from "viem";
+import { TransactionReceipt } from "viem";
 
 interface MulticallReadParams<T extends ContractName> {
   calls: {
     functionName: ContractFunctionName<T>;
-    args?: ContractFunctionArgs<ContractAbi<T>, 'nonpayable' | 'payable'>;
+    args?: ContractFunctionArgs<T, ContractFunctionName<T>>;
   }[];
 }
 
-type TypedWriteContract<T extends ContractName> = <F extends ContractFunctionName<T>>(
+type TypedWriteContract<T extends ContractName> = <
+  F extends ContractFunctionName<T>
+>(
   params: {
     functionName: F;
-    args?: ContractFunctionArgs<ContractAbi<T>, 'nonpayable' | 'payable'>;
+    args?: ContractFunctionArgs<T, F>;
   } & Omit<WriteContractParameters, "address" | "abi" | "functionName" | "args">
 ) => Promise<TransactionReceipt>;
 
-type TypedReadContract<T extends ContractName> = <F extends ContractFunctionName<T>>(
+type TypedReadContract<T extends ContractName> = <
+  F extends ContractFunctionName<T>
+>(
   params: {
     functionName: F;
-    args?: readonly unknown[];
+    args?: ContractFunctionArgs<T, F>;
   } & Omit<ReadContractParameters, "address" | "abi" | "functionName" | "args">
 ) => Promise<any>;
 
@@ -46,7 +50,9 @@ export function usePoolzContract() {
   const { address: account, chainId } = useAccount();
   const { usePoolzContractInfo: getContractInfo } = { usePoolzContractInfo };
 
-  function buildContractMethods<T extends ContractName>(contractName: T): PoolzContractMethods<T> {
+  function buildContractMethods<T extends ContractName>(
+    contractName: T
+  ): PoolzContractMethods<T> {
     const { smcAddress, abi } = getContractInfo({ chainId, contractName });
     const { writeContractAsync } = useWriteContract();
 
@@ -96,10 +102,12 @@ export function usePoolzContract() {
     };
   }
 
-  const poolContract = contractNames.reduce((acc, name) => {
-    acc[name] = buildContractMethods(name);
-    return acc;
-  }, {} as PoolzContractObject);
+  const poolContract = Object.assign(
+    {} as PoolzContractObject,
+    Object.fromEntries(
+      contractNames.map((name) => [name, buildContractMethods(name)])
+    )
+  );
 
   return { poolContract };
 }
