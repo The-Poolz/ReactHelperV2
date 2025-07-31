@@ -1,15 +1,17 @@
-import { useAccount,useChainId,useSwitchChain } from "wagmi";
+import { useAccount,useChainId,useSwitchChain, useWatchAsset } from "wagmi";
 
 export function usePoolzApp() {
   const chainId = useChainId();
-  const { address, ...rest } = useAccount();
+  const account = useAccount();
   const { switchChainAsync, isPending } = useSwitchChain();
+  const watchAsset = useWatchAsset()
 
   return {
-    ...rest,
+    ...account,
     chainId,
-    account: address,
+    account: account.address,
     switchChainAsync,
     isSwitching: isPending,
+    watchAsset
   };
 }
