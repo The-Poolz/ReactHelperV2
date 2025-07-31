@@ -24,7 +24,6 @@ This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](
 2. Install dependencies by running `pnpm install`.
 3. After installing dependencies, run `pnpm lint` to check code style.
 4. Run `pnpm test` to execute the test suite.
-5. WalletConnect connections require the `VITE_WC_PROJECT_ID` environment variable.
 
 ## Generating Poolz data
 
@@ -34,85 +33,42 @@ chain IDs to `src/generated/poolzChains.ts`, stores all contract ABIs under
 `src/generated/abi/` and creates contract configuration files in `src/contracts/`.
 It also updates `src/wagmi.ts` to include the retrieved chains.
 
-## Configuration
+## Poolz Contract Hook (Type-safe Multicall, Read, Write)
 
-`src/wagmi.ts` expects the environment variable `VITE_WC_PROJECT_ID` to be set.
-If it is missing, the module throws an error on startup so WalletConnect cannot
-be misconfigured.
+The main entrypoint for interacting with Poolz contracts is the `usePoolzContract` hook. This hook provides a type-safe API for reading, writing, and multicall to any supported Poolz contract, with full TypeScript support for function names and arguments.
 
-## Custom React Hooks
-
-The `src/hooks/` folder provides a set of custom hooks to interact with Poolz smart contracts and blockchain data in a type-safe, convenient way. Below are the main hooks and usage examples:
-
-### useContractRead
-Type-safe read from any Poolz contract.
+### Example: Type-safe Read
 ```tsx
-const nameQuery = useContractRead({
-  chainId: 56,
-  contractName: "LockDealNFT",
-  functionName: "name",
+const { poolContract } = usePoolzContract();
+const res = await poolContract.LockDealNFT.readContract({
+  functionName: "balanceOf",
+  args: ["0x1234..."],
 });
-// Usage: await nameQuery.mutateAsync([])
 ```
 
-### useContractWrite
-Type-safe write to any Poolz contract.
+### Example: Type-safe Write
 ```tsx
-const transferMutation = useContractWrite({
-  chainId: 56,
-  contractName: "LockDealNFT",
+const { poolContract } = usePoolzContract();
+const receipt = await poolContract.LockDealNFT.writeContract({
   functionName: "safeTransferFrom",
+  args: ["0xFrom", "0xTo", 1],
 });
-// Usage: transferMutation.mutate([from, to, tokenId])
 ```
 
-### useERC20Info
-Get ERC20 token info (symbol, decimals, name).
+### Example: Type-safe Multicall
 ```tsx
-const { symbol, decimals, name } = useERC20Info(chainId, tokenAddress);
-```
-
-### useERC20Balance
-Get ERC20 token balance for an account.
-```tsx
-const balance = useERC20Balance(chainId, tokenAddress, account);
-```
-
-### useERC20Allowance
-Get ERC20 allowance for a spender.
-```tsx
-const allowance = useERC20Allowance(chainId, tokenAddress, owner, spender);
-```
-
-### useERC20Approve
-Approve ERC20 tokens for a spender.
-```tsx
-const approveMutation = useERC20Approve(chainId, tokenAddress);
-// Usage: approveMutation.mutate([spender, amount])
-```
-
-### useCheckGasFee
-Estimate and check if the account has enough gas for a contract call.
-```tsx
-const checkGas = useCheckGasFee({
-  chainId,
-  contractName: "LockDealNFT",
-  functionName: "safeTransferFrom",
-  account,
-  balance,
+const { poolContract } = usePoolzContract();
+const result = await poolContract.LockDealNFT.multicall({
+  calls: [
+    { functionName: "balanceOf", args: ["0x1234..."] },
+    { functionName: "ownerOf", args: [1] },
+  ]
 });
-// Usage: checkGas.mutate([args...])
 ```
 
-### usePoolzContractInfo
-Get contract address and ABI by chainId and contractName.
-```tsx
-const { smcAddress, abi } = usePoolzContractInfo(chainId, contractName);
-```
+All function names and argument types are inferred from the contract ABIs, so you get full autocompletion and type safety.
 
----
-
-All hooks are fully type-safe and optimized for Poolz contracts. See the `example/` folder for more usage patterns.
+See the `example/` folder for more usage patterns and advanced scenarios.
 
 ## Usage
 
