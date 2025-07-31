@@ -4,6 +4,14 @@ export { usePoolzContractInfo } from "./hooks/usePoolzContractInfo";
 export type { UsePoolzContractInfoReturn } from "./hooks/usePoolzContractInfo";
 export { usePoolzApp } from "./hooks/usePoolzApp";
 export { usePoolzContract } from "./hooks/usePoolzContract";
+export type {
+  PoolzContractMethods,
+  MulticallReadParams,
+  MulticallCallUnion,
+  MulticallResult,
+  TypedWriteContract,
+  TypedReadContract
+} from "./hooks/usePoolzContract";
 export { useTokenApproval } from "./hooks/useTokenApproval";
 export type { UseTokenApprovalReturn, UseTokenApprovalOptions } from "./hooks/useTokenApproval";
 

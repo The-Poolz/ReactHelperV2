@@ -9,14 +9,23 @@ import {
 import { WriteContractParameters, ReadContractParameters } from "wagmi/actions";
 import { TransactionReceipt } from "viem";
 
-interface MulticallReadParams<T extends ContractName> {
-  calls: {
-    functionName: ContractFunctionName<T>;
-    args?: ContractFunctionArgs<T, ContractFunctionName<T>>;
-  }[];
-}
+export type MulticallSuccess = { result: any; status: "success" };
+export type MulticallFailure = { error: Error; status: "failure" };
+export type MulticallResult = MulticallSuccess | MulticallFailure;
 
-type TypedWriteContract<T extends ContractName> = <
+export type MulticallCallUnion<T extends ContractName> =
+  {
+    [F in ContractFunctionName<T>]: {
+      functionName: F;
+      args?: ContractFunctionArgs<T, F>;
+    } & Omit<WriteContractParameters, "address" | "abi" | "functionName" | "args">;
+  }[ContractFunctionName<T>];
+
+export type MulticallReadParams<T extends ContractName> = {
+  contracts: Array<MulticallCallUnion<T>>;
+};
+
+export type TypedWriteContract<T extends ContractName> = <
   F extends ContractFunctionName<T>
 >(
   params: {
@@ -25,7 +34,7 @@ type TypedWriteContract<T extends ContractName> = <
   } & Omit<WriteContractParameters, "address" | "abi" | "functionName" | "args">
 ) => Promise<TransactionReceipt>;
 
-type TypedReadContract<T extends ContractName> = <
+export type TypedReadContract<T extends ContractName> = <
   F extends ContractFunctionName<T>
 >(
   params: {
@@ -34,11 +43,11 @@ type TypedReadContract<T extends ContractName> = <
   } & Omit<ReadContractParameters, "address" | "abi" | "functionName" | "args">
 ) => Promise<any>;
 
-type PoolzContractMethods<T extends ContractName> = {
+export type PoolzContractMethods<T extends ContractName> = {
   smcAddress: `0x${string}`;
   readContract: TypedReadContract<T>;
   writeContract: TypedWriteContract<T>;
-  multicall: (params: MulticallReadParams<T>) => Promise<any>;
+  multicall: (params: MulticallReadParams<T>) => Promise<MulticallResult[]>;
 };
 
 type PoolzContractObject = {
@@ -84,14 +93,15 @@ export function usePoolzContract() {
       if (!smcAddress || !abi || !publicClient) {
         throw new Error("PublicClient or contract info missing");
       }
-      const contracts = params.calls.map((call) => ({
+      const contracts = params.contracts.map((c) => ({
         address: smcAddress,
         abi,
-        functionName: call.functionName,
-        args: call.args || [],
+        functionName: c.functionName,
+        args: c.args || [],
       })) as any;
       const results = await publicClient.multicall({ contracts });
-      return results;
+      // Convert to mutable array and cast to MulticallResult[]
+      return Array.from(results) as MulticallResult[];
     };
 
     return {

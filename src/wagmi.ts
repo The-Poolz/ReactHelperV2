@@ -1,6 +1,6 @@
 import { createClient } from "viem";
 import { http, createConfig } from "wagmi";
-import { telos, base, unichain, manta, moonbeam, mantaTestnet, viction, mainnet, sepolia, avalanche, arbitrum, polygon, bscTestnet, neonMainnet, bsc } from "wagmi/chains";
+import { telos, base, unichain, manta, moonbeam, mantaTestnet, viction, mainnet, avalanche, arbitrum, polygon, neonMainnet, bsc, bscTestnet, sepolia } from "wagmi/chains";
 import { coinbaseWallet, metaMask, injected } from "wagmi/connectors";
 
 
@@ -63,7 +63,7 @@ const createConnectors = () => {
 };
 
 export const config: any = createConfig({
-  chains: [telos, base, unichain, manta, moonbeam, mantaTestnet, viction, mainnet, sepolia, avalanche, arbitrum, polygon, bscTestnet, neonMainnet, bsc], //poolz chains
+  chains: [telos, base, unichain, manta, moonbeam, mantaTestnet, viction, mainnet, avalanche, arbitrum, polygon, neonMainnet, bsc, bscTestnet, sepolia], //poolz chains
   connectors: createConnectors(),
   client({ chain }) {
     return createClient({ chain, transport: http() });

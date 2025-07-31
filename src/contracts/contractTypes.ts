@@ -3,6 +3,25 @@
 
 // Contract schemas with function names and args combined
 export type ContractSchemas = {
+  DaoStation: {
+    'MAX_FEE_WEI': readonly [];
+    'WETH': readonly [];
+    'executeSwap': readonly [tokenIn: `0x${string}`, commands: `0x${string}`, inputs: `0x${string}`, user: `0x${string}`, data: `0x${string}`, deadline: bigint, v: bigint, r: `0x${string}`, s: `0x${string}`];
+    'getTreasuryBalance': readonly [];
+    'isMaintainer': readonly [`0x${string}`];
+    'isValidSignature': readonly [user: `0x${string}`, spender: `0x${string}`, amountIn: bigint, deadline: bigint, nonce: bigint, domainSeparator: `0x${string}`, v: bigint, r: `0x${string}`, s: `0x${string}`];
+    'maintainerFeeWei': readonly [];
+    'owner': readonly [];
+    'permit2': readonly [];
+    'renounceOwnership': readonly [];
+    'setMaintainer': readonly [maintainer: `0x${string}`, allowed: boolean];
+    'setMaintainerFee': readonly [_maintainerFeeWei: bigint];
+    'setTreasuryFee': readonly [_treasuryFeeWei: bigint];
+    'transferOwnership': readonly [newOwner: `0x${string}`];
+    'treasuryFeeWei': readonly [];
+    'universalRouter': readonly [];
+    'withdrawTreasury': readonly [recipient: `0x${string}`, amount: bigint];
+  };
   DealProvider: {
     'acceptFirewallAdmin': readonly [];
     'createNewPool': readonly [addresses: `0x${string}`[], params: bigint, signature: `0x${string}`];
@@ -368,7 +387,7 @@ export type ContractSchemas = {
   };
 };
 
-export const contractNames = ['DealProvider', 'DelayVault', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'MultiSenderV2', 'SimpleBuilder', 'TimedDealProvider', 'VaultManager'] as const;
+export const contractNames = ['DaoStation', 'DealProvider', 'DelayVault', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'MultiSenderV2', 'SimpleBuilder', 'TimedDealProvider', 'VaultManager'] as const;
 
 export type ContractName = typeof contractNames[number];
 
@@ -382,6 +401,7 @@ export type ContractFunctionArgs<
 
 import { Abi } from "viem";
 // ABI mappings
+import { DaoStationAbi } from "../generated/abi/DaoStation";
 import { DealProviderAbi } from "../generated/abi/DealProvider";
 import { DelayVaultAbi } from "../generated/abi/DelayVault";
 import { DelayVaultProviderAbi } from "../generated/abi/DelayVaultProvider";
@@ -396,6 +416,7 @@ import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
 import { VaultManagerAbi } from "../generated/abi/VaultManager";
 
 export type ContractAbiMap = {
+  DaoStation: typeof DaoStationAbi;
   DealProvider: typeof DealProviderAbi;
   DelayVault: typeof DelayVaultAbi;
   DelayVaultProvider: typeof DelayVaultProviderAbi;
