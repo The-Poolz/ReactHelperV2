@@ -16,14 +16,7 @@ export { useTokenApproval } from "./hooks/useTokenApproval";
 export type { UseTokenApprovalReturn, UseTokenApprovalOptions } from "./hooks/useTokenApproval";
 
 // Exporting hooks and components related to ERC20 tokens
-export { useERC20Balance, getERC20Balance } from "./hooks/useERC20Balance";
-export type { UseERC20BalanceReturn } from "./hooks/useERC20Balance";
-export { getERC20Info } from "./hooks/useERC20Info";
-export type { IERC20Info } from "./hooks/useERC20Info";
-export { useERC20Allowance } from "./hooks/useERC20Allowance";
-export type { UseERC20AllowanceReturn } from "./hooks/useERC20Allowance";
-export { useERC20Approve } from "./hooks/useERC20Approve";
-export type { UseERC20ApproveReturn } from "./hooks/useERC20Approve";
+export { useERC20 } from "./hooks/useERC20";
 
 // Exporting NFT metadata related hooks and components
 export { useNFTMetadata } from "./hooks/useNFTMetadata";

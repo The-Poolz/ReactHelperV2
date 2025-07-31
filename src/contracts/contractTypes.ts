@@ -77,6 +77,21 @@ export type ContractSchemas = {
     'Withdraw': readonly [_token: `0x${string}`];
     'approveTokenRedemption': readonly [_token: `0x${string}`, _status: boolean];
   };
+  DelayVaultMigrator: {
+    'CreateNewPool': readonly [_Token: `0x${string}`, bigint, bigint, bigint, _StartAmount: bigint, _Owner: `0x${string}`];
+    'finalize': readonly [_newVault: `0x${string}`];
+    'firewallAdmin': readonly [];
+    'fullMigrate': readonly [];
+    'getUserV1Amount': readonly [user: `0x${string}`];
+    'lockDealNFT': readonly [];
+    'newVault': readonly [];
+    'oldVault': readonly [];
+    'owner': readonly [];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'token': readonly [];
+    'withdrawTokensFromV1Vault': readonly [];
+  };
   DelayVaultProvider: {
     'balanceOf': readonly [user: `0x${string}`];
     'beforeTransfer': readonly [from: `0x${string}`, to: `0x${string}`, poolId: bigint];
@@ -350,6 +365,28 @@ export type ContractSchemas = {
     'supportsInterface': readonly [interfaceId: `0x${string}`];
     'withdraw': readonly [poolId: bigint] | readonly [poolId: bigint, amount: bigint];
   };
+  TokenNFTConnector: {
+    'MAX_FEE': readonly [];
+    'calcMinusFee': readonly [amount: bigint];
+    'checkIncreaseTier': readonly [user: `0x${string}`, additionalAmount: bigint];
+    'createLeaderboard': readonly [amountIn: bigint, amountOutMinimum: bigint, poolsData: any[]];
+    'delayVaultProvider': readonly [];
+    'getBytes': readonly [data: any[]];
+    'name': readonly [];
+    'owner': readonly [];
+    'pairToken': readonly [];
+    'pause': readonly [];
+    'paused': readonly [];
+    'projectOwnerFee': readonly [];
+    'renounceOwnership': readonly [];
+    'setProjectOwnerFee': readonly [fee: bigint];
+    'swapRouter': readonly [];
+    'token': readonly [];
+    'transferOwnership': readonly [newOwner: `0x${string}`];
+    'unpause': readonly [];
+    'version': readonly [];
+    'withdrawFee': readonly [];
+  };
   VaultManager: {
     'acceptFirewallAdmin': readonly [];
     'createNewVault': readonly [_tokenAddress: `0x${string}`, _tradeStartTime: bigint, _royaltyReceiver: `0x${string}`, _feeNumerator: bigint] | readonly [_tokenAddress: `0x${string}`, _royaltyReceiver: `0x${string}`, _feeNumerator: bigint] | readonly [_tokenAddress: `0x${string}`, _tradeStartTime: bigint] | readonly [_tokenAddress: `0x${string}`];
@@ -387,7 +424,7 @@ export type ContractSchemas = {
   };
 };
 
-export const contractNames = ['DaoStation', 'DealProvider', 'DelayVault', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'MultiSenderV2', 'SimpleBuilder', 'TimedDealProvider', 'VaultManager'] as const;
+export const contractNames = ['DaoStation', 'DealProvider', 'DelayVault', 'DelayVaultMigrator', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'MultiSenderV2', 'SimpleBuilder', 'TimedDealProvider', 'TokenNFTConnector', 'VaultManager'] as const;
 
 export type ContractName = typeof contractNames[number];
 
@@ -404,6 +441,7 @@ import { Abi } from "viem";
 import { DaoStationAbi } from "../generated/abi/DaoStation";
 import { DealProviderAbi } from "../generated/abi/DealProvider";
 import { DelayVaultAbi } from "../generated/abi/DelayVault";
+import { DelayVaultMigratorAbi } from "../generated/abi/DelayVaultMigrator";
 import { DelayVaultProviderAbi } from "../generated/abi/DelayVaultProvider";
 import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
 import { InvestProviderAbi } from "../generated/abi/InvestProvider";
@@ -413,12 +451,14 @@ import { LockedDealV2Abi } from "../generated/abi/LockedDealV2";
 import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
 import { SimpleBuilderAbi } from "../generated/abi/SimpleBuilder";
 import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
+import { TokenNFTConnectorAbi } from "../generated/abi/TokenNFTConnector";
 import { VaultManagerAbi } from "../generated/abi/VaultManager";
 
 export type ContractAbiMap = {
   DaoStation: typeof DaoStationAbi;
   DealProvider: typeof DealProviderAbi;
   DelayVault: typeof DelayVaultAbi;
+  DelayVaultMigrator: typeof DelayVaultMigratorAbi;
   DelayVaultProvider: typeof DelayVaultProviderAbi;
   DispenserProvider: typeof DispenserProviderAbi;
   InvestProvider: typeof InvestProviderAbi;
@@ -428,6 +468,7 @@ export type ContractAbiMap = {
   MultiSenderV2: typeof MultiSenderV2Abi;
   SimpleBuilder: typeof SimpleBuilderAbi;
   TimedDealProvider: typeof TimedDealProviderAbi;
+  TokenNFTConnector: typeof TokenNFTConnectorAbi;
   VaultManager: typeof VaultManagerAbi;
 };
 

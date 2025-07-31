@@ -54,7 +54,7 @@ export function useTokenApproval(options: UseTokenApprovalOptions): UseTokenAppr
         return await approve.mutateAsync({
           tokenAddress,
           spender,
-          amount,
+          amount: amount ? BigInt(amount) : undefined,
         });
       },
       isPending: approve.isPending,
