@@ -17,6 +17,10 @@ export type { UseTokenApprovalReturn, UseTokenApprovalOptions } from "./hooks/us
 
 // Exporting hooks and components related to ERC20 tokens
 export { useERC20 } from "./hooks/useERC20";
+export type { ERC20BalanceParams, UseERC20BalanceReturn } from "./hooks/useERC20Balance";
+export type { ERC20InfoParams, IERC20Info } from "./hooks/useERC20Info";
+export type { ERC20AllowanceParams, UseERC20AllowanceReturn } from "./hooks/useERC20Allowance";
+export type { ERC20ApproveArgs, UseERC20ApproveReturn } from "./hooks/useERC20Approve";
 
 // Exporting NFT metadata related hooks and components
 export { useNFTMetadata } from "./hooks/useNFTMetadata";
