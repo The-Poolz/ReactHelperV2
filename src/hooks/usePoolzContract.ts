@@ -13,13 +13,15 @@ export type MulticallSuccess = { result: any; status: "success" };
 export type MulticallFailure = { error: Error; status: "failure" };
 export type MulticallResult = MulticallSuccess | MulticallFailure;
 
-export type MulticallCallUnion<T extends ContractName> =
-  {
-    [F in ContractFunctionName<T>]: {
-      functionName: F;
-      args?: ContractFunctionArgs<T, F>;
-    } & Omit<WriteContractParameters, "address" | "abi" | "functionName" | "args">;
-  }[ContractFunctionName<T>];
+export type MulticallCallUnion<T extends ContractName> = {
+  [F in ContractFunctionName<T>]: {
+    functionName: F;
+    args?: ContractFunctionArgs<T, F>;
+  } & Omit<
+    WriteContractParameters,
+    "address" | "abi" | "functionName" | "args"
+  >;
+}[ContractFunctionName<T>];
 
 export type MulticallReadParams<T extends ContractName> = {
   contracts: Array<MulticallCallUnion<T>>;
@@ -100,7 +102,6 @@ export function usePoolzContract() {
         args: c.args || [],
       })) as any;
       const results = await publicClient.multicall({ contracts });
-      // Convert to mutable array and cast to MulticallResult[]
       return Array.from(results) as MulticallResult[];
     };
 
@@ -112,12 +113,16 @@ export function usePoolzContract() {
     };
   }
 
-  const poolContract = Object.assign(
+  const poolContract: PoolzContractObject = Object.assign(
     {} as PoolzContractObject,
     Object.fromEntries(
       contractNames.map((name) => [name, buildContractMethods(name)])
     )
   );
-
-  return { poolContract };
+  // NOTE: need update `poolzTokenAddress` by chainId
+  return {
+    poolContract,
+    poolzTokenAddress:
+      "0xbAeA9aBA1454DF334943951d51116aE342eAB255" as `0x${string}`,
+  };
 }

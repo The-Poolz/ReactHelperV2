@@ -1,3 +1,4 @@
+import { useAccount } from 'wagmi';
 import { useERC20Allowance, UseERC20AllowanceReturn } from './useERC20Allowance';
 import { useERC20Approve } from './useERC20Approve';
 import { Address, TransactionReceipt } from 'viem';
@@ -39,10 +40,12 @@ export interface UseTokenApprovalReturn {
  */
 export function useTokenApproval(options: UseTokenApprovalOptions): UseTokenApprovalReturn {
   const { tokenAddress, spender } = options;
+  const {address: account} = useAccount();
 
   const allowance = useERC20Allowance({
     tokenAddress,
-    spenderAddress: spender,
+    owner: account as `0x${string}`,
+    spender,
   });
 
   const approve = useERC20Approve();
@@ -54,7 +57,8 @@ export function useTokenApproval(options: UseTokenApprovalOptions): UseTokenAppr
         return await approve.mutateAsync({
           tokenAddress,
           spender,
-          amount,
+          amount: amount ? BigInt(amount) : undefined,
+          ownder: account as `0x${string}`,
         });
       },
       isPending: approve.isPending,

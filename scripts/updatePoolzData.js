@@ -20,7 +20,7 @@ const query = `query Contract($pagination: PaginationArg) {
     Chain {
       chainId
     }
-    Contracts {
+    Contracts(pagination: $pagination) {
       Address
       ContractType {
         ContractType

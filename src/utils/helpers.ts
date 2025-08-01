@@ -1,5 +1,6 @@
 import { formatUnits } from "viem";
-import { ChainContracts, contractsByChain } from "../contracts";
+import { contractsByChain } from "../contracts";
+import { ContractName } from "../contracts/contractTypes";
 
 export const isEnoughBalance = (
   balance: string,
@@ -26,7 +27,7 @@ export const isEnoughGasFee = (
  * @param contract The contract key (e.g. "LockDealNFT")
  * @returns Array of chain IDs (number) where the contract exists
  */
-export const getAvailableNets = <T extends keyof ChainContracts>(contract: T): number[] => {
+export const getAvailableNets = (contract: ContractName): number[] => {
   return Object.entries(contractsByChain)
     .filter(([, chainConfig]) => contract in chainConfig)
     .map(([chainId]) => Number(chainId));
