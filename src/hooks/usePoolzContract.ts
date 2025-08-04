@@ -52,7 +52,7 @@ export type PoolzContractMethods<T extends ContractName> = {
   multicall: (params: MulticallReadParams<T>) => Promise<MulticallResult[]>;
 };
 
-type PoolzContractObject = {
+export type PoolzContractObject = {
   [K in ContractName]: PoolzContractMethods<K>;
 };
 
