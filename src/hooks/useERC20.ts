@@ -1,6 +1,6 @@
 import { getERC20Allowance, useERC20Allowance } from "./useERC20Allowance";
 import { useERC20Approve } from "./useERC20Approve";
-import { useERC20Balance } from "./useERC20Balance";
+import { getERC20Balance, useERC20Balance } from "./useERC20Balance";
 import { getERC20Info } from "./useERC20Info";
 
 export function useERC20() {
@@ -8,11 +8,12 @@ export function useERC20() {
   const { mutateAsync, ...approveState } = approveMutation;
 
   return {
-    balance: useERC20Balance,
-    allowance: useERC20Allowance,
+    useBalance: useERC20Balance,
+    balance: getERC20Balance,
+    useAllowance: useERC20Allowance,
     approve: mutateAsync,
     approveState,
-    info: getERC20Info,
-    getAllowance: getERC20Allowance,
+    tokenInfo: getERC20Info,
+    allowance: getERC20Allowance,
   };
 }
