@@ -1,7 +1,7 @@
+import { useAccount } from 'wagmi';
 import { useERC20Allowance, UseERC20AllowanceReturn } from './useERC20Allowance';
 import { useERC20Approve } from './useERC20Approve';
 import { Address, TransactionReceipt } from 'viem';
-import { usePoolzApp } from './usePoolzApp';
 
 export interface UseTokenApprovalOptions {
   tokenAddress: Address;
@@ -40,13 +40,12 @@ export interface UseTokenApprovalReturn {
  */
 export function useTokenApproval(options: UseTokenApprovalOptions): UseTokenApprovalReturn {
   const { tokenAddress, spender } = options;
-  const { chain, account } = usePoolzApp()
+  const { address: account } = useAccount();
 
   const allowance = useERC20Allowance({
     tokenAddress,
     owner: account as `0x${string}`,
     spender,
-    chain
   });
 
   const approve = useERC20Approve();
