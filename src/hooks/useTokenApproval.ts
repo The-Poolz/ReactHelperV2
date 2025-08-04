@@ -40,7 +40,7 @@ export interface UseTokenApprovalReturn {
  */
 export function useTokenApproval(options: UseTokenApprovalOptions): UseTokenApprovalReturn {
   const { tokenAddress, spender } = options;
-  const {address: account} = useAccount();
+  const { address: account } = useAccount();
 
   const allowance = useERC20Allowance({
     tokenAddress,
@@ -58,7 +58,7 @@ export function useTokenApproval(options: UseTokenApprovalOptions): UseTokenAppr
           tokenAddress,
           spender,
           amount: amount ? BigInt(amount) : undefined,
-          ownder: account as `0x${string}`,
+          owner: account as `0x${string}`,
         });
       },
       isPending: approve.isPending,

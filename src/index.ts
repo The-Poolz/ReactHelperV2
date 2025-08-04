@@ -10,13 +10,15 @@ export type {
   MulticallCallUnion,
   MulticallResult,
   TypedWriteContract,
-  TypedReadContract
+  TypedReadContract,
+  PoolzContractObject,
 } from "./hooks/usePoolzContract";
 export { useTokenApproval } from "./hooks/useTokenApproval";
 export type { UseTokenApprovalReturn, UseTokenApprovalOptions } from "./hooks/useTokenApproval";
 
 // Exporting hooks and components related to ERC20 tokens
 export { useERC20 } from "./hooks/useERC20";
+export type { UseERC20Return } from "./hooks/useERC20";
 export type { ERC20BalanceParams, UseERC20BalanceReturn } from "./hooks/useERC20Balance";
 export type { ERC20InfoParams, IERC20Info } from "./hooks/useERC20Info";
 export type { ERC20AllowanceParams, UseERC20AllowanceReturn } from "./hooks/useERC20Allowance";

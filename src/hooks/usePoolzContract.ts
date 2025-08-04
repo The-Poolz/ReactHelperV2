@@ -52,7 +52,7 @@ export type PoolzContractMethods<T extends ContractName> = {
   multicall: (params: MulticallReadParams<T>) => Promise<MulticallResult[]>;
 };
 
-type PoolzContractObject = {
+export type PoolzContractObject = {
   [K in ContractName]: PoolzContractMethods<K>;
 };
 
@@ -123,6 +123,6 @@ export function usePoolzContract() {
   return {
     poolContract,
     poolzTokenAddress:
-      "0xbAeA9aBA1454DF334943951d51116aE342eAB255" as `0x${string}`,
+      "0xE14A2A1006B83F363569BC7b5b733191E919ca34" as `0x${string}`,
   };
 }
