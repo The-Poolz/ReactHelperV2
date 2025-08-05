@@ -37,6 +37,7 @@ export { useTokenBalance, useTokenBalances, useNativeBalance } from './hooks/use
 export type { TokenBalance, NativeBalance } from './contexts/BalanceContext';
 export { useSidNameForAddress } from "./hooks/useSidNameForAddress";
 export { useWalletConnection } from "./hooks/useWalletConnection";
+export { useTheSiwe } from "./hooks/useTheSiwe";
 
 export type {
   QueryHookResult,
