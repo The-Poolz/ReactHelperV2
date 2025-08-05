@@ -1,7 +1,7 @@
 export { PoolzProvider } from "./PoolzProvider";
 
-export { usePoolzContractInfo } from "./hooks/usePoolzContractInfo";
-export type { UsePoolzContractInfoReturn } from "./hooks/usePoolzContractInfo";
+export { getPoolzContractInfo } from "./utils/getPoolzContractInfo";
+export type { PoolzContractInfoReturn } from "./utils/getPoolzContractInfo";
 export { usePoolzApp } from "./hooks/usePoolzApp";
 export { usePoolzContract } from "./hooks/usePoolzContract";
 export type {
@@ -45,4 +45,4 @@ export type {
   WalletOption,
 } from "./types/hookTypes";
 export { getChainNativeSymbol } from './utils/balance-helper';
-export { getAvailableNets } from './utils/helpers';
+export * from './utils/helpers';
