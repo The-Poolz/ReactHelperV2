@@ -1,4 +1,4 @@
-import { formatUnits } from "viem";
+import { formatUnits, parseUnits } from "viem";
 import { contractsByChain } from "../contracts";
 import { ContractName } from "../contracts/contractTypes";
 
@@ -31,4 +31,12 @@ export const getAvailableNets = (contract: ContractName): number[] => {
   return Object.entries(contractsByChain)
     .filter(([, chainConfig]) => contract in chainConfig)
     .map(([chainId]) => Number(chainId));
+};
+
+export const fromWei = (inWei: string | bigint, decimals: number = 18): string => {
+  return formatUnits(BigInt(String(inWei)), decimals);
+};
+
+export const toWei = (inEth: string | number, decimals: number = 18): bigint => {
+  return parseUnits(String(inEth), decimals);
 };
