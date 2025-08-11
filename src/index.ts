@@ -9,10 +9,35 @@ export type {
   MulticallReadParams,
   MulticallCallUnion,
   MulticallResult,
-  TypedWriteContract,
-  TypedReadContract,
+  MulticallResults,
+  MulticallSuccess,
+  MulticallFailure,
   PoolzContractObject,
+  ContractReadFunction,
+  ContractWriteFunction,
+  ContractFunction,
+  ContractFunctionBuilder,
+  DynamicContractInterface,
+  BaseContractParams,
+  WriteResult,
+  WriteOptions,
 } from "./hooks/usePoolzContract";
+
+// Export contract types for advanced usage
+export type {
+  ContractName,
+  ContractFunctionName,
+  ContractReadFunctionName,
+  ContractWriteFunctionName,
+  ContractFunctionArgs,
+  ContractFunctionReturnType,
+  ContractSchemas,
+  ContractReadSchemas,
+  ContractWriteSchemas,
+  ContractReturnTypes,
+} from "./contracts/contractTypes";
+export { contractNames } from "./contracts/contractTypes";
+
 export { useTokenApproval } from "./hooks/useTokenApproval";
 export type { UseTokenApprovalReturn, UseTokenApprovalOptions } from "./hooks/useTokenApproval";
 
