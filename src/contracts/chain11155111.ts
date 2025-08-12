@@ -5,7 +5,6 @@ import { LockDealProviderAbi } from "../generated/abi/LockDealProvider";
 import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
 import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
 import { DaoStationAbi } from "../generated/abi/DaoStation";
-import { StakingManagerAbi } from "../generated/abi/StakingManager";
 
 export const chain11155111Contracts = {
   LockDealNFT: { address: "0x25E66861ADC9BBA4e539da90EbFb9c8cd0326EF2", abi: LockDealNFTAbi },
@@ -14,6 +13,5 @@ export const chain11155111Contracts = {
   LockDealProvider: { address: "0x398cc8B9d891fFEFA0E82EB0fb3845c19C887451", abi: LockDealProviderAbi },
   TimedDealProvider: { address: "0xc30405F76FCb8913d9A2719d19A2b1B7017CaE5b", abi: TimedDealProviderAbi },
   DispenserProvider: { address: "0x78012fc722660E22778af214f3bc560673f37721", abi: DispenserProviderAbi },
-  DaoStation: { address: "0x6a2B94EC32BE1Acce6dADdabE1c8b7DcA333B6a6", abi: DaoStationAbi },
-  StakingManager: { address: "0x153AA7818cBF29B52C1fbe90def08C779BB31B4E", abi: StakingManagerAbi }
+  DaoStation: { address: "0x6a2B94EC32BE1Acce6dADdabE1c8b7DcA333B6a6", abi: DaoStationAbi }
 } as const;

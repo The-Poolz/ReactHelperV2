@@ -2,12 +2,12 @@ import { useAccount, usePublicClient, useWriteContract } from "wagmi";
 import { getPoolzContractInfo } from "../utils/getPoolzContractInfo";
 import {
   ContractName,
-  ContractFunctionName,
   ContractReadFunctionName,
   ContractWriteFunctionName,
   contractNames,
-  ContractFunctionArgs,
-  ContractFunctionReturnType,
+  ContractReadSchemas,
+  ContractWriteSchemas,
+  ContractReturnTypes,
 } from "../contracts/contractTypes";
 import { WriteContractParameters } from "wagmi/actions";
 import { TransactionReceipt } from "viem";
@@ -17,27 +17,25 @@ export type MulticallSuccess<T = any> = { result: T; status: "success" };
 export type MulticallFailure = { error: Error; status: "failure" };
 export type MulticallResult<T = any> = MulticallSuccess<T> | MulticallFailure;
 
-export type MulticallCallUnion<T extends ContractName> = {
-  [F in ContractFunctionName<T>]: {
+export type MulticallReadUnion<T extends ContractName> = {
+  [F in ContractReadFunctionName<T>]: {
     functionName: F;
-    args?: ContractFunctionArgs<T, F>;
+    args?: ContractReadSchemas[T][F];
   } & Omit<
     WriteContractParameters,
     "address" | "abi" | "functionName" | "args"
   >;
-}[ContractFunctionName<T>];
+}[ContractReadFunctionName<T>];
 
-export type MulticallReadParams<T extends ContractName> = {
-  contracts: Array<MulticallCallUnion<T>>;
-};
-
-export type MulticallResults<
+export type MulticallReadResults<
   T extends ContractName,
-  Calls extends MulticallCallUnion<T>[]
+  Calls extends MulticallReadUnion<T>[]
 > = {
   [K in keyof Calls]: Calls[K] extends { functionName: infer F }
-    ? F extends ContractFunctionName<T>
-      ? MulticallResult<ContractFunctionReturnType<T, F>>
+    ? F extends ContractReadFunctionName<T>
+      ? F extends keyof ContractReturnTypes[T]
+        ? MulticallResult<ContractReturnTypes[T][F]>
+        : MulticallResult
       : MulticallResult
     : MulticallResult;
 };
@@ -50,17 +48,19 @@ export type BaseContractParams = Omit<
 // Write function result interface - conditional based on whether function has outputs
 export type WriteResult<
   T extends ContractName,
-  F extends ContractFunctionName<T>
-> = ContractFunctionReturnType<T, F> extends void
-  ? TransactionReceipt
-  : TransactionReceipt & { data: ContractFunctionReturnType<T, F> };
+  F extends ContractWriteFunctionName<T>
+> = F extends keyof ContractReturnTypes[T]
+  ? ContractReturnTypes[T][F] extends void
+    ? TransactionReceipt
+    : TransactionReceipt & { data: ContractReturnTypes[T][F] }
+  : TransactionReceipt;
 
 // Clean function interfaces without phantom types
 export type ContractReadFunction<
   T extends ContractName,
   F extends ContractReadFunctionName<T>
 > = {
-  read: () => Promise<ContractFunctionReturnType<T, F>>;
+  read: () => Promise<F extends keyof ContractReturnTypes[T] ? ContractReturnTypes[T][F] : any>;
 };
 
 export type WriteOptions = {
@@ -74,35 +74,53 @@ export type ContractWriteFunction<
   write: (options?: WriteOptions) => Promise<WriteResult<T, F>>;
 };
 
+// Union type for all contract functions
 export type ContractFunction<
   T extends ContractName,
-  F extends ContractFunctionName<T>
+  F extends ContractReadFunctionName<T> | ContractWriteFunctionName<T>
 > = F extends ContractReadFunctionName<T>
   ? ContractReadFunction<T, F>
   : F extends ContractWriteFunctionName<T>
   ? ContractWriteFunction<T, F>
   : never;
 
-// Type for the function builder that takes args and returns the function interface
-export type ContractFunctionBuilder<
+// Type for the read function builder - simplified
+export type ContractReadFunctionBuilder<
   T extends ContractName,
-  F extends ContractFunctionName<T>
+  F extends ContractReadFunctionName<T>
 > = (
-  params: {
-    args?: ContractFunctionArgs<T, F>;
+  params?: {
+    args?: ContractReadSchemas[T][F];
   } & BaseContractParams
-) => ContractFunction<T, F>;
+) => ContractReadFunction<T, F>;
 
-// Dynamic contract interface with all functions as properties
-export type DynamicContractInterface<T extends ContractName> = {
-  [F in ContractFunctionName<T>]: ContractFunctionBuilder<T, F>;
+// Type for the write function builder - simplified
+export type ContractWriteFunctionBuilder<
+  T extends ContractName,
+  F extends ContractWriteFunctionName<T>
+> = (
+  params?: {
+    args?: ContractWriteSchemas[T][F];
+  } & BaseContractParams
+) => ContractWriteFunction<T, F>;
+
+// Dynamic contract interface with separate read and write functions
+export type DynamicReadInterface<T extends ContractName> = {
+  [F in ContractReadFunctionName<T>]: ContractReadFunctionBuilder<T, F>;
 };
+
+export type DynamicWriteInterface<T extends ContractName> = {
+  [F in ContractWriteFunctionName<T>]: ContractWriteFunctionBuilder<T, F>;
+};
+
+export type DynamicContractInterface<T extends ContractName> =
+  DynamicReadInterface<T> & DynamicWriteInterface<T>;
 
 export type PoolzContractMethods<T extends ContractName> = {
   smcAddress: `0x${string}`;
-  multicall: <Calls extends MulticallCallUnion<T>[]>(params: {
+  multicall: <Calls extends MulticallReadUnion<T>[]>(params: {
     contracts: Calls;
-  }) => Promise<MulticallResults<T, Calls>>;
+  }) => Promise<MulticallReadResults<T, Calls>>;
 } & DynamicContractInterface<T>;
 
 export type PoolzContractObject = {
@@ -118,9 +136,9 @@ function buildContractMethods<T extends ContractName>(
 ): PoolzContractMethods<T> {
   const { smcAddress, abi } = getPoolzContractInfo({ chainId, contractName });
 
-  const multicall = async <Calls extends MulticallCallUnion<T>[]>(params: {
+  const multicall = async <Calls extends MulticallReadUnion<T>[]>(params: {
     contracts: Calls;
-  }): Promise<MulticallResults<T, Calls>> => {
+  }): Promise<MulticallReadResults<T, Calls>> => {
     if (!smcAddress || !abi || !publicClient) {
       throw new Error("PublicClient or contract info missing");
     }
@@ -132,18 +150,15 @@ function buildContractMethods<T extends ContractName>(
     }));
     const results = await publicClient.multicall({ contracts });
 
-    return results.map((result: any, index: number) => {
+    return results.map((result: any) => {
       if ("error" in result) {
         return { error: result.error, status: "failure" } as MulticallFailure;
       }
-      const functionName = params.contracts[index]
-        .functionName as ContractFunctionName<T>;
-      type ReturnType = ContractFunctionReturnType<T, typeof functionName>;
       return {
-        result: result.result as ReturnType,
+        result: result.result,
         status: "success",
-      } as MulticallSuccess<ReturnType>;
-    }) as MulticallResults<T, Calls>;
+      } as MulticallSuccess;
+    }) as MulticallReadResults<T, Calls>;
   };
 
   const dynamicInterface = {} as DynamicContractInterface<T>;
