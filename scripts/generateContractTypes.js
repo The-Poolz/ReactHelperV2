@@ -13,7 +13,6 @@ const outFile = path.resolve(__dirname, '../src/contracts/contractTypes.ts');
 
 const files = fs.readdirSync(abiDir).filter(f => f.endsWith('.ts'));
 
-const contractSchemas = [];
 const contractReadSchemas = [];
 const contractWriteSchemas = [];
 const contractReturnTypes = [];
@@ -22,7 +21,29 @@ const abiMapEntries = [];
 const contractMapEntries = [];
 
 // Helper function to convert Solidity type to TypeScript type
-function solidityToTSType(solidityType) {
+function solidityToTSType(solidityType, components = null) {
+  // Handle tuple[] specifically first (before general array handling)
+  if (solidityType === 'tuple[]' && components) {
+    // Handle array of tuples with components
+    const tupleFields = components.map(comp => {
+      const fieldType = solidityToTSType(comp.type, comp.components);
+      return comp.name ? `${comp.name}: ${fieldType}` : fieldType;
+    }).join('; ');
+    return `{ ${tupleFields} }[]`;
+  }
+  if (solidityType === 'tuple' && components) {
+    // Handle tuple type with components
+    const tupleFields = components.map(comp => {
+      const fieldType = solidityToTSType(comp.type, comp.components);
+      return comp.name ? `${comp.name}: ${fieldType}` : fieldType;
+    }).join('; ');
+    return `{ ${tupleFields} }`;
+  }
+  // Handle other array types
+  if (solidityType.endsWith('[]')) {
+    const baseType = solidityType.slice(0, -2);
+    return `${solidityToTSType(baseType)}[]`;
+  }
   if (solidityType.startsWith('uint') || solidityType.startsWith('int')) {
     return 'bigint';
   }
@@ -38,10 +59,6 @@ function solidityToTSType(solidityType) {
   if (solidityType === 'bytes' || solidityType.startsWith('bytes')) {
     return '`0x${string}`';
   }
-  if (solidityType.endsWith('[]')) {
-    const baseType = solidityType.slice(0, -2);
-    return `${solidityToTSType(baseType)}[]`;
-  }
   // Default fallback
   return 'any';
 }
@@ -49,30 +66,30 @@ function solidityToTSType(solidityType) {
 // Helper function to generate function args type
 function generateArgsType(inputs) {
   if (inputs.length === 0) return 'readonly []';
-  
+
   const args = inputs.map(input => {
-    const tsType = solidityToTSType(input.type);
+    const tsType = solidityToTSType(input.type, input.components);
     return input.name ? `${input.name}: ${tsType}` : tsType;
   }).join(', ');
-  
+
   return `readonly [${args}]`;
 }
 
 // Helper function to generate return type
 function generateReturnType(outputs) {
   if (!outputs || outputs.length === 0) return 'void';
-  
+
   if (outputs.length === 1) {
-    return solidityToTSType(outputs[0].type);
+    return solidityToTSType(outputs[0].type, outputs[0].components);
   }
-  
-  return `[${outputs.map(output => solidityToTSType(output.type)).join(', ')}]`;
+
+  return `[${outputs.map(output => solidityToTSType(output.type, output.components)).join(', ')}]`;
 }
 
 // Helper function to check if function is read-only
 function isReadOnlyFunction(func) {
-  return func.stateMutability === 'view' || 
-         func.stateMutability === 'pure' || 
+  return func.stateMutability === 'view' ||
+         func.stateMutability === 'pure' ||
          func.stateMutability === 'constant';
 }
 
@@ -95,7 +112,6 @@ for (const file of files) {
     functionsByName[func.name].push(func);
   });
 
-  const functionEntries = [];
   const readFunctionEntries = [];
   const writeFunctionEntries = [];
   const returnTypeEntries = [];
@@ -112,8 +128,6 @@ for (const file of files) {
       const func = funcs[0];
       const argsType = generateArgsType(func.inputs || []);
 
-      functionEntries.push(`    '${funcName}': ${argsType};`);
-
       if (isReadOnly) {
         readFunctionEntries.push(`    '${funcName}': ${argsType};`);
       } else {
@@ -126,8 +140,6 @@ for (const file of files) {
       const overloadTypes = funcs.map(func => generateArgsType(func.inputs || []));
       const unionType = overloadTypes.join(' | ');
 
-      functionEntries.push(`    '${funcName}': ${unionType};`);
-
       if (isReadOnly) {
         readFunctionEntries.push(`    '${funcName}': ${unionType};`);
       } else {
@@ -138,7 +150,6 @@ for (const file of files) {
     }
   });
 
-  contractSchemas.push(`  ${contractName}: {\n${functionEntries.join('\n')}\n  };`);
   contractReadSchemas.push(`  ${contractName}: {\n${readFunctionEntries.join('\n')}\n  };`);
   contractWriteSchemas.push(`  ${contractName}: {\n${writeFunctionEntries.join('\n')}\n  };`);
   contractReturnTypes.push(`  ${contractName}: {\n${returnTypeEntries.join('\n')}\n  };`);
@@ -153,11 +164,6 @@ const contractNamesConst = `export const contractNames = [${contractNames.map(na
 
 const content = `// AUTO-GENERATED FILE. DO NOT EDIT.
 // Run scripts/generateContractTypes.js to update.
-
-// Contract schemas with function names and args combined
-export type ContractSchemas = {
-${contractSchemas.join('\n')}
-};
 
 // Read-only functions
 export type ContractReadSchemas = {
@@ -179,19 +185,8 @@ ${contractNamesConst}
 export type ContractName = typeof contractNames[number];
 
 // Utility types extracted from schemas
-export type ContractFunctionName<T extends ContractName> = keyof ContractSchemas[T];
 export type ContractReadFunctionName<T extends ContractName> = keyof ContractReadSchemas[T];
 export type ContractWriteFunctionName<T extends ContractName> = keyof ContractWriteSchemas[T];
-
-export type ContractFunctionArgs<
-  T extends ContractName,
-  F extends ContractFunctionName<T>
-> = ContractSchemas[T][F];
-
-export type ContractFunctionReturnType<
-  T extends ContractName,
-  F extends ContractFunctionName<T>
-> = F extends keyof ContractReturnTypes[T] ? ContractReturnTypes[T][F] : any;
 
 import { Abi } from "viem";
 // ABI mappings
