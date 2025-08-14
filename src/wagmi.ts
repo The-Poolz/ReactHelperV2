@@ -88,7 +88,10 @@ export const config: any = createConfig({
   chains: [bscTestnet, base, sepolia, avalanche, mainnet, manta, polygon, unichain, telos, moonbeam, mantaTestnet, viction, neonMainnet, bsc, arbitrum], //poolz chains
   connectors: createConnectors(),
   client({ chain }) {
-    return createClient({ chain, transport: custom(window?.ethereum) });
+    const provider = typeof window !== "undefined" && window.ethereum
+      ? window.ethereum
+      : { request: async () => null };
+    return createClient({ chain, transport: custom(provider) });
   },
 });
 
