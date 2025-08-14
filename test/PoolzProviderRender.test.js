@@ -59,7 +59,6 @@ describe("PoolzProvider", () => {
       "wagmi/connectors": {
         injected: () => {},
         coinbaseWallet: () => {},
-        metaMask: () => {},
         walletConnect: () => () => {},
       },
       "wagmi/chains": new Proxy({}, { get: () => ({}) }),
