@@ -1,56 +1,78 @@
 import { createClient } from "viem";
-import { http, createConfig } from "wagmi";
+import { custom, createConfig } from "wagmi";
 import { bscTestnet, base, sepolia, avalanche, mainnet, manta, polygon, unichain, telos, moonbeam, mantaTestnet, viction, neonMainnet, bsc, arbitrum } from "wagmi/chains";
-import { coinbaseWallet, metaMask, injected } from "wagmi/connectors";
+import { coinbaseWallet, injected } from "wagmi/connectors";
 
+type WalletConfig = {
+  id: string;
+  name: string;
+  installUrl: string;
+  installed: boolean;
+  connector: () => any;
+};
 
-export const walletConfigs: Record<string, { name: string; connector: () => any; installUrl: string }> = {
-  metamask: {
-    name: "MetaMask",
-    installUrl: "https://metamask.io/",
-    connector: () => metaMask({
-      dappMetadata: {
-        name: "Poolz Interface",
-        url: "https://www.poolz.finance/",
-        iconUrl: "https://www.poolz.finance/favicon.ico",
+type InjectedWalletConfigParams = {
+  id: string;
+  name: string;
+  installUrl: string;
+  providerKey: string;
+  installed: boolean;
+};
+
+function createInjectedWallet({ id, name, installUrl, providerKey, installed }: InjectedWalletConfigParams): WalletConfig {
+  return {
+    id,
+    name,
+    installUrl,
+    installed,
+    connector: () => injected({
+      target() {
+        return {
+          id,
+          name,
+          provider: typeof window !== "undefined" ? (window as any)?.[providerKey] : undefined,
+        };
       },
     }),
-  },
-  coinbase: {
+  };
+}
+
+function createCoinbaseWallet(): WalletConfig {
+  return {
+    id: "coinbaseWalletSDK",
     name: "Coinbase Wallet",
     installUrl: "https://wallet.coinbase.com/",
     connector: () => coinbaseWallet({
       appName: "Poolz Interface",
       appLogoUrl: "https://www.poolz.finance/favicon.ico",
     }),
-  },
-  binance: {
-    name: "Binance Wallet",
-    installUrl: "https://www.binance.org/en/binance-wallet",
-    connector: () => injected({
-      target() {
-        return {
-          id: "binance",
-          name: "Binance Wallet",
-          provider: typeof window !== "undefined" ? window.BinanceChain : undefined,
-        };
-      },
-    }),
-  },
-  trust: {
-    name: "Trust Wallet",
-    installUrl: "https://trustwallet.com/",
-    connector: () => injected({
-      target() {
-        return {
-          id: "trust",
-          name: "Trust Wallet",
-          provider: typeof window !== "undefined" ? window.trustwallet : undefined,
-        };
-      },
-    }),
-  },
+    installed: typeof window !== "undefined" ? Boolean(window?.ethereum?.isCoinbaseWallet) :   false,
+  };
+}
 
+export const walletConfigs: Record<string, WalletConfig> = {
+  metamask: createInjectedWallet({
+    id: "io.metamask",
+    name: "MetaMask",
+    installUrl: "https://metamask.io/download/",
+    providerKey: "ethereum",
+    installed: typeof window !== "undefined" ? Boolean(window?.ethereum?.isMetaMask) : false,
+  }),
+  binance: createInjectedWallet({
+    id: "binance",
+    name: "Binance Wallet",
+    installUrl: "https://www.binance.org/en",
+    providerKey: "BinanceChain",
+    installed: typeof window !== "undefined" ? Boolean(window?.BinanceChain) : false,
+  }),
+  trust: createInjectedWallet({
+    id: "trust",
+    name: "Trust Wallet",
+    installUrl: "https://trustwallet.com/download",
+    providerKey: "trustwallet",
+    installed: typeof window !== "undefined" ? Boolean(window?.trustwallet) : false,
+  }),
+  coinbase: createCoinbaseWallet(),
 };
 
 const createConnectors = () => {
@@ -66,11 +88,10 @@ export const config: any = createConfig({
   chains: [bscTestnet, base, sepolia, avalanche, mainnet, manta, polygon, unichain, telos, moonbeam, mantaTestnet, viction, neonMainnet, bsc, arbitrum], //poolz chains
   connectors: createConnectors(),
   client({ chain }) {
-    return createClient({ chain, transport: http() });
+    return createClient({ chain, transport: custom(window?.ethereum) });
   },
 });
 
-// Clean production build - debug logs removed
 
 declare module "wagmi" {
   interface Register {

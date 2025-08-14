@@ -1,13 +1,16 @@
 import { useConnect, useDisconnect, useAccount } from "wagmi";
 import type { Connector } from "wagmi";
 import type { WalletConnectionResult, WalletOption } from "../types/hookTypes";
+import { walletConfigs } from "../wagmi";
 
-// Wallet install URLs mapping
-const walletInstallUrls: Record<string, string> = {
-  metaMaskSDK: "https://metamask.io/download/",
-  coinbaseWalletSDK: "https://wallet.coinbase.com/",
-  binance: "https://www.binance.org/en",
-  trust: "https://trustwallet.com/download",
+const getInstallUrl = (id: string): string | undefined => {
+  const config = Object.values(walletConfigs).find((cfg) => cfg.id === id);
+  return config?.installUrl;
+};
+
+const isWalletInstalled = (connectorId: string): boolean => {
+  const config = Object.values(walletConfigs).find(cfg => cfg.id === connectorId);
+  return config?.installed ?? false;
 };
 
 export const useWalletConnection = (): WalletConnectionResult => {
@@ -15,31 +18,18 @@ export const useWalletConnection = (): WalletConnectionResult => {
   const { disconnect } = useDisconnect();
   const { address, isConnected, isConnecting } = useAccount();
 
-  const isWalletInstalled = (connectorId: string): boolean => {
-    if (typeof window === "undefined") return false;
-
-    switch (connectorId) {
-      case "metaMaskSDK":
-        return typeof window.ethereum !== "undefined" && window.ethereum.isMetaMask;
-      case "coinbaseWalletSDK":
-        return typeof window.ethereum !== "undefined" && window.ethereum.isCoinbaseWallet;
-      case "binance":
-        return typeof window.BinanceChain !== "undefined";
-      case "trust":
-        return typeof window.trustwallet !== "undefined";
-      default:
-        return false;
-    }
-  };
-
   // Get wallet options directly from wagmi connectors
   const getWalletOptions = (): WalletOption[] => {
-    return connectors.map((connector: Connector) => ({
+    const uniqueConnectors = connectors.filter(
+      (c: Connector, idx: number, arr: Connector[]) =>
+        arr.findIndex((x: Connector) => x.id === c.id) === idx
+    );
+    return uniqueConnectors.map((connector: Connector) => ({
       id: connector.id,
       name: connector.name,
       connect: () => connect({ connector }),
       installed: isWalletInstalled(connector.id),
-      installUrl: walletInstallUrls[connector.id],
+      installUrl: getInstallUrl(connector.id),
     }));
   };
 
