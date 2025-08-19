@@ -67,11 +67,20 @@ export type WriteOptions = {
   fetchReturnData?: boolean;
 };
 
+export type GasEstimate = {
+  gasLimit: bigint;
+  gasPrice: bigint;
+  gasFee: bigint;
+  hasSufficientBalance: boolean;
+  currentBalance: bigint;
+};
+
 export type ContractWriteFunction<
   T extends ContractName,
   F extends ContractWriteFunctionName<T>
 > = {
   write: (options?: WriteOptions) => Promise<WriteResult<T, F>>;
+  estimateGas: () => Promise<GasEstimate>;
 };
 
 // Union type for all contract functions
@@ -237,6 +246,38 @@ function buildContractMethods<T extends ContractName>(
             }
 
             return receipt;
+          },
+          estimateGas: async (): Promise<GasEstimate> => {
+            if (!smcAddress || !abi || !account) {
+              throw new Error("Wallet or contract info missing");
+            }
+
+            const gasLimit = await publicClient.estimateContractGas({
+              address: smcAddress,
+              abi,
+              functionName,
+              args: args || [],
+              account,
+              ...additionalParams,
+            } as any);
+
+            const gasPrice = await publicClient.getGasPrice();
+
+            const gasFee = gasLimit * gasPrice;
+
+            const currentBalance = await publicClient.getBalance({
+              address: account,
+            });
+
+            const hasSufficientBalance = currentBalance >= gasFee;
+
+            return {
+              gasLimit,
+              gasPrice,
+              gasFee: BigInt(gasFee),
+              hasSufficientBalance,
+              currentBalance,
+            };
           },
         };
       }

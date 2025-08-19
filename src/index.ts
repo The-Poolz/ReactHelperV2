@@ -24,6 +24,7 @@ export type {
   BaseContractParams,
   WriteResult,
   WriteOptions,
+  GasEstimate,
 } from "./hooks/usePoolzContract";
 
 // Export contract types for advanced usage
