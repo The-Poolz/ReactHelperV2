@@ -91,6 +91,7 @@ export const config: any = createConfig({
     const provider = typeof window !== "undefined" && window.ethereum
       ? window.ethereum
       : { request: async () => null };
+    if(provider) provider._log.warn = () => {}; // Suppress warnings in the console
     return createClient({ chain, transport: custom(provider) });
   },
 });
