@@ -7,6 +7,7 @@ import { SimpleBuilderAbi } from "../generated/abi/SimpleBuilder";
 import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
 import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
 import { LockedDealV2Abi } from "../generated/abi/LockedDealV2";
+import { WhiteListAbi } from "../generated/abi/WhiteList";
 
 export const chain137Contracts = {
   LockDealNFT: { address: "0x9C36786836A594e3b355bA572A5Cd6841F69d86e", abi: LockDealNFTAbi },
@@ -17,5 +18,6 @@ export const chain137Contracts = {
   SimpleBuilder: { address: "0x8d82b419a15deb20c43934f5a40ecf876df37e93", abi: SimpleBuilderAbi },
   DispenserProvider: { address: "0x55e7bBC157D3Ce3c9b507ec0A7948782e44BB29b", abi: DispenserProviderAbi },
   MultiSenderV2: { address: "0x9c8f78e0aeab8190c9d1df7bed0b26c1edcb8de6", abi: MultiSenderV2Abi },
-  LockedDealV2: { address: "0x9D13B213852669077131f8A24A676f27ab0C2931", abi: LockedDealV2Abi }
+  LockedDealV2: { address: "0x9D13B213852669077131f8A24A676f27ab0C2931", abi: LockedDealV2Abi },
+  WhiteList: { address: "0xD39eA2C72B99E65F1CDa47E727b453964B45e036", abi: WhiteListAbi }
 } as const;

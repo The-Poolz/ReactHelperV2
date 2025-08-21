@@ -12,6 +12,9 @@ import { DelayVaultAbi } from "../generated/abi/DelayVault";
 import { DelayVaultProviderAbi } from "../generated/abi/DelayVaultProvider";
 import { TokenNFTConnectorAbi } from "../generated/abi/TokenNFTConnector";
 import { DelayVaultMigratorAbi } from "../generated/abi/DelayVaultMigrator";
+import { PoolzBackAbi } from "../generated/abi/PoolzBack";
+import { SignUpAbi } from "../generated/abi/SignUp";
+import { WhiteListAbi } from "../generated/abi/WhiteList";
 
 export const chain56Contracts = {
   LockDealNFT: { address: "0x3d2C83bbBbfB54087d46B80585253077509c21AE", abi: LockDealNFTAbi },
@@ -27,5 +30,8 @@ export const chain56Contracts = {
   DelayVault: { address: "0x5eb57B1210338b13E3D5572d5e1670285Aa71702", abi: DelayVaultAbi },
   DelayVaultProvider: { address: "0xeb88Ff7799E0e7b187D98232336722ec9936B86D", abi: DelayVaultProviderAbi },
   TokenNFTConnector: { address: "0x23f561B92AAa13d7C15A1038297Cd59bAe6C47c5", abi: TokenNFTConnectorAbi },
-  DelayVaultMigrator: { address: "0x10F1DA58d6d25B5909d5897ea3BA3E76fcE774A5", abi: DelayVaultMigratorAbi }
+  DelayVaultMigrator: { address: "0x10F1DA58d6d25B5909d5897ea3BA3E76fcE774A5", abi: DelayVaultMigratorAbi },
+  PoolzBack: { address: "0xCc8f6A82Ff034C15dFDAcBcab29F7Ea28C616EF7", abi: PoolzBackAbi },
+  SignUp: { address: "0x41b56bF3b21C53F6394a44A2ff84f1d2bBC27841", abi: SignUpAbi },
+  WhiteList: { address: "0x06eD6E9A15D1bae5835544E305e43f5cAB5DB525", abi: WhiteListAbi }
 } as const;

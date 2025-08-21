@@ -1,6 +1,6 @@
 import { createClient } from "viem";
 import { custom, createConfig } from "wagmi";
-import { bscTestnet, base, sepolia, avalanche, mainnet, manta, polygon, unichain, telos, moonbeam, mantaTestnet, viction, neonMainnet, bsc, arbitrum } from "wagmi/chains";
+import { bscTestnet, sepolia, arbitrum, avalanche, manta, unichain, moonbeam, bsc, mantaTestnet, polygon, viction, base, neonMainnet, telos, mainnet } from "wagmi/chains";
 import { coinbaseWallet, injected } from "wagmi/connectors";
 
 type WalletConfig = {
@@ -85,12 +85,13 @@ const createConnectors = () => {
 };
 
 export const config: any = createConfig({
-  chains: [bscTestnet, base, sepolia, avalanche, mainnet, manta, polygon, unichain, telos, moonbeam, mantaTestnet, viction, neonMainnet, bsc, arbitrum], //poolz chains
+  chains: [bscTestnet, sepolia, arbitrum, avalanche, manta, unichain, moonbeam, bsc, mantaTestnet, polygon, viction, base, neonMainnet, telos, mainnet], //poolz chains
   connectors: createConnectors(),
   client({ chain }) {
     const provider = typeof window !== "undefined" && window.ethereum
       ? window.ethereum
       : { request: async () => null };
+    if(provider) provider._log.warn = () => {}; // Suppress warnings in the console
     return createClient({ chain, transport: custom(provider) });
   },
 });
