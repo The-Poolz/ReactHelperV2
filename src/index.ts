@@ -3,7 +3,9 @@ export { PoolzProvider } from "./PoolzProvider";
 export { getPoolzContractInfo } from "./utils/getPoolzContractInfo";
 export type { PoolzContractInfoReturn } from "./utils/getPoolzContractInfo";
 export { useWalletClient } from "wagmi";
-export { usePoolzApp } from "./hooks/usePoolzApp";
+export type { UseAccountReturnType } from "wagmi";
+export type { Chain } from "viem/chains";
+export { watchAccountChange, usePoolzApp } from "./hooks/usePoolzApp";
 export { usePoolzContract } from "./hooks/usePoolzContract";
 export type {
   PoolzContractMethods,
