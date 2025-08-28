@@ -17,8 +17,13 @@ const query = `query Contract($pagination: PaginationArg) {
     }
   }
   contractsOnChains(pagination: $pagination) {
+    RPC
+    Explorer
+    Decimals
     Chain {
       chainId
+      name
+      symbol
     }
     Contracts(pagination: $pagination) {
       Address
@@ -72,6 +77,7 @@ async function main() {
 
   const chains = [];
   const contractsByChain = {};
+  const customChains = {};
   const contractEntries = Array.isArray(data.contractsOnChains)
     ? data.contractsOnChains
     : data.contractsOnChains
@@ -82,6 +88,16 @@ async function main() {
     const id = entry.Chain.chainId;
     if (id == null) continue;
     chains.push(id);
+
+    customChains[id] = {
+      id,
+      name: entry.Chain.name || `Chain unknown`,
+      decimals: entry.Decimals || 18,
+      symbol: entry.Chain.symbol || 'unknown',
+      rpcUrls: [entry.RPC] || [],
+      blockExplorers: [entry.Explore] || []
+    };
+
     const map = contractsByChain[id] || {};
     const cList = Array.isArray(entry.Contracts) ? entry.Contracts : entry.Contracts ? [entry.Contracts] : [];
     for (const c of cList) {
@@ -105,17 +121,91 @@ async function main() {
       chainIdToName[chain.id] = name;
     }
   }
-  const chainNames = chains.map((id) => chainIdToName[id]).filter(Boolean);
-  if (chainNames.length) {
+
+  const existingChainNames = [];
+  const missingChains = [];
+
+  for (const id of chains) {
+    if (chainIdToName[id]) {
+      existingChainNames.push(chainIdToName[id]);
+    } else {
+      missingChains.push(id);
+    }
+  }
+
+  // Create custom chain configs for missing chains
+  let customChainConfigs = '';
+  const customChainNames = [];
+
+  if (missingChains.length > 0) {
+    const customConfigs = missingChains.map(id => {
+      const chainInfo = customChains[id];
+      const chainName = `customChain${id}`;
+      customChainNames.push(chainName);
+
+      return `export const ${chainName} = {
+  id: ${id},
+  name: "${chainInfo.name}",
+  nativeCurrency: {
+    decimals: ${chainInfo.decimals || 18},
+    name: "${chainInfo.symbol}",
+    symbol: "${chainInfo.symbol}",
+  },
+  rpcUrls: {
+    default: {
+      http: ${JSON.stringify(chainInfo.rpcUrls.length > 0 ? chainInfo.rpcUrls : [`https://rpc-${id}.example.com`])},
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "${chainInfo.name} Scan",
+      url: "${chainInfo.blockExplorers?.[0] || `https://explorer-${id}.example.com`}",
+    },
+  },
+} as const;`;
+    }).join('\n\n');
+
+    customChainConfigs = `\n// Custom chain configs for chains not available in viem/chains\n${customConfigs}\n`;
+  }
+
+  const allChainNames = [...existingChainNames, ...customChainNames];
+  const uniqueChainNames = [...new Set(allChainNames)];
+
+  if (uniqueChainNames.length) {
     const wagmiFile = path.resolve(__dirname, "../src/wagmi.ts");
     let wagmiContent = await readFile(wagmiFile, "utf8");
-    wagmiContent = wagmiContent.replace(
-      /import {[^}]+} from "wagmi\/chains";/,
-      `import { ${chainNames.join(", ")} } from "wagmi/chains";`,
-    );
+
+    // Remove existing custom chain configs to avoid duplicates (but keep imports)
+    const customChainRegex = /\/\/ Custom chain configs for chains not available in viem\/chains[\s\S]*?(?=\ntype WalletConfig)/g;
+    wagmiContent = wagmiContent.replace(customChainRegex, '\n');
+
+    // Ensure viem/chains import exists and update it
+    const viemChainsImportRegex = /import {[^}]*} from "wagmi\/chains";/;
+    if (existingChainNames.length > 0) {
+      const newImport = `import { ${[...new Set(existingChainNames)].join(", ")} } from "wagmi/chains";`;
+      if (viemChainsImportRegex.test(wagmiContent)) {
+        wagmiContent = wagmiContent.replace(viemChainsImportRegex, newImport);
+      } else {
+        // Add import after connectors import
+        wagmiContent = wagmiContent.replace(
+          /(import.*from "wagmi\/connectors";)/,
+          `$1\n${newImport}`
+        );
+      }
+    }
+
+    // Add custom chain configs after connectors import
+    if (customChainConfigs) {
+      wagmiContent = wagmiContent.replace(
+        /(import.*from "wagmi\/connectors";\s*)/,
+        `$1${customChainConfigs}\n`
+      );
+    }
+
+    // Update chains array
     wagmiContent = wagmiContent.replace(
       /chains: \[[^\]]+\], ?\/\/poolz chains/,
-      `chains: [${chainNames.join(", ")}], //poolz chains`,
+      `chains: [${uniqueChainNames.join(", ")}], //poolz chains`,
     );
     await writeFile(wagmiFile, wagmiContent);
     console.log(`Updated ${wagmiFile}`);
