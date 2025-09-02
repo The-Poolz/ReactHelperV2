@@ -1,5 +1,6 @@
 import { useAccount, usePublicClient, useWriteContract } from "wagmi";
 import { getPoolzContractInfo } from "../utils/getPoolzContractInfo";
+import { safeMulticall } from "../utils/multicall-helper";
 import {
   ContractName,
   ContractReadFunctionName,
@@ -157,11 +158,11 @@ function buildContractMethods<T extends ContractName>(
       functionName: c.functionName,
       args: c.args || [],
     }));
-    const results = await publicClient.multicall({ contracts });
+    const results = await safeMulticall({ client: publicClient, contracts });
 
-    return results.map((result: any) => {
-      if ("error" in result) {
-        return { error: result.error, status: "failure" } as MulticallFailure;
+    return results.map((result) => {
+      if (result.status === "failure") {
+        return { error: result.error!, status: "failure" } as MulticallFailure;
       }
       return {
         result: result.result,

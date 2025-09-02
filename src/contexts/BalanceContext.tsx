@@ -1,13 +1,19 @@
-import React, { createContext, useContext, useCallback, useEffect, useState } from 'react';
-import { useAccount, useConfig, usePublicClient } from 'wagmi';
-import { multicall } from 'wagmi/actions';
-import { formatUnits } from 'viem';
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import { useAccount, useConfig, usePublicClient } from "wagmi";
+import { safeMulticall } from "../utils/multicall-helper";
+import { formatUnits } from "viem";
 import {
   parseMulticallResults,
   getChainNativeSymbol,
   prepareMulticallContracts,
   lowerCaseAddresses,
-} from '../utils/balance-helper';
+} from "../utils/balance-helper";
 
 export interface TokenBalance {
   address: string;
@@ -41,7 +47,7 @@ const BalanceContext = createContext<BalanceContextType | undefined>(undefined);
 export const useBalanceContext = () => {
   const context = useContext(BalanceContext);
   if (!context) {
-    throw new Error('useBalanceContext must be used within a BalanceProvider');
+    throw new Error("useBalanceContext must be used within a BalanceProvider");
   }
   return context;
 };
@@ -63,16 +69,18 @@ export const BalanceProvider: React.FC<BalanceProviderProps> = ({
   const [balances, setBalances] = useState<Record<string, TokenBalance>>({});
   const [nativeBalance, setNativeBalance] = useState<NativeBalance>({
     balance: 0n,
-    formattedBalance: '0',
-    symbol: 'BNB',
+    formattedBalance: "0",
+    symbol: "BNB",
     isLoading: false,
   });
-  const [trackedAddresses, setTrackedAddresses] = useState(new Set(tokenAddresses));
+  const [trackedAddresses, setTrackedAddresses] = useState(
+    new Set(tokenAddresses)
+  );
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const addTokenAddress = useCallback((address: string) => {
     const normalizedAddress = address.toLowerCase();
-    setTrackedAddresses(prev => new Set([...prev, normalizedAddress]));
+    setTrackedAddresses((prev) => new Set([...prev, normalizedAddress]));
   }, []);
 
   // Fetch balances for all tracked addresses
@@ -84,21 +92,18 @@ export const BalanceProvider: React.FC<BalanceProviderProps> = ({
     try {
       const addressArray = lowerCaseAddresses(trackedAddresses);
       const contracts = prepareMulticallContracts(addressArray, account);
-      const results = await multicall(config, {
-        contracts,
-        chainId: chainId as any,
-      });
-      const parsedBalances = parseMulticallResults(addressArray, results)
+      const results = await safeMulticall({ client: publicClient, contracts });
+      const parsedBalances = parseMulticallResults(addressArray, results);
       setBalances(parsedBalances);
     } catch (error) {
-      console.error('Error fetching balances:', error);
-      setBalances(prev => {
+      console.error("Error fetching balances:", error);
+      setBalances((prev) => {
         const newBalances = { ...prev };
-        Array.from(trackedAddresses).forEach(addr => {
+        Array.from(trackedAddresses).forEach((addr) => {
           newBalances[addr] = {
             ...newBalances[addr],
             isLoading: false,
-            error: error instanceof Error ? error.message : 'Unknown error',
+            error: error instanceof Error ? error.message : "Unknown error",
           };
         });
         return newBalances;
@@ -110,7 +115,7 @@ export const BalanceProvider: React.FC<BalanceProviderProps> = ({
 
   const refreshNativeBalance = useCallback(async () => {
     if (!account || !publicClient) return;
-    setNativeBalance(prev => ({ ...prev, isLoading: true }));
+    setNativeBalance((prev) => ({ ...prev, isLoading: true }));
     try {
       const balance = await publicClient.getBalance({ address: account });
       const formattedBalance = formatUnits(balance, 18);
@@ -122,11 +127,11 @@ export const BalanceProvider: React.FC<BalanceProviderProps> = ({
         isLoading: false,
       });
     } catch (error) {
-      console.error('Error fetching native balance:', error);
-      setNativeBalance(prev => ({
+      console.error("Error fetching native balance:", error);
+      setNativeBalance((prev) => ({
         ...prev,
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
       }));
     }
   }, [account, publicClient, chainId, config]);
@@ -154,7 +159,14 @@ export const BalanceProvider: React.FC<BalanceProviderProps> = ({
     }, refreshInterval);
 
     return () => clearInterval(interval);
-  }, [refreshInterval, account, chainId, trackedAddresses, refreshBalances, refreshNativeBalance]);
+  }, [
+    refreshInterval,
+    account,
+    chainId,
+    trackedAddresses,
+    refreshBalances,
+    refreshNativeBalance,
+  ]);
 
   return (
     <BalanceContext.Provider
