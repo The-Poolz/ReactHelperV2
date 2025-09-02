@@ -10,7 +10,7 @@ import {
   getERC20Balance,
   useERC20Balance,
 } from "./useERC20Balance";
-import { getERC20Info } from "./useERC20Info";
+import { ERC20InfoParams, getERC20Info, IERC20Info } from "./useERC20Info";
 
 export type UseERC20Return = {
   useBalance: typeof useERC20Balance;
@@ -18,7 +18,7 @@ export type UseERC20Return = {
   useAllowance: typeof useERC20Allowance;
   approve: ReturnType<typeof useERC20Approve>["mutateAsync"];
   approveState: Omit<ReturnType<typeof useERC20Approve>, "mutateAsync">;
-  tokenInfo: typeof getERC20Info;
+  tokenInfo: (params: ERC20InfoParams) => Promise<IERC20Info>;
   allowance: (params: ERC20AllowanceParams) => Promise<string>;
 };
 
@@ -35,7 +35,7 @@ export function useERC20(): UseERC20Return {
     useAllowance: useERC20Allowance,
     approve: mutateAsync,
     approveState,
-    tokenInfo: getERC20Info,
+    tokenInfo: (params) => getERC20Info({ ...params, client: publicClient }),
     allowance: (params: ERC20AllowanceParams) => {
       return getERC20Allowance({ ...params, publicClient });
     },
