@@ -45,42 +45,37 @@ function shallowRender(element) {
 }
 
 describe("PoolzProvider", () => {
-  it("supplies wagmi config to WagmiProvider", () => {
+  it("renders children and passes props to BalanceProvider", () => {
     const wagmiMock = {};
-    let received;
+    let receivedConfig;
     wagmiMock.WagmiProvider = ({ config, children }) => {
-      received = config;
+      receivedConfig = config;
       return children;
     };
-    wagmiMock.useConfig = () => received;
+
+    let receivedBalanceProps;
+    const BalanceProviderMock = ({ children, tokenAddresses, refreshInterval }) => {
+      receivedBalanceProps = { tokenAddresses, refreshInterval };
+      return children;
+    };
+
+    const PoolzAppProviderMock = ({ children }) => children;
 
     const commonMocks = {
-      wagmi: { createConfig: (opts) => ({ opts }), http: () => {} },
-      "wagmi/connectors": {
-        injected: () => {},
-        coinbaseWallet: () => {},
-        walletConnect: () => () => {},
-      },
-      "wagmi/chains": new Proxy({}, { get: () => ({}) }),
-      viem: { createClient: () => ({}) },
+      wagmi: wagmiMock,
       react: React,
     };
 
-    const configModule = compileTs(path.join("src", "wagmi.ts"), commonMocks);
+    const configModule = { config: { test: true } };
     const ProviderModule = compileTs(path.join("src", "PoolzProvider.tsx"), {
       ...commonMocks,
-      wagmi: wagmiMock,
       "./wagmi": configModule,
       "./contexts/BalanceContext": {
-        BalanceProvider: ({ children }) => children,
+        BalanceProvider: BalanceProviderMock,
         useBalanceContext: () => ({}),
       },
-      "./utils/balance-helper": {
-        normalizeTokenAddresses: () => [],
-        buildTokenMulticallContracts: () => [],
-        setTokenBalancesLoading: () => ({}),
-        parseTokenMulticallResults: () => ({}),
-        getChainNativeSymbol: () => "ETH",
+      "./contexts/PoolzAppContext": {
+        PoolzAppProvider: PoolzAppProviderMock,
       },
       "@tanstack/react-query": {
         QueryClient: class {},
@@ -88,7 +83,20 @@ describe("PoolzProvider", () => {
       },
     });
 
-    shallowRender(React.createElement(ProviderModule.PoolzProvider, null, React.createElement("div")));
-    assert.strictEqual(wagmiMock.useConfig(), configModule.config);
+    const testTokenAddresses = ["0x123", "0x456"];
+    const testRefreshInterval = 5000;
+    const child = React.createElement("div", { id: "test-child" });
+    shallowRender(
+      React.createElement(
+        ProviderModule.PoolzProvider,
+        { tokenAddresses: testTokenAddresses, refreshInterval: testRefreshInterval },
+        child
+      )
+    );
+    assert.deepStrictEqual(receivedBalanceProps, {
+      tokenAddresses: testTokenAddresses,
+      refreshInterval: testRefreshInterval,
+    });
+    assert.strictEqual(receivedConfig, configModule.config);
   });
 });
