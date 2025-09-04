@@ -3,6 +3,7 @@ import React, { type PropsWithChildren } from "react";
 import { WagmiProvider } from "wagmi";
 import { config } from "./wagmi";
 import { BalanceProvider } from "./contexts/BalanceContext";
+import { PoolzAppProvider } from "./contexts/PoolzAppContext";
 
 const queryClient = new QueryClient();
 
@@ -20,12 +21,14 @@ export function PoolzProvider({
     <React.StrictMode>
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-          <BalanceProvider
-            tokenAddresses={tokenAddresses}
-            refreshInterval={refreshInterval}
-          >
-            {children}
-          </BalanceProvider>
+          <PoolzAppProvider>
+            <BalanceProvider
+              tokenAddresses={tokenAddresses}
+              refreshInterval={refreshInterval}
+            >
+              {children}
+            </BalanceProvider>
+          </PoolzAppProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </React.StrictMode>
