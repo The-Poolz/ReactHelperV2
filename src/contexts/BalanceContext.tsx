@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { useAccount, useConfig, usePublicClient } from "wagmi";
+import { useConfig, usePublicClient } from "wagmi";
 import { safeMulticall } from "../utils/multicall-helper";
 import { formatUnits } from "viem";
 import {
@@ -14,6 +14,7 @@ import {
   prepareMulticallContracts,
   lowerCaseAddresses,
 } from "../utils/balance-helper";
+import { usePoolzApp } from "../hooks/usePoolzApp";
 
 export interface TokenBalance {
   address: string;
@@ -63,7 +64,7 @@ export const BalanceProvider: React.FC<BalanceProviderProps> = ({
   tokenAddresses = [],
   refreshInterval = 30000,
 }) => {
-  const { address: account, chainId } = useAccount();
+  const { account, chainId } = usePoolzApp();
   const config = useConfig();
   const publicClient = usePublicClient();
   const [balances, setBalances] = useState<Record<string, TokenBalance>>({});

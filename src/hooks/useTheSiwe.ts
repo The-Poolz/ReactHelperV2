@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useSignMessage } from "wagmi";
 import { usePoolzApp } from "./usePoolzApp";
+import { isAddressEqual } from "viem";
 
 interface ISiwe {
   Domain: string;
@@ -16,7 +17,7 @@ interface ISiwe {
 type TProps = () => Promise<Partial<ISiwe>>;
 
 export const useTheSiwe = (props: TProps) => {
-  const { account } = usePoolzApp();
+  const { account, connectedAccount } = usePoolzApp();
   const { signMessageAsync } = useSignMessage();
 
   const templateEip4361message = useCallback(async () => {
@@ -38,7 +39,13 @@ Expiration Time: ${ExpirationAt ?? new Date(new Date().getTime() + 1000 * 60 * 6
 
   return useMemo(() => {
     const signInWithEthereum = async () => {
-      if (!account) throw new Error("No account connected");
+      if (!account || !connectedAccount) throw new Error("No account connected");
+      console.log(connectedAccount, account);
+      console.log(!isAddressEqual(connectedAccount, account));
+
+      if(!isAddressEqual(connectedAccount, account)) {
+        throw new Error("Connected account does not match the account in context");
+      }
 
       const eip4361message = await templateEip4361message();
       const formattedMessage = eip4361message.replace(/[\r\n]/g, "\n");
