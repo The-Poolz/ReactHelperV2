@@ -45,7 +45,7 @@ export const useSidNameForAddress = () => {
   const lookup = useCallback(
     async (addr?: string) => {
       const userAddress = addr || address;
-      if (!userAddress) return setResult(null);
+      if (!userAddress || !publicClient) return setResult(null);
 
       if ((chainId === 1 || chainId === 11155111)) {
         const ensName = await getEnsName(config,{

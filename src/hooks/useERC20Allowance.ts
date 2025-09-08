@@ -22,7 +22,7 @@ export async function fetchERC20Allowance({
   spender,
   publicClient,
 }: ERC20AllowanceParamsExtended): Promise<string> {
-  if (!tokenAddress || !owner || !spender) return "0";
+  if (!tokenAddress || !owner || !spender || !publicClient) return "0";
   const result = await publicClient.readContract({
     address: tokenAddress as `0x${string}`,
     abi: erc20Abi,
