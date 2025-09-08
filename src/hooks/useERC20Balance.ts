@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import {  erc20Abi } from "viem";
+import { erc20Abi } from "viem";
 import type { QueryHookResult } from "../types/hookTypes";
 import { usePublicClient } from "wagmi";
 
@@ -9,7 +9,7 @@ export interface ERC20BalanceParams {
   enabled?: boolean;
 }
 
- interface ERC20BalanceParamsExtended extends ERC20BalanceParams {
+interface ERC20BalanceParamsExtended extends ERC20BalanceParams {
   publicClient: ReturnType<typeof usePublicClient>;
 }
 
@@ -20,13 +20,17 @@ async function fetchERC20Balance({
   owner,
   publicClient,
 }: ERC20BalanceParamsExtended): Promise<string> {
-  const result = await publicClient.readContract({
-    address: tokenAddress as `0x${string}`,
-    abi: erc20Abi,
-    functionName: "balanceOf",
-    args: [owner as `0x${string}`],
-  });
-  return String(result);
+  try {
+    const result = await publicClient?.readContract({
+      address: tokenAddress as `0x${string}`,
+      abi: erc20Abi,
+      functionName: "balanceOf",
+      args: [owner as `0x${string}`],
+    });
+    return String(result);
+  } catch (error) {
+    return "0";
+  }
 }
 
 export function useERC20Balance({
@@ -49,7 +53,7 @@ export function useERC20Balance({
 export async function getERC20Balance({
   tokenAddress,
   owner,
-  publicClient
+  publicClient,
 }: ERC20BalanceParamsExtended): Promise<string> {
   return fetchERC20Balance({ tokenAddress, owner, publicClient });
 }

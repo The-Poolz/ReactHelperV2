@@ -198,8 +198,8 @@ function buildContractMethods<T extends ContractName>(
       if (isReadOnly) {
         return {
           read: async () => {
-            if (!smcAddress || !abi) {
-              throw new Error("Contract info missing");
+            if (!smcAddress || !abi || !publicClient) {
+              throw new Error("PublicClient or contract info missing");
             }
             return publicClient.readContract({
               address: smcAddress,

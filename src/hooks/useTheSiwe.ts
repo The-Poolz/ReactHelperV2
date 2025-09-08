@@ -40,8 +40,6 @@ Expiration Time: ${ExpirationAt ?? new Date(new Date().getTime() + 1000 * 60 * 6
   return useMemo(() => {
     const signInWithEthereum = async () => {
       if (!account || !connectedAccount) throw new Error("No account connected");
-      console.log(connectedAccount, account);
-      console.log(!isAddressEqual(connectedAccount, account));
 
       if(!isAddressEqual(connectedAccount, account)) {
         throw new Error("Connected account does not match the account in context");
