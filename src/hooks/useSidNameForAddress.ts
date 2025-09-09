@@ -1,8 +1,9 @@
 import { config } from "../wagmi";
 import { useCallback, useMemo, useState } from "react";
-import { useAccount, useChainId, usePublicClient } from "wagmi";
+import { useChainId, usePublicClient } from "wagmi";
 import { namehash as ensNamehash, zeroAddress } from "viem";
 import { getEnsName } from "wagmi/actions";
+import { usePoolzApp } from "./usePoolzApp";
 
 const SID_CONTRACTS: Record<number, string> = {
   56: "0x08CEd32a7f3eeC915Ba84415e9C07a7286977956",
@@ -33,7 +34,7 @@ const resolverAbi = [
 ];
 
 export const useSidNameForAddress = () => {
-  const { address } = useAccount();
+  const { address } = usePoolzApp();
   const chainId = useChainId();
   const publicClient = usePublicClient();
   const [result, setResult] = useState<string | null>(null);
@@ -47,19 +48,21 @@ export const useSidNameForAddress = () => {
       const userAddress = addr || address;
       if (!userAddress || !publicClient) return setResult(null);
 
-      if ((chainId === 1 || chainId === 11155111)) {
-        const ensName = await getEnsName(config,{
-          address: userAddress as `0x${string}`,
-        })
-        setResult(ensName);
-        return;
-      }
-
-      let sidAddress = config.chains.find((c: any) => c.id === chainId)?.sidRegistry;
-      if (!sidAddress) sidAddress = SID_CONTRACTS[chainId];
-      if (!sidAddress) return setResult(null);
-      const reverseNode = namehash(`${userAddress.slice(2)}.addr.reverse`);
       try {
+        if (chainId === 1 || chainId === 11155111) {
+          const ensName = await getEnsName(config, {
+            address: userAddress as `0x${string}`,
+          });
+          setResult(ensName);
+          return;
+        }
+
+        let sidAddress = config.chains.find(
+          (c: any) => c.id === chainId
+        )?.sidRegistry;
+        if (!sidAddress) sidAddress = SID_CONTRACTS[chainId];
+        if (!sidAddress) return setResult(null);
+        const reverseNode = namehash(`${userAddress.slice(2)}.addr.reverse`);
         const resolverAddress = await publicClient.readContract({
           address: sidAddress as `0x${string}`,
           abi: reverseAbi,

@@ -40,12 +40,6 @@ export type {
 } from "./contracts/contractTypes";
 export { contractNames } from "./contracts/contractTypes";
 
-export { useTokenApproval } from "./hooks/useTokenApproval";
-export type {
-  UseTokenApprovalReturn,
-  UseTokenApprovalOptions,
-} from "./hooks/useTokenApproval";
-
 // Exporting hooks and components related to ERC20 tokens
 export { useERC20 } from "./hooks/useERC20";
 export type { UseERC20Return } from "./hooks/useERC20";

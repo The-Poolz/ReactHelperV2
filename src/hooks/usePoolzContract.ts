@@ -1,4 +1,4 @@
-import { useAccount, usePublicClient, useWriteContract } from "wagmi";
+import { usePublicClient, useWriteContract } from "wagmi";
 import { getPoolzContractInfo } from "../utils/getPoolzContractInfo";
 import { safeMulticall } from "../utils/multicall-helper";
 import {
@@ -13,6 +13,7 @@ import {
 import { WriteContractParameters } from "wagmi/actions";
 import { TransactionReceipt } from "viem";
 import { useMemo } from "react";
+import { usePoolzApp } from "./usePoolzApp";
 
 export type MulticallSuccess<T = any> = { result: T; status: "success" };
 export type MulticallFailure = { error: Error; status: "failure" };
@@ -143,7 +144,7 @@ function buildContractMethods<T extends ContractName>(
   account: string | undefined,
   publicClient: ReturnType<typeof usePublicClient>,
   writeContractAsync: ReturnType<typeof useWriteContract>["writeContractAsync"]
-): PoolzContractMethods<T> {
+): PoolzContractMethods<T> | null {
   const { smcAddress, abi } = getPoolzContractInfo({ chainId, contractName });
 
   const multicall = async <Calls extends MulticallReadUnion<T>[]>(params: {
@@ -173,13 +174,7 @@ function buildContractMethods<T extends ContractName>(
 
   const dynamicInterface = {} as DynamicContractInterface<T>;
 
-  if (!abi) {
-    return {
-      smcAddress,
-      multicall,
-      ...dynamicInterface,
-    };
-  }
+  if (!abi) return null
 
   const abiArray = Array.isArray(abi) ? abi : [];
   const functions = abiArray.filter((item: any) => item.type === "function");
@@ -294,7 +289,7 @@ function buildContractMethods<T extends ContractName>(
 
 export function usePoolzContract() {
   const publicClient = usePublicClient();
-  const { address: account, chainId } = useAccount();
+  const { address: account, chainId } = usePoolzApp();
   const { writeContractAsync } = useWriteContract();
 
   const poolzContract = useMemo(() => {
