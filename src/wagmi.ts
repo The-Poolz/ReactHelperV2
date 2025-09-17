@@ -66,7 +66,7 @@ export const customChain2632500 = {
   },
 } as const;
 
-import { bscTestnet, sepolia, arbitrum, avalanche, manta, unichain, bsc, mantaTestnet, polygon, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, oasys, base, neonMainnet, telos, mainnet, fuse, lukso, polygonAmoy, moonbeam } from "wagmi/chains";
+import { bscTestnet, manta, unichain, mantaTestnet, polygon, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, oasys, neonMainnet, telos, mainnet, fuse, lukso, polygonAmoy, moonbeam, base, bsc, sepolia, avalanche, arbitrum } from "wagmi/chains";
 
 
 
@@ -151,8 +151,9 @@ const createConnectors = () => {
   ];
 };
 
+
 export const config: any = createConfig({
-  chains: [bscTestnet, sepolia, arbitrum, avalanche, manta, unichain, bsc, mantaTestnet, polygon, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, oasys, base, neonMainnet, telos, mainnet, fuse, lukso, polygonAmoy, moonbeam, customChain0, customChain7082400, customChain2632500], //poolz chains
+  chains: [bscTestnet, manta, unichain, mantaTestnet, polygon, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, oasys, neonMainnet, telos, mainnet, fuse, lukso, polygonAmoy, moonbeam, base, bsc, sepolia, avalanche, arbitrum, customChain0, customChain7082400, customChain2632500], //poolz chains
   connectors: createConnectors(),
   client({ chain }) {
     const provider = typeof window !== "undefined" && window.ethereum

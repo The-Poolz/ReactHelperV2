@@ -1,10 +1,10 @@
 export { PoolzProvider } from "./PoolzProvider";
-
 export { getPoolzContractInfo } from "./utils/getPoolzContractInfo";
 export type { PoolzContractInfoReturn } from "./utils/getPoolzContractInfo";
-export { useWalletClient } from "wagmi";
+export { useWalletClient, useChains } from "wagmi";
 export type { UseAccountReturnType } from "wagmi";
 export type { Chain } from "viem/chains";
+export type { Address, WalletClient } from "viem";
 export { watchAccountChange, usePoolzApp } from "./hooks/usePoolzApp";
 export { usePoolzContract } from "./hooks/usePoolzContract";
 export type {
@@ -79,6 +79,7 @@ export type { TokenBalance, NativeBalance } from "./contexts/BalanceContext";
 export { useSidNameForAddress } from "./hooks/useSidNameForAddress";
 export { useWalletConnection } from "./hooks/useWalletConnection";
 export { useTheSiwe } from "./hooks/useTheSiwe";
+export { contractsByChain } from "./contracts";
 
 export type {
   QueryHookResult,
@@ -87,3 +88,4 @@ export type {
 } from "./types/hookTypes";
 export { getChainNativeSymbol } from "./utils/balance-helper";
 export * from "./utils/helpers";
+export * as utils from "./utils";
