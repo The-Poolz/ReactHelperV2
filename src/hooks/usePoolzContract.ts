@@ -10,10 +10,11 @@ import {
   ContractWriteSchemas,
   ContractReturnTypes,
 } from "../contracts/contractTypes";
-import { WriteContractParameters } from "wagmi/actions";
+import { waitForTransactionReceipt, WriteContractParameters, WaitForTransactionReceiptParameters } from "wagmi/actions";
 import { TransactionReceipt } from "viem";
 import { useMemo } from "react";
 import { usePoolzApp } from "./usePoolzApp";
+import { config } from "../wagmi";
 
 export type MulticallSuccess<T = any> = { result: T; status: "success" };
 export type MulticallFailure = { error: Error; status: "failure" };
@@ -67,7 +68,7 @@ export type ContractReadFunction<
 
 export type WriteOptions = {
   fetchReturnData?: boolean;
-};
+} & Omit<WaitForTransactionReceiptParameters, 'hash'>;
 
 export type GasEstimate = {
   gasLimit: bigint;
@@ -218,11 +219,13 @@ function buildContractMethods<T extends ContractName>(
               args: args || [],
               ...additionalParams,
             } as any);
-            const receipt = await publicClient.waitForTransactionReceipt({
+            const { fetchReturnData, ...waitOptions } = options || {};
+            const receipt = await waitForTransactionReceipt(config, {
               hash,
+              ...waitOptions,
             });
 
-            if (hasReturnData && options?.fetchReturnData) {
+            if (hasReturnData && fetchReturnData) {
               try {
                 const returnData = await publicClient.readContract({
                   address: smcAddress,
@@ -323,5 +326,6 @@ export function usePoolzContract() {
   return {
     poolzContract,
     poolzTokenAddress,
+    writeContractAsync,
   };
 }
