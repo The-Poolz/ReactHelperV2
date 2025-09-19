@@ -20,13 +20,14 @@ import { chain42Contracts } from "./chain42";
 import { chain43113Contracts } from "./chain43113";
 import { chain43114Contracts } from "./chain43114";
 import { chain56Contracts } from "./chain56";
+import { chain59144Contracts } from "./chain59144";
 import { chain7082400Contracts } from "./chain7082400";
 import { chain80002Contracts } from "./chain80002";
 import { chain8453Contracts } from "./chain8453";
 import { chain88Contracts } from "./chain88";
 import { chain97Contracts } from "./chain97";
 
-export type ChainContracts = typeof chain0Contracts | typeof chain1Contracts | typeof chain10Contracts | typeof chain40Contracts | typeof chain42Contracts | typeof chain56Contracts | typeof chain88Contracts | typeof chain97Contracts | typeof chain122Contracts | typeof chain130Contracts | typeof chain137Contracts | typeof chain169Contracts | typeof chain248Contracts | typeof chain1284Contracts | typeof chain2741Contracts | typeof chain8453Contracts | typeof chain42161Contracts | typeof chain43113Contracts | typeof chain43114Contracts | typeof chain80002Contracts | typeof chain2632500Contracts | typeof chain3441005Contracts | typeof chain3441006Contracts | typeof chain7082400Contracts | typeof chain11155111Contracts | typeof chain245022934Contracts | typeof chain1666600000Contracts;
+export type ChainContracts = typeof chain0Contracts | typeof chain1Contracts | typeof chain10Contracts | typeof chain40Contracts | typeof chain42Contracts | typeof chain56Contracts | typeof chain88Contracts | typeof chain97Contracts | typeof chain122Contracts | typeof chain130Contracts | typeof chain137Contracts | typeof chain169Contracts | typeof chain248Contracts | typeof chain1284Contracts | typeof chain2741Contracts | typeof chain8453Contracts | typeof chain42161Contracts | typeof chain43113Contracts | typeof chain43114Contracts | typeof chain59144Contracts | typeof chain80002Contracts | typeof chain2632500Contracts | typeof chain3441005Contracts | typeof chain3441006Contracts | typeof chain7082400Contracts | typeof chain11155111Contracts | typeof chain245022934Contracts | typeof chain1666600000Contracts;
 
 export const contractsByChain: { [chainId: number]: ChainContracts } = {
   0: chain0Contracts,
@@ -51,6 +52,7 @@ export const contractsByChain: { [chainId: number]: ChainContracts } = {
   43113: chain43113Contracts,
   43114: chain43114Contracts,
   56: chain56Contracts,
+  59144: chain59144Contracts,
   7082400: chain7082400Contracts,
   80002: chain80002Contracts,
   8453: chain8453Contracts,

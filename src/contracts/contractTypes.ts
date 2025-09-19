@@ -3,6 +3,22 @@
 
 // Read-only functions
 export type ContractReadSchemas = {
+  CollateralProvider: {
+    'currentParamsTargetLength': readonly [];
+    'firewallAdmin': readonly [];
+    'getInnerIdsArray': readonly [poolId: bigint];
+    'getParams': readonly [poolId: bigint];
+    'getSubProvidersPoolIds': readonly [poolId: bigint];
+    'getWithdrawableAmount': readonly [poolId: bigint];
+    'isPoolFinished': readonly [poolId: bigint];
+    'lockDealNFT': readonly [];
+    'name': readonly [];
+    'poolIdToRateToWei': readonly [bigint];
+    'poolIdToTime': readonly [bigint];
+    'provider': readonly [];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+    'withdraw': readonly [poolId: bigint];
+  };
   DaoStation: {
     'MAX_FEE_WEI': readonly [];
     'WETH': readonly [];
@@ -191,6 +207,16 @@ export type ContractReadSchemas = {
     'owner': readonly [];
     'paused': readonly [];
   };
+  POOLX: {
+    'allowance': readonly [owner: `0x${string}`, spender: `0x${string}`];
+    'balanceOf': readonly [account: `0x${string}`];
+    'cap': readonly [];
+    'decimals': readonly [];
+    'isMinter': readonly [account: `0x${string}`];
+    'name': readonly [];
+    'symbol': readonly [];
+    'totalSupply': readonly [];
+  };
   PoolzBack: {
     'Benefit_Address': readonly [];
     'Fee': readonly [];
@@ -224,6 +250,19 @@ export type ContractReadSchemas = {
     'paused': readonly [];
     'poolsCount': readonly [];
   };
+  RefundProvider: {
+    'collateralProvider': readonly [];
+    'currentParamsTargetLength': readonly [];
+    'firewallAdmin': readonly [];
+    'getParams': readonly [poolId: bigint];
+    'getSubProvidersPoolIds': readonly [poolId: bigint];
+    'getWithdrawableAmount': readonly [poolId: bigint];
+    'lastPoolOwner': readonly [bigint];
+    'lockDealNFT': readonly [];
+    'name': readonly [];
+    'poolIdToCollateralId': readonly [bigint];
+    'supportsInterface': readonly [interfaceId: `0x${string}`];
+  };
   SignUp: {
     'Fee': readonly [];
     'FeeTokenAddress': readonly [];
@@ -237,6 +276,12 @@ export type ContractReadSchemas = {
   SimpleBuilder: {
     'firewallAdmin': readonly [];
     'lockDealNFT': readonly [];
+  };
+  SimpleRefundBuilder: {
+    'collateralProvider': readonly [];
+    'firewallAdmin': readonly [];
+    'lockDealNFT': readonly [];
+    'refundProvider': readonly [];
   };
   StakingManager: {
     'MAX_FEE_RATE': readonly [];
@@ -320,6 +365,18 @@ export type ContractReadSchemas = {
 
 // Write functions (state-changing)
 export type ContractWriteSchemas = {
+  CollateralProvider: {
+    'acceptFirewallAdmin': readonly [];
+    'handleRefund': readonly [poolId: bigint, user: `0x${string}`, tokenAmount: bigint];
+    'handleWithdraw': readonly [poolId: bigint, tokenAmount: bigint];
+    'onERC721Received': readonly [`0x${string}`, `0x${string}`, bigint, `0x${string}`];
+    'registerPool': readonly [poolId: bigint, params: bigint[]];
+    'safeFunctionCall': readonly [target: `0x${string}`, targetPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedTarget': readonly [target: `0x${string}`, status: boolean];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'split': readonly [poolId: bigint, bigint, ratio: bigint];
+  };
   DaoStation: {
     'executeSwap': readonly [tokenIn: `0x${string}`, commands: `0x${string}`, inputs: `0x${string}`[], user: `0x${string}`, data: `0x${string}`, deadline: bigint, v: bigint, r: `0x${string}`, s: `0x${string}`];
     'renounceOwnership': readonly [];
@@ -481,6 +538,18 @@ export type ContractWriteSchemas = {
     'setupNewWhitelist': readonly [_whiteListAddress: `0x${string}`];
     'transferOwnership': readonly [newOwner: `0x${string}`];
   };
+  POOLX: {
+    'addMinter': readonly [account: `0x${string}`];
+    'approve': readonly [spender: `0x${string}`, amount: bigint];
+    'burn': readonly [amount: bigint];
+    'burnFrom': readonly [account: `0x${string}`, amount: bigint];
+    'decreaseAllowance': readonly [spender: `0x${string}`, subtractedValue: bigint];
+    'increaseAllowance': readonly [spender: `0x${string}`, addedValue: bigint];
+    'mint': readonly [to: `0x${string}`, amount: bigint];
+    'renounceMinter': readonly [];
+    'transfer': readonly [to: `0x${string}`, amount: bigint];
+    'transferFrom': readonly [from: `0x${string}`, to: `0x${string}`, amount: bigint];
+  };
   PoolzBack: {
     'CreatePool': readonly [_Token: `0x${string}`, _FinishTime: bigint, _Rate: bigint, _POZRate: bigint, _StartAmount: bigint, _LockedUntil: bigint, _MainCoin: `0x${string}`, _Is21Decimal: boolean, _Now: bigint, _WhiteListId: bigint];
     'InvestERC20': readonly [_PoolId: bigint, _Amount: bigint];
@@ -505,6 +574,19 @@ export type ContractWriteSchemas = {
     'WithdrawETHFee': readonly [_to: `0x${string}`];
     'WithdrawERC20Fee': readonly [_Token: `0x${string}`, _to: `0x${string}`];
   };
+  RefundProvider: {
+    'acceptFirewallAdmin': readonly [];
+    'beforeTransfer': readonly [from: `0x${string}`, to: `0x${string}`, poolId: bigint];
+    'createNewRefundPool': readonly [addresses: `0x${string}`[], params: bigint[], tokenSignature: `0x${string}`, mainCoinSignature: `0x${string}`];
+    'onERC721Received': readonly [provider: `0x${string}`, user: `0x${string}`, poolId: bigint, `0x${string}`];
+    'registerPool': readonly [poolId: bigint, params: bigint[]];
+    'safeFunctionCall': readonly [target: `0x${string}`, targetPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedTarget': readonly [target: `0x${string}`, status: boolean];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+    'split': readonly [poolId: bigint, newPoolId: bigint, ratio: bigint];
+    'withdraw': readonly [poolId: bigint];
+  };
   SignUp: {
     'ActivatePool': readonly [_poolId: bigint];
     'CreateNewPool': readonly [];
@@ -525,6 +607,15 @@ export type ContractWriteSchemas = {
     'acceptFirewallAdmin': readonly [];
     'buildMassPools': readonly [addressParams: `0x${string}`[], userData: { userPools: { user: `0x${string}`; amount: bigint }[]; totalAmount: bigint }, params: bigint[], signature: `0x${string}`];
     'onERC721Received': readonly [`0x${string}`, `0x${string}`, bigint, `0x${string}`];
+    'safeFunctionCall': readonly [target: `0x${string}`, targetPayload: `0x${string}`, data: `0x${string}`];
+    'setApprovedTarget': readonly [target: `0x${string}`, status: boolean];
+    'setFirewall': readonly [_firewall: `0x${string}`];
+    'setFirewallAdmin': readonly [_firewallAdmin: `0x${string}`];
+  };
+  SimpleRefundBuilder: {
+    'acceptFirewallAdmin': readonly [];
+    'buildMassPools': readonly [addressParams: `0x${string}`[], userData: { userPools: { user: `0x${string}`; amount: bigint }[]; totalAmount: bigint }, params: bigint[][], tokenSignature: `0x${string}`, mainCoinSignature: `0x${string}`];
+    'onERC721Received': readonly [operator: `0x${string}`, user: `0x${string}`, collateralPoolId: bigint, data: `0x${string}`];
     'safeFunctionCall': readonly [target: `0x${string}`, targetPayload: `0x${string}`, data: `0x${string}`];
     'setApprovedTarget': readonly [target: `0x${string}`, status: boolean];
     'setFirewall': readonly [_firewall: `0x${string}`];
@@ -601,6 +692,32 @@ export type ContractWriteSchemas = {
 
 // Function return types
 export type ContractReturnTypes = {
+  CollateralProvider: {
+    'acceptFirewallAdmin': void;
+    'currentParamsTargetLength': bigint;
+    'firewallAdmin': `0x${string}`;
+    'getInnerIdsArray': bigint[];
+    'getParams': bigint[];
+    'getSubProvidersPoolIds': bigint[];
+    'getWithdrawableAmount': bigint;
+    'handleRefund': void;
+    'handleWithdraw': void;
+    'isPoolFinished': boolean;
+    'lockDealNFT': `0x${string}`;
+    'name': string;
+    'onERC721Received': `0x${string}`;
+    'poolIdToRateToWei': bigint;
+    'poolIdToTime': bigint;
+    'provider': `0x${string}`;
+    'registerPool': void;
+    'safeFunctionCall': void;
+    'setApprovedTarget': void;
+    'setFirewall': void;
+    'setFirewallAdmin': void;
+    'split': void;
+    'supportsInterface': boolean;
+    'withdraw': [bigint, boolean];
+  };
   DaoStation: {
     'MAX_FEE_WEI': bigint;
     'WETH': `0x${string}`;
@@ -928,6 +1045,26 @@ export type ContractReturnTypes = {
     'setupNewWhitelist': void;
     'transferOwnership': void;
   };
+  POOLX: {
+    'addMinter': void;
+    'allowance': bigint;
+    'approve': boolean;
+    'balanceOf': bigint;
+    'burn': void;
+    'burnFrom': void;
+    'cap': bigint;
+    'decimals': bigint;
+    'decreaseAllowance': boolean;
+    'increaseAllowance': boolean;
+    'isMinter': boolean;
+    'mint': void;
+    'name': string;
+    'renounceMinter': void;
+    'symbol': string;
+    'totalSupply': bigint;
+    'transfer': boolean;
+    'transferFrom': boolean;
+  };
   PoolzBack: {
     'Benefit_Address': `0x${string}`;
     'CreatePool': void;
@@ -983,6 +1120,30 @@ export type ContractReturnTypes = {
     'WithdrawETHFee': void;
     'WithdrawERC20Fee': void;
   };
+  RefundProvider: {
+    'acceptFirewallAdmin': void;
+    'beforeTransfer': void;
+    'collateralProvider': `0x${string}`;
+    'createNewRefundPool': bigint;
+    'currentParamsTargetLength': bigint;
+    'firewallAdmin': `0x${string}`;
+    'getParams': bigint[];
+    'getSubProvidersPoolIds': bigint[];
+    'getWithdrawableAmount': bigint;
+    'lastPoolOwner': `0x${string}`;
+    'lockDealNFT': `0x${string}`;
+    'name': string;
+    'onERC721Received': `0x${string}`;
+    'poolIdToCollateralId': bigint;
+    'registerPool': void;
+    'safeFunctionCall': void;
+    'setApprovedTarget': void;
+    'setFirewall': void;
+    'setFirewallAdmin': void;
+    'split': void;
+    'supportsInterface': boolean;
+    'withdraw': [bigint, boolean];
+  };
   SignUp: {
     'ActivatePool': void;
     'CreateNewPool': void;
@@ -1013,6 +1174,19 @@ export type ContractReturnTypes = {
     'firewallAdmin': `0x${string}`;
     'lockDealNFT': `0x${string}`;
     'onERC721Received': `0x${string}`;
+    'safeFunctionCall': void;
+    'setApprovedTarget': void;
+    'setFirewall': void;
+    'setFirewallAdmin': void;
+  };
+  SimpleRefundBuilder: {
+    'acceptFirewallAdmin': void;
+    'buildMassPools': void;
+    'collateralProvider': `0x${string}`;
+    'firewallAdmin': `0x${string}`;
+    'lockDealNFT': `0x${string}`;
+    'onERC721Received': `0x${string}`;
+    'refundProvider': `0x${string}`;
     'safeFunctionCall': void;
     'setApprovedTarget': void;
     'setFirewall': void;
@@ -1155,7 +1329,7 @@ export type ContractReturnTypes = {
   };
 };
 
-export const contractNames = ['DaoStation', 'DealProvider', 'DelayVault', 'DelayVaultMigrator', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'MultiSenderV2', 'PoolzBack', 'SignUp', 'SimpleBuilder', 'StakingManager', 'TimedDealProvider', 'TokenNFTConnector', 'VaultManager', 'WhiteList'] as const;
+export const contractNames = ['CollateralProvider', 'DaoStation', 'DealProvider', 'DelayVault', 'DelayVaultMigrator', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'MultiSenderV2', 'POOLX', 'PoolzBack', 'RefundProvider', 'SignUp', 'SimpleBuilder', 'SimpleRefundBuilder', 'StakingManager', 'TimedDealProvider', 'TokenNFTConnector', 'VaultManager', 'WhiteList'] as const;
 
 export type ContractName = typeof contractNames[number];
 
@@ -1165,6 +1339,7 @@ export type ContractWriteFunctionName<T extends ContractName> = keyof ContractWr
 
 import { Abi } from "viem";
 // ABI mappings
+import { CollateralProviderAbi } from "../generated/abi/CollateralProvider";
 import { DaoStationAbi } from "../generated/abi/DaoStation";
 import { DealProviderAbi } from "../generated/abi/DealProvider";
 import { DelayVaultAbi } from "../generated/abi/DelayVault";
@@ -1176,9 +1351,12 @@ import { LockDealNFTAbi } from "../generated/abi/LockDealNFT";
 import { LockDealProviderAbi } from "../generated/abi/LockDealProvider";
 import { LockedDealV2Abi } from "../generated/abi/LockedDealV2";
 import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
+import { POOLXAbi } from "../generated/abi/POOLX";
 import { PoolzBackAbi } from "../generated/abi/PoolzBack";
+import { RefundProviderAbi } from "../generated/abi/RefundProvider";
 import { SignUpAbi } from "../generated/abi/SignUp";
 import { SimpleBuilderAbi } from "../generated/abi/SimpleBuilder";
+import { SimpleRefundBuilderAbi } from "../generated/abi/SimpleRefundBuilder";
 import { StakingManagerAbi } from "../generated/abi/StakingManager";
 import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
 import { TokenNFTConnectorAbi } from "../generated/abi/TokenNFTConnector";
@@ -1186,6 +1364,7 @@ import { VaultManagerAbi } from "../generated/abi/VaultManager";
 import { WhiteListAbi } from "../generated/abi/WhiteList";
 
 export type ContractAbiMap = {
+  CollateralProvider: typeof CollateralProviderAbi;
   DaoStation: typeof DaoStationAbi;
   DealProvider: typeof DealProviderAbi;
   DelayVault: typeof DelayVaultAbi;
@@ -1197,9 +1376,12 @@ export type ContractAbiMap = {
   LockDealProvider: typeof LockDealProviderAbi;
   LockedDealV2: typeof LockedDealV2Abi;
   MultiSenderV2: typeof MultiSenderV2Abi;
+  POOLX: typeof POOLXAbi;
   PoolzBack: typeof PoolzBackAbi;
+  RefundProvider: typeof RefundProviderAbi;
   SignUp: typeof SignUpAbi;
   SimpleBuilder: typeof SimpleBuilderAbi;
+  SimpleRefundBuilder: typeof SimpleRefundBuilderAbi;
   StakingManager: typeof StakingManagerAbi;
   TimedDealProvider: typeof TimedDealProviderAbi;
   TokenNFTConnector: typeof TokenNFTConnectorAbi;

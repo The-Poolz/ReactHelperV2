@@ -3,27 +3,6 @@ import { custom, createConfig } from "wagmi";
 import { coinbaseWallet, injected } from "wagmi/connectors";
 
 // Custom chain configs for chains not available in viem/chains
-export const customChain0 = {
-  id: 0,
-  name: "CKB",
-  nativeCurrency: {
-    decimals: 18,
-    name: "CKB",
-    symbol: "CKB",
-  },
-  rpcUrls: {
-    default: {
-      http: ["https://v1.mainnet.godwoken.io/rpc"],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: "CKB Scan",
-      url: "https://explorer-0.example.com",
-    },
-  },
-} as const;
-
 export const customChain7082400 = {
   id: 7082400,
   name: "COTI Testnet",
@@ -41,6 +20,27 @@ export const customChain7082400 = {
     default: {
       name: "COTI Testnet Scan",
       url: "https://explorer-7082400.example.com",
+    },
+  },
+} as const;
+
+export const customChain0 = {
+  id: 0,
+  name: "CKB",
+  nativeCurrency: {
+    decimals: 18,
+    name: "CKB",
+    symbol: "CKB",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://v1.mainnet.godwoken.io/rpc"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "CKB Scan",
+      url: "https://explorer-0.example.com",
     },
   },
 } as const;
@@ -66,7 +66,7 @@ export const customChain2632500 = {
   },
 } as const;
 
-import { bscTestnet, manta, unichain, mantaTestnet, polygon, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, oasys, neonMainnet, telos, mainnet, fuse, lukso, polygonAmoy, moonbeam, base, bsc, sepolia, avalanche, arbitrum } from "wagmi/chains";
+import { bsc, manta, polygon, unichain, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, bscTestnet, telos, oasys, neonMainnet, mainnet, fuse, linea, lukso, polygonAmoy, moonbeam, sepolia, arbitrum, avalanche, base } from "wagmi/chains";
 
 
 
@@ -151,9 +151,8 @@ const createConnectors = () => {
   ];
 };
 
-
 export const config: any = createConfig({
-  chains: [bscTestnet, manta, unichain, mantaTestnet, polygon, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, oasys, neonMainnet, telos, mainnet, fuse, lukso, polygonAmoy, moonbeam, base, bsc, sepolia, avalanche, arbitrum, customChain0, customChain7082400, customChain2632500], //poolz chains
+  chains: [bsc, manta, polygon, unichain, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, bscTestnet, telos, oasys, neonMainnet, mainnet, fuse, linea, lukso, polygonAmoy, moonbeam, sepolia, arbitrum, avalanche, base, customChain7082400, customChain0, customChain2632500], //poolz chains
   connectors: createConnectors(),
   client({ chain }) {
     const provider = typeof window !== "undefined" && window.ethereum

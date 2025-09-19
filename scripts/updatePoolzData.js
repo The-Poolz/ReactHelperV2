@@ -12,6 +12,7 @@ const query = `query Contract($pagination: PaginationArg) {
         ContractType
       }
       ContractVersion {
+        NameVersion
         ABI
       }
     }
@@ -104,8 +105,23 @@ async function main() {
       if (!c || !c.ContractType) continue;
       const typeName = c.ContractType.ContractType;
       const address = c.Address;
+      // Find matching version info
+      let nameVersion = undefined;
+      // Search latestTypes for matching contract type
+      for (const item of latestTypes) {
+        if (!item || !item.Version) continue;
+        const versions = Array.isArray(item.Version) ? item.Version : [item.Version];
+        for (const version of versions) {
+          if (!version || !version.ContractType || !version.ContractVersion) continue;
+          if (version.ContractType.ContractType === typeName) {
+            nameVersion = version.ContractVersion.NameVersion;
+            break;
+          }
+        }
+        if (nameVersion) break;
+      }
       if (!typeName || !address) continue;
-      map[typeName] = address;
+      map[typeName] = { address, nameVersion };
     }
     contractsByChain[id] = map;
   }
@@ -218,10 +234,11 @@ async function main() {
   for (const [chainId, contracts] of Object.entries(contractsByChain)) {
     const imports = [];
     const entries = [];
-    for (const [name, address] of Object.entries(contracts)) {
+    for (const [name, contractInfo] of Object.entries(contracts)) {
       const varName = `${name}Abi`;
       imports.push(`import { ${varName} } from "../generated/abi/${name}";`);
-      entries.push(`  ${toVar(name)}: { address: "${address}", abi: ${varName} }`);
+      const nameVersionStr = contractInfo.nameVersion ? `, nameVersion: ${JSON.stringify(contractInfo.nameVersion)}` : '';
+      entries.push(`  ${toVar(name)}: { address: "${contractInfo.address}", abi: ${varName}${nameVersionStr} }`);
     }
     const content = `${imports.join("\n")}\n\nexport const chain${chainId}Contracts = {\n${entries.join(",\n")}\n} as const;\n`;
     await writeFile(path.join(contractsDir, `chain${chainId}.ts`), content);
