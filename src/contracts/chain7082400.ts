@@ -6,10 +6,10 @@ import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
 import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
 
 export const chain7082400Contracts = {
-  VaultManager: { address: "0x3A3717a198f0b69155D666D61984e3BBeD084C48", abi: VaultManagerAbi },
-  LockDealNFT: { address: "0x398cc8B9d891fFEFA0E82EB0fb3845c19C887451", abi: LockDealNFTAbi },
-  DealProvider: { address: "0x8169b222ECeb16beF40cF94Ba0d50678d706F6D0", abi: DealProviderAbi },
-  LockDealProvider: { address: "0x66a550610d38Fd4964635b6bf6828f4CF75Ab42A", abi: LockDealProviderAbi },
-  TimedDealProvider: { address: "0x29552d4fa4e2ecF802a2dcf6fA5513386a4BCCBb", abi: TimedDealProviderAbi },
-  DispenserProvider: { address: "0x0D8c24f2D33864D82ddBCb64D15D8EDA635db0d0", abi: DispenserProviderAbi }
+  VaultManager: { address: "0x3A3717a198f0b69155D666D61984e3BBeD084C48", abi: VaultManagerAbi, nameVersion: "VaultManager@1.0.1" },
+  LockDealNFT: { address: "0x398cc8B9d891fFEFA0E82EB0fb3845c19C887451", abi: LockDealNFTAbi, nameVersion: "LockDealNFT@1.0.4-a" },
+  DealProvider: { address: "0x8169b222ECeb16beF40cF94Ba0d50678d706F6D0", abi: DealProviderAbi, nameVersion: "DealProvider@1.0.6" },
+  LockDealProvider: { address: "0x66a550610d38Fd4964635b6bf6828f4CF75Ab42A", abi: LockDealProviderAbi, nameVersion: "LockDealProvider@1.0.6" },
+  TimedDealProvider: { address: "0x29552d4fa4e2ecF802a2dcf6fA5513386a4BCCBb", abi: TimedDealProviderAbi, nameVersion: "TimedDealProvider@1.0.6" },
+  DispenserProvider: { address: "0x0D8c24f2D33864D82ddBCb64D15D8EDA635db0d0", abi: DispenserProviderAbi, nameVersion: "DispenserProvider@1.1.2" }
 } as const;
