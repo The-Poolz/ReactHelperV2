@@ -5,7 +5,7 @@ import { ContractAbiMap, ContractName } from "../contracts/contractTypes";
 type ContractInfo = {
   address: `0x${string}`;
   abi: Abi;
-  nameVersion?: string;
+  nameVersion: string;
 };
 
 export interface PoolzContractInfoReturn<
@@ -13,7 +13,7 @@ export interface PoolzContractInfoReturn<
 > {
   smcAddress: `0x${string}`;
   abi: ContractAbiMap[T] | Abi | undefined;
-  nameVersion?: string;
+  nameVersion: string;
 }
 
 export type PoolzContractInfoParams<T extends ContractName = ContractName> = {
@@ -24,7 +24,7 @@ export type PoolzContractInfoParams<T extends ContractName = ContractName> = {
 const EMPTY_CONTRACT_INFO = {
   smcAddress: zeroAddress,
   abi: undefined,
-  nameVersion: undefined,
+  nameVersion: '',
 } as const;
 
 export function getPoolzContractInfo<T extends ContractName>({

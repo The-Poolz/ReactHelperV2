@@ -129,6 +129,7 @@ export type DynamicContractInterface<T extends ContractName> =
   DynamicReadInterface<T> & DynamicWriteInterface<T>;
 
 export type PoolzContractMethods<T extends ContractName> = {
+  nameVersion: string;
   smcAddress: `0x${string}`;
   multicall: <Calls extends MulticallReadUnion<T>[]>(params: {
     contracts: Calls;
@@ -146,7 +147,7 @@ function buildContractMethods<T extends ContractName>(
   publicClient: ReturnType<typeof usePublicClient>,
   writeContractAsync: ReturnType<typeof useWriteContract>["writeContractAsync"]
 ): PoolzContractMethods<T> | null {
-  const { smcAddress, abi } = getPoolzContractInfo({ chainId, contractName });
+  const { smcAddress, abi, nameVersion } = getPoolzContractInfo({ chainId, contractName });
 
   const multicall = async <Calls extends MulticallReadUnion<T>[]>(params: {
     contracts: Calls;
@@ -284,6 +285,7 @@ function buildContractMethods<T extends ContractName>(
   });
 
   return {
+    nameVersion,
     smcAddress,
     multicall,
     ...dynamicInterface,
