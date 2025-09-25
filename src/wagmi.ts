@@ -105,15 +105,22 @@ function createInjectedWallet({ id, name, installUrl, providerKey, installed }: 
 }
 
 function createCoinbaseWallet(): WalletConfig {
+  const isCoinbaseInstalled = typeof window !== "undefined" && (
+    Boolean(window?.ethereum?.isCoinbaseWallet) ||
+    Boolean(window?.ethereum?.providerMap?.has('CoinbaseWallet')) ||
+    Boolean(window?.ethereum?.providers?.some((provider: any) => provider?.isCoinbaseWallet))
+  );
+
   return {
     id: "coinbaseWalletSDK",
     name: "Coinbase Wallet",
     installUrl: "https://wallet.coinbase.com/",
     connector: () => coinbaseWallet({
       appName: "Poolz Interface",
-      appLogoUrl: "https://www.poolz.finance/favicon.ico",
+      appLogoUrl: "https://www.poolz.finance/favicon.png",
+      headlessMode: true
     }),
-    installed: typeof window !== "undefined" ? Boolean(window?.ethereum?.isCoinbaseWallet) :   false,
+    installed: isCoinbaseInstalled,
   };
 }
 
