@@ -1,17 +1,7 @@
 import { useConnect, useDisconnect, useAccount } from "wagmi";
 import type { Connector } from "wagmi";
 import type { WalletConnectionResult, WalletOption } from "../types/hookTypes";
-import { walletConfigs } from "../wagmi";
-
-const getInstallUrl = (id: string): string | undefined => {
-  const config = Object.values(walletConfigs).find((cfg) => cfg.id === id);
-  return config?.installUrl;
-};
-
-const isWalletInstalled = (connectorId: string): boolean => {
-  const config = Object.values(walletConfigs).find(cfg => cfg.id === connectorId);
-  return config?.installed ?? false;
-};
+import { getInstallUrl, isWalletInstalled } from "../utils/connector-helper";
 
 export const useWalletConnection = (): WalletConnectionResult => {
   const { connect, connectors, isPending, error } = useConnect();

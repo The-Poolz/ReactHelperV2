@@ -181,7 +181,7 @@ async function main() {
 } as const;`;
     }).join('\n\n');
 
-    customChainConfigs = `\n// Custom chain configs for chains not available in viem/chains\n${customConfigs}\n`;
+    customChainConfigs = `// Custom chain configs for chains not available in viem/chains\n${customConfigs}\n`;
   }
 
   const allChainNames = [...existingChainNames, ...customChainNames];
@@ -191,9 +191,44 @@ async function main() {
     const wagmiFile = path.resolve(__dirname, "../src/wagmi.ts");
     let wagmiContent = await readFile(wagmiFile, "utf8");
 
-    // Remove existing custom chain configs to avoid duplicates (but keep imports)
-    const customChainRegex = /\/\/ Custom chain configs for chains not available in viem\/chains[\s\S]*?(?=\ntype WalletConfig)/g;
-    wagmiContent = wagmiContent.replace(customChainRegex, '\n');
+    // Remove existing custom chain configs to avoid duplicates
+    const lines = wagmiContent.split('\n');
+    const filteredLines = [];
+    let skipUntilNext = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      // Start skipping from custom chain comment
+      if (line.includes('// Custom chain configs for chains not available in viem/chains')) {
+        skipUntilNext = true;
+        continue;
+      }
+
+      // Skip individual custom chain exports
+      if (line.startsWith('export const customChain')) {
+        // Skip until we find the closing brace
+        while (i < lines.length && !lines[i].includes('} as const;')) {
+          i++;
+        }
+        continue;
+      }
+
+      // Stop skipping when we hit connector-helper import, wagmi/chains import or function definitions
+      if (skipUntilNext && (
+        (line.includes('import') && line.includes('connector-helper')) ||
+        (line.includes('import') && line.includes('wagmi/chains')) ||
+        line.includes('const createConnectors')
+      )) {
+        skipUntilNext = false;
+      }
+
+      if (!skipUntilNext) {
+        filteredLines.push(line);
+      }
+    }
+
+    wagmiContent = filteredLines.join('\n').replace(/\n{3,}/g, '\n\n');
 
     // Ensure viem/chains import exists and update it
     const viemChainsImportRegex = /import {[^}]*} from "wagmi\/chains";/;
@@ -210,12 +245,19 @@ async function main() {
       }
     }
 
-    // Add custom chain configs after connectors import
+    // Add custom chain configs after connectors import (only if we have custom configs)
     if (customChainConfigs) {
-      wagmiContent = wagmiContent.replace(
-        /(import.*from "wagmi\/connectors";\s*)/,
-        `$1${customChainConfigs}\n`
-      );
+      // Find the right place to insert - after connector imports but before helper imports or chain imports
+      const insertPoint = /(import.*from "wagmi\/connectors";\s*)/;
+      if (insertPoint.test(wagmiContent)) {
+        wagmiContent = wagmiContent.replace(insertPoint, `$1${customChainConfigs}\n`);
+      } else {
+        // Fallback: insert after viem import
+        wagmiContent = wagmiContent.replace(
+          /(import.*from "viem";\s*)/,
+          `$1${customChainConfigs}\n`
+        );
+      }
     }
 
     // Update chains array

@@ -20,7 +20,7 @@ export const chain8453Contracts = {
   SimpleBuilder: { address: "0xA2A0bEEfda596Fdb321240dD283D8cBf65b252f1", abi: SimpleBuilderAbi, nameVersion: "SimpleBuilder@1.2.2" },
   DispenserProvider: { address: "0x6145F338eCf142813a9Cfcf02A9f95cFC300cfb7", abi: DispenserProviderAbi, nameVersion: "DispenserProvider@1.1.2" },
   MultiSenderV2: { address: "0x120893ab6f67171d4e6b0e72c151ab96aebe44e4", abi: MultiSenderV2Abi, nameVersion: "MultiSenderV2@2.1.0" },
-  StakingManager: { address: "0xCc8f6A82Ff034C15dFDAcBcab29F7Ea28C616EF7", abi: StakingManagerAbi, nameVersion: "StakingManager@1.0.0" },
+  StakingManager: { address: "0xCc8f6A82Ff034C15dFDAcBcab29F7Ea28C616EF7", abi: StakingManagerAbi, nameVersion: "StakingManager@1.2.0" },
   CollateralProvider: { address: "0x7521fF2baca97397C8936E35dAc225f6bc1070Cf", abi: CollateralProviderAbi, nameVersion: "CollateralProvider@1.0.2" },
   RefundProvider: { address: "0x9c8F78E0aeAB8190c9d1DF7BEd0B26c1EDcB8DE6", abi: RefundProviderAbi, nameVersion: "RefundProvider@1.0.2" },
   SimpleRefundBuilder: { address: "0x65f62efEb1A43064081443791d8C10Db0A1FB511", abi: SimpleRefundBuilderAbi, nameVersion: "SimpleRefundBuilder@1.2.2" }
