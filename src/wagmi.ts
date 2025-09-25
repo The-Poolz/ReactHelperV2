@@ -1,8 +1,6 @@
 import { createClient } from "viem";
 import { custom, createConfig } from "wagmi";
 import { coinbaseWallet, injected } from "wagmi/connectors";
-import { getMetaMaskProvider, getProvider } from "./utils/connector-helper";
-
 // Custom chain configs for chains not available in viem/chains
 export const customChain7082400 = {
   id: 7082400,
@@ -67,7 +65,8 @@ export const customChain2632500 = {
   },
 } as const;
 
-import { bsc, manta, polygon, unichain, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, bscTestnet, telos, oasys, neonMainnet, mainnet, fuse, linea, lukso, polygonAmoy, moonbeam, sepolia, arbitrum, avalanche, base } from "wagmi/chains";
+import { getMetaMaskProvider, getProvider } from "./utils/connector-helper";
+import { bsc, manta, polygon, unichain, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, bscTestnet, telos, sepolia, oasys, neonMainnet, mainnet, fuse, linea, lukso, polygonAmoy, moonbeam, arbitrum, avalanche, base } from "wagmi/chains";
 
 const createConnectors = () => {
   return [
@@ -111,7 +110,7 @@ const createConnectors = () => {
 };
 
 export const config: any = createConfig({
-  chains: [bsc, manta, polygon, unichain, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, bscTestnet, telos, oasys, neonMainnet, mainnet, fuse, linea, lukso, polygonAmoy, moonbeam, sepolia, arbitrum, avalanche, base, customChain7082400, customChain0, customChain2632500], //poolz chains
+  chains: [bsc, manta, polygon, unichain, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, bscTestnet, telos, sepolia, oasys, neonMainnet, mainnet, fuse, linea, lukso, polygonAmoy, moonbeam, arbitrum, avalanche, base, customChain7082400, customChain0, customChain2632500], //poolz chains
   connectors: createConnectors(),
   client({ chain }) {
     const provider = typeof window !== "undefined" && window.ethereum
