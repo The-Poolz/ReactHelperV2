@@ -9,6 +9,7 @@ import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
 import { LockedDealV2Abi } from "../generated/abi/LockedDealV2";
 import { PoolzBackAbi } from "../generated/abi/PoolzBack";
 import { WhiteListAbi } from "../generated/abi/WhiteList";
+import { Multicall3Abi } from "../generated/abi/Multicall3";
 
 export const chain1Contracts = {
   VaultManager: { address: "0x9ff1db30c66cd9d3311b4b22da49791610922b13", abi: VaultManagerAbi, nameVersion: "VaultManager@1.0.1" },
@@ -21,5 +22,6 @@ export const chain1Contracts = {
   MultiSenderV2: { address: "0x658bcdfe51795ba43e9fd1ae9e39ddfbb1e70c5f", abi: MultiSenderV2Abi, nameVersion: "MultiSenderV2@2.1.0" },
   LockedDealV2: { address: "0x285B4866257eF51FfBDD239c10dE5f9493413d8f", abi: LockedDealV2Abi, nameVersion: "LockedDeal@2.3.3" },
   PoolzBack: { address: "0x99896BA5fde6CED06569CF848982d2c7779d2694", abi: PoolzBackAbi, nameVersion: "PoolzBack@1.3.0" },
-  WhiteList: { address: "0xf5BbB7f9D38387A2196CD242e51808dc7E5CEF88", abi: WhiteListAbi, nameVersion: "Whitelist@0.6.12" }
+  WhiteList: { address: "0xf5BbB7f9D38387A2196CD242e51808dc7E5CEF88", abi: WhiteListAbi, nameVersion: "Whitelist@0.6.12" },
+  Multicall3: { address: "0xcA11bde05977b3631167028862bE2a173976CA11", abi: Multicall3Abi, nameVersion: "Multicall3@1.0.0" }
 } as const;

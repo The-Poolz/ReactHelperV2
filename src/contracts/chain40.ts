@@ -10,6 +10,7 @@ import { WhiteListAbi } from "../generated/abi/WhiteList";
 import { CollateralProviderAbi } from "../generated/abi/CollateralProvider";
 import { RefundProviderAbi } from "../generated/abi/RefundProvider";
 import { SimpleRefundBuilderAbi } from "../generated/abi/SimpleRefundBuilder";
+import { Multicall3Abi } from "../generated/abi/Multicall3";
 
 export const chain40Contracts = {
   LockDealNFT: { address: "0x6d77B5147CDE6Fa287c1266A33e09a09651D36d0", abi: LockDealNFTAbi, nameVersion: "LockDealNFT@1.0.4-a" },
@@ -23,5 +24,6 @@ export const chain40Contracts = {
   WhiteList: { address: "0xb16BBDf683fFd6D92290F7610bb10f22f9c71e9e", abi: WhiteListAbi, nameVersion: "Whitelist@0.6.12" },
   CollateralProvider: { address: "0xA2A0bEEfda596Fdb321240dD283D8cBf65b252f1", abi: CollateralProviderAbi, nameVersion: "CollateralProvider@1.0.2" },
   RefundProvider: { address: "0x65f62efEb1A43064081443791d8C10Db0A1FB511", abi: RefundProviderAbi, nameVersion: "RefundProvider@1.0.2" },
-  SimpleRefundBuilder: { address: "0x2dd5B5E374B2d32152507100a42CA15f7707F504", abi: SimpleRefundBuilderAbi, nameVersion: "SimpleRefundBuilder@1.2.2" }
+  SimpleRefundBuilder: { address: "0x2dd5B5E374B2d32152507100a42CA15f7707F504", abi: SimpleRefundBuilderAbi, nameVersion: "SimpleRefundBuilder@1.2.2" },
+  Multicall3: { address: "0xcA11bde05977b3631167028862bE2a173976CA11", abi: Multicall3Abi, nameVersion: "Multicall3@1.0.0" }
 } as const;
