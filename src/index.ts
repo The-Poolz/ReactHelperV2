@@ -29,6 +29,19 @@ export type {
   GasEstimate,
 } from "./hooks/usePoolzContract";
 
+// Export EIP-7702 batch functionality (new feature)
+export { useEIP7702Batch } from "./hooks/useEIP7702Batch";
+export { useEIP7702Authorization } from "./hooks/useEIP7702Authorization";
+export type {
+  EIP7702Authorization,
+  BatchCallParams,
+  BatchTransactionParams,
+  BatchExecutionResult,
+  EIP7702BatchOptions,
+  EIP7702SupportOptions,
+  UseEIP7702BatchResult,
+} from "./types/eip7702Types";
+
 // Export contract types for advanced usage
 export type {
   ContractName,
@@ -89,3 +102,11 @@ export type {
 export { getChainNativeSymbol } from "./utils/balance-helper";
 export * from "./utils/helpers";
 export * as utils from "./utils";
+
+// Export EIP-7702 utility functions
+export {
+  encodeBatchCall,
+  encodeBatchCalls,
+  supportsEIP7702,
+  validateBatchParams,
+} from "./utils/eip7702-helper";

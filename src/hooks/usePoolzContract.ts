@@ -15,6 +15,13 @@ import { TransactionReceipt } from "viem";
 import { useMemo } from "react";
 import { usePoolzApp } from "./usePoolzApp";
 import { config } from "../wagmi";
+import { useEIP7702Batch } from "./useEIP7702Batch";
+import type { 
+  BatchCallParams, 
+  BatchTransactionParams, 
+  EIP7702BatchOptions,
+  EIP7702SupportOptions 
+} from "../types/eip7702Types";
 
 export type MulticallSuccess<T = any> = { result: T; status: "success" };
 export type MulticallFailure = { error: Error; status: "failure" };
@@ -292,10 +299,13 @@ function buildContractMethods<T extends ContractName>(
   };
 }
 
-export function usePoolzContract() {
+export function usePoolzContract(eip7702Options?: EIP7702SupportOptions) {
   const publicClient = usePublicClient();
   const { address: account, chainId } = usePoolzApp();
   const { writeContractAsync } = useWriteContract();
+  
+  // Include EIP-7702 batch functionality with configurable options
+  const eip7702Batch = useEIP7702Batch(eip7702Options);
 
   const poolzContract = useMemo(() => {
     return Object.assign(
@@ -325,9 +335,56 @@ export function usePoolzContract() {
     }
   }, [chainId]);
 
+  /**
+   * Create a batch of contract calls for EIP-7702 execution
+   * @param calls Array of contract calls to batch
+   * @param options Optional batch execution options
+   */
+  const createBatch = (
+    calls: BatchCallParams<any>[],
+    options?: Omit<BatchTransactionParams, 'calls'>
+  ): BatchTransactionParams => {
+    return {
+      calls,
+      ...options,
+    };
+  };
+
+  /**
+   * Execute a batch of contract calls
+   * This provides an additional option for batching without breaking existing functionality
+   */
+  const executeBatch = async (
+    params: BatchTransactionParams,
+    options?: EIP7702BatchOptions
+  ) => {
+    return eip7702Batch.executeBatch(params, options);
+  };
+
+  /**
+   * Estimate gas for a batch of contract calls
+   */
+  const estimateBatchGas = async (
+    params: BatchTransactionParams,
+    options?: EIP7702BatchOptions
+  ) => {
+    return eip7702Batch.estimateBatchGas(params, options);
+  };
+
   return {
     poolzContract,
     poolzTokenAddress,
     writeContractAsync,
+    
+    // New EIP-7702 batch functionality (non-breaking addition)
+    batch: {
+      create: createBatch,
+      execute: executeBatch,
+      estimateGas: estimateBatchGas,
+      supportsEIP7702: eip7702Batch.supportsEIP7702,
+      isLoading: eip7702Batch.isLoading,
+      error: eip7702Batch.error,
+      createAuthorization: eip7702Batch.createAuthorization,
+    },
   };
 }
