@@ -29,6 +29,17 @@ export type {
   GasEstimate,
 } from "./hooks/usePoolzContract";
 
+// Export batch transaction functionality
+export { useBatchTransaction } from "./hooks/useBatchTransaction";
+export type {
+  BatchCall,
+  BatchTransactionOptions,
+  BatchTransactionResult,
+  BatchTransactionStatus,
+  UseBatchTransactionReturn,
+  AllowedContractName
+} from "./types/batchTypes";
+
 // Export contract types for advanced usage
 export type {
   ContractName,
