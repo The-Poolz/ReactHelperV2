@@ -1,6 +1,7 @@
 import { Abi, zeroAddress } from "viem";
 import { contractsByChain } from "../contracts";
 import { ContractAbiMap, ContractName } from "../contracts/contractTypes";
+import { AllowedContractName } from "../types/batchTypes";
 
 type ContractInfo = {
   address: `0x${string}`;
@@ -27,7 +28,7 @@ const EMPTY_CONTRACT_INFO = {
   nameVersion: '',
 } as const;
 
-export function getPoolzContractInfo<T extends ContractName>({
+export function getPoolzContractInfo<T extends ContractName | AllowedContractName>({
   chainId,
   contractName,
 }: PoolzContractInfoParams<T>): PoolzContractInfoReturn<T> {
