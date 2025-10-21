@@ -12,8 +12,8 @@ import {
 } from "../types/batchTypes";
 
 /**
- * Hook for executing batch transactions using EIP-7702 and wagmi's useSendCalls.
- * Supports LockDealNFT, LockedDealV2, and DispenserProvider contracts.
+ * Hook for executing batch transactions using EIP-5792 and wagmi's useSendCalls.
+ * Supports LockDealNFT, LockedDealV2 contracts.
  */
 export function useBatchTransaction(): UseBatchTransactionReturn {
   const { chainId } = usePoolzApp();
@@ -65,7 +65,7 @@ export function useBatchTransaction(): UseBatchTransactionReturn {
 
         setBatchData(batchResult);
 
-        // Send the batch transaction using wagmi's useSendCalls (EIP-7702)
+        // Send the batch transaction using wagmi's useSendCalls (EIP-5792)
         await sendCalls({
           calls: encodedCalls,
           version: options.version,

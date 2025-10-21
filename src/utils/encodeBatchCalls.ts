@@ -21,7 +21,7 @@ export async function encodeBatchCalls(
       // Validate contract is allowed
       if (!allowedContracts.includes(call.contractName)) {
         throw new Error(
-          `Contract ${call.contractName} is not allowed for batch operations. Only LockDealNFT, LockedDealV2, and DispenserProvider are supported.`
+          `Contract ${call.contractName} is not allowed for batch operations. Only LockDealNFT are supported.`
         );
       }
 

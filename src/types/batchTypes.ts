@@ -1,11 +1,11 @@
 import { Hex } from "viem";
 
 // Allowed contract names for batch operations
-export const ALLOWED_CONTRACTS = ["LockDealNFT", "LockedDealV2", "DispenserProvider"] as const;
+export const ALLOWED_CONTRACTS = ["LockDealNFT", "LockedDealV2"] as const;
 
 export type AllowedContractName = typeof ALLOWED_CONTRACTS[number];
 
-// EIP-7702 Batch Transaction Types
+// EIP-5792 Batch Transaction Types
 export type BatchCall<T extends AllowedContractName = AllowedContractName> = {
   contractName: T;
   functionName: string;
@@ -15,7 +15,7 @@ export type BatchCall<T extends AllowedContractName = AllowedContractName> = {
 };
 
 export type BatchTransactionOptions = {
-  version?: "1.0";
+  version?: "2.0.0";
   from?: Hex;
   capabilities?: Record<string, any>;
 };
