@@ -69,3 +69,17 @@ export class BatchOperationBuilder {
     return result;
   }
 }
+
+/**
+ * Creates a batch operation builder for the given chain
+ */
+export function createBatchOperationBuilder(chainId: number): BatchOperationBuilder {
+  return new BatchOperationBuilder(chainId);
+}
+
+/**
+ * Hook that provides batch operation builders with multicall support
+ */
+export function useBatchOperationBuilder(chainId: number) {
+  return createBatchOperationBuilder(chainId);
+}

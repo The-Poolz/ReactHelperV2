@@ -31,7 +31,11 @@ export type {
 
 // Export batch transaction functionality
 export { useBatchTransaction } from "./hooks/useBatchTransaction";
-export {  BatchOperationBuilder } from "./utils/batchOperationBuilder";
+export { 
+  createBatchOperationBuilder, 
+  useBatchOperationBuilder,
+  BatchOperationBuilder 
+} from "./utils/batchOperationBuilder";
 export { 
   createMulticallBatch, 
   createMulticallTargets,
