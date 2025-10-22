@@ -14,6 +14,7 @@ import { DelayVaultMigratorAbi } from "../generated/abi/DelayVaultMigrator";
 import { CollateralProviderAbi } from "../generated/abi/CollateralProvider";
 import { RefundProviderAbi } from "../generated/abi/RefundProvider";
 import { SimpleRefundBuilderAbi } from "../generated/abi/SimpleRefundBuilder";
+import { Multicall3Abi } from "../generated/abi/Multicall3";
 
 export const chain97Contracts = {
   SimpleBuilder: { address: "0xaE297EeC7A7782e81CC23E6A3B6C06621B12dF26", abi: SimpleBuilderAbi, nameVersion: "SimpleBuilder@1.2.2" },
@@ -31,5 +32,6 @@ export const chain97Contracts = {
   DelayVaultMigrator: { address: "0xFc4E9DDd1E21a9BaDEb1A4C81687A20fe135A54F", abi: DelayVaultMigratorAbi, nameVersion: "DelayVaultMigrator@0.9.1-ironblocks" },
   CollateralProvider: { address: "0xb2b37652577A00655A45E6db8bB61251e47D4B8a", abi: CollateralProviderAbi, nameVersion: "CollateralProvider@1.0.2" },
   RefundProvider: { address: "0xD4780f8298385a034e44515977F29E3DaC83fB0f", abi: RefundProviderAbi, nameVersion: "RefundProvider@1.0.2" },
-  SimpleRefundBuilder: { address: "0xC45C273Cf9aD9727f8b057C27E57253feF2c0ED6", abi: SimpleRefundBuilderAbi, nameVersion: "SimpleRefundBuilder@1.2.2" }
+  SimpleRefundBuilder: { address: "0xC45C273Cf9aD9727f8b057C27E57253feF2c0ED6", abi: SimpleRefundBuilderAbi, nameVersion: "SimpleRefundBuilder@1.2.2" },
+  Multicall3: { address: "0xcA11bde05977b3631167028862bE2a173976CA11", abi: Multicall3Abi, nameVersion: "Multicall3@1.0.0" }
 } as const;

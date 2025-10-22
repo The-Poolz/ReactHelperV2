@@ -195,6 +195,18 @@ export type ContractReadSchemas = {
     'owner': readonly [];
     'getWithdrawableAmount': readonly [_PoolId: bigint];
   };
+  Multicall3: {
+    'getBasefee': readonly [];
+    'getBlockHash': readonly [blockNumber: bigint];
+    'getBlockNumber': readonly [];
+    'getChainId': readonly [];
+    'getCurrentBlockCoinbase': readonly [];
+    'getCurrentBlockDifficulty': readonly [];
+    'getCurrentBlockGasLimit': readonly [];
+    'getCurrentBlockTimestamp': readonly [];
+    'getEthBalance': readonly [addr: `0x${string}`];
+    'getLastBlockHash': readonly [];
+  };
   MultiSenderV2: {
     'FeeAmount': readonly [];
     'FeeReserve': readonly [`0x${string}`];
@@ -528,6 +540,14 @@ export type ContractWriteSchemas = {
     'swapTokenFilter': readonly [];
     'transferOwnership': readonly [newOwner: `0x${string}`];
     'WithdrawToken': readonly [_PoolId: bigint];
+  };
+  Multicall3: {
+    'aggregate': readonly [calls: { target: `0x${string}`; callData: `0x${string}` }[]];
+    'aggregate3': readonly [calls: { target: `0x${string}`; allowFailure: boolean; callData: `0x${string}` }[]];
+    'aggregate3Value': readonly [calls: { target: `0x${string}`; allowFailure: boolean; value: bigint; callData: `0x${string}` }[]];
+    'blockAndAggregate': readonly [calls: { target: `0x${string}`; callData: `0x${string}` }[]];
+    'tryAggregate': readonly [requireSuccess: boolean, calls: { target: `0x${string}`; callData: `0x${string}` }[]];
+    'tryBlockAndAggregate': readonly [requireSuccess: boolean, calls: { target: `0x${string}`; callData: `0x${string}` }[]];
   };
   MultiSenderV2: {
     'MultiSendERC20Direct': readonly [_token: `0x${string}`, _multiSendData: { user: `0x${string}`; amount: bigint }[]];
@@ -1031,6 +1051,24 @@ export type ContractReturnTypes = {
     'getWithdrawableAmount': bigint;
     'WithdrawToken': bigint;
   };
+  Multicall3: {
+    'aggregate': [bigint, `0x${string}`[]];
+    'aggregate3': { success: boolean; returnData: `0x${string}` }[];
+    'aggregate3Value': { success: boolean; returnData: `0x${string}` }[];
+    'blockAndAggregate': [bigint, `0x${string}`, { success: boolean; returnData: `0x${string}` }[]];
+    'getBasefee': bigint;
+    'getBlockHash': `0x${string}`;
+    'getBlockNumber': bigint;
+    'getChainId': bigint;
+    'getCurrentBlockCoinbase': `0x${string}`;
+    'getCurrentBlockDifficulty': bigint;
+    'getCurrentBlockGasLimit': bigint;
+    'getCurrentBlockTimestamp': bigint;
+    'getEthBalance': bigint;
+    'getLastBlockHash': `0x${string}`;
+    'tryAggregate': { success: boolean; returnData: `0x${string}` }[];
+    'tryBlockAndAggregate': [bigint, `0x${string}`, { success: boolean; returnData: `0x${string}` }[]];
+  };
   MultiSenderV2: {
     'FeeAmount': bigint;
     'FeeReserve': bigint;
@@ -1367,7 +1405,7 @@ export type ContractReturnTypes = {
   };
 };
 
-export const contractNames = ['CollateralProvider', 'DaoStation', 'DealProvider', 'DelayVault', 'DelayVaultMigrator', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'MultiSenderV2', 'POOLX', 'PoolzBack', 'RefundProvider', 'SignUp', 'SimpleBuilder', 'SimpleRefundBuilder', 'StakingManager', 'TimedDealProvider', 'TokenNFTConnector', 'VaultManager', 'WhiteList'] as const;
+export const contractNames = ['CollateralProvider', 'DaoStation', 'DealProvider', 'DelayVault', 'DelayVaultMigrator', 'DelayVaultProvider', 'DispenserProvider', 'InvestProvider', 'LockDealNFT', 'LockDealProvider', 'LockedDealV2', 'Multicall3', 'MultiSenderV2', 'POOLX', 'PoolzBack', 'RefundProvider', 'SignUp', 'SimpleBuilder', 'SimpleRefundBuilder', 'StakingManager', 'TimedDealProvider', 'TokenNFTConnector', 'VaultManager', 'WhiteList'] as const;
 
 export type ContractName = typeof contractNames[number];
 
@@ -1388,6 +1426,7 @@ import { InvestProviderAbi } from "../generated/abi/InvestProvider";
 import { LockDealNFTAbi } from "../generated/abi/LockDealNFT";
 import { LockDealProviderAbi } from "../generated/abi/LockDealProvider";
 import { LockedDealV2Abi } from "../generated/abi/LockedDealV2";
+import { Multicall3Abi } from "../generated/abi/Multicall3";
 import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
 import { POOLXAbi } from "../generated/abi/POOLX";
 import { PoolzBackAbi } from "../generated/abi/PoolzBack";
@@ -1413,6 +1452,7 @@ export type ContractAbiMap = {
   LockDealNFT: typeof LockDealNFTAbi;
   LockDealProvider: typeof LockDealProviderAbi;
   LockedDealV2: typeof LockedDealV2Abi;
+  Multicall3: typeof Multicall3Abi;
   MultiSenderV2: typeof MultiSenderV2Abi;
   POOLX: typeof POOLXAbi;
   PoolzBack: typeof PoolzBackAbi;
