@@ -31,13 +31,20 @@ export type {
 
 // Export batch transaction functionality
 export { useBatchTransaction } from "./hooks/useBatchTransaction";
+export {  BatchOperationBuilder } from "./utils/batchOperationBuilder";
+export { 
+  createMulticallBatch, 
+  createMulticallTargets,
+  optimizeBatchCalls 
+} from "./utils/multicallBatchUtils";
 export type {
   BatchCall,
   BatchTransactionOptions,
   BatchTransactionResult,
   BatchTransactionStatus,
   UseBatchTransactionReturn,
-  AllowedContractName
+  AllowedContractName,
+  MulticallTarget
 } from "./types/batchTypes";
 
 // Export contract types for advanced usage

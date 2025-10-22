@@ -5,6 +5,7 @@ import { LockDealProviderAbi } from "../generated/abi/LockDealProvider";
 import { TimedDealProviderAbi } from "../generated/abi/TimedDealProvider";
 import { DispenserProviderAbi } from "../generated/abi/DispenserProvider";
 import { MultiSenderV2Abi } from "../generated/abi/MultiSenderV2";
+import { Multicall3Abi } from "../generated/abi/Multicall3";
 
 export const chain130Contracts = {
   VaultManager: { address: "0x7Ff9315f538dF7eC76Ec4815249Dd30519726460", abi: VaultManagerAbi, nameVersion: "VaultManager@1.0.1" },
@@ -13,5 +14,6 @@ export const chain130Contracts = {
   LockDealProvider: { address: "0x7521fF2baca97397C8936E35dAc225f6bc1070Cf", abi: LockDealProviderAbi, nameVersion: "LockDealProvider@1.0.6" },
   TimedDealProvider: { address: "0xA2A0bEEfda596Fdb321240dD283D8cBf65b252f1", abi: TimedDealProviderAbi, nameVersion: "TimedDealProvider@1.0.6" },
   DispenserProvider: { address: "0x960c76BeC76ebB223B3e29B35a70c40925f38d66", abi: DispenserProviderAbi, nameVersion: "DispenserProvider@1.1.2" },
-  MultiSenderV2: { address: "0x756CD0834C2610f583B8324934A0269E3fef6f72", abi: MultiSenderV2Abi, nameVersion: "MultiSenderV2@2.1.0" }
+  MultiSenderV2: { address: "0x756CD0834C2610f583B8324934A0269E3fef6f72", abi: MultiSenderV2Abi, nameVersion: "MultiSenderV2@2.1.0" },
+  Multicall3: { address: "0xcA11bde05977b3631167028862bE2a173976CA11", abi: Multicall3Abi, nameVersion: "Multicall3@1.0.0" }
 } as const;

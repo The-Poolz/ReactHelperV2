@@ -3,25 +3,24 @@ import { useSendCalls } from "wagmi";
 import { Hex } from "viem";
 import { usePoolzApp } from "./usePoolzApp";
 import { encodeBatchCalls } from "../utils/encodeBatchCalls";
-import {
-  BatchCall,
-  BatchTransactionOptions,
-  BatchTransactionResult,
-  BatchTransactionStatus,
-  UseBatchTransactionReturn,
-} from "../types/batchTypes";
+import { useBatchOperationBuilder } from "../utils/batchOperationBuilder";
+import { BatchCall, BatchTransactionOptions, BatchTransactionResult, BatchTransactionStatus, UseBatchTransactionReturn } from "../types/batchTypes";
 
 /**
  * Hook for executing batch transactions using EIP-5792 and wagmi's useSendCalls.
- * Supports LockDealNFT, LockedDealV2 contracts.
+ * Supports LockDealNFT, LockedDealV2 contracts, and automatic multicall optimization.
+ * When batches exceed the wallet limit, automatically uses Multicall to bundle operations.
  */
-export function useBatchTransaction(): UseBatchTransactionReturn {
+export function useBatchTransaction(): UseBatchTransactionReturn & {
+  builders: ReturnType<typeof useBatchOperationBuilder>;
+} {
   const { chainId } = usePoolzApp();
   const [batchStatus, setBatchStatus] = useState<BatchTransactionStatus>("idle");
   const [batchError, setBatchError] = useState<Error | null>(null);
   const [batchData, setBatchData] = useState<BatchTransactionResult | undefined>();
 
   const { sendCalls, data: callsId, isPending, isSuccess, isError, error } = useSendCalls();
+  const builders = useBatchOperationBuilder(chainId || 1);
 
   // Update status based on wagmi useSendCalls state
   useEffect(() => {
@@ -96,5 +95,6 @@ export function useBatchTransaction(): UseBatchTransactionReturn {
     isPending: batchStatus === "pending" || batchStatus === "preparing" || isPending,
     isSuccess: batchStatus === "success",
     isError: batchStatus === "error",
+    builders,
   };
 }

@@ -10,6 +10,7 @@ import { LockedDealV2Abi } from "../generated/abi/LockedDealV2";
 import { CollateralProviderAbi } from "../generated/abi/CollateralProvider";
 import { RefundProviderAbi } from "../generated/abi/RefundProvider";
 import { SimpleRefundBuilderAbi } from "../generated/abi/SimpleRefundBuilder";
+import { Multicall3Abi } from "../generated/abi/Multicall3";
 
 export const chain43114Contracts = {
   VaultManager: { address: "0x9c8F78E0aeAB8190c9d1DF7BEd0B26c1EDcB8DE6", abi: VaultManagerAbi, nameVersion: "VaultManager@1.0.1" },
@@ -23,5 +24,6 @@ export const chain43114Contracts = {
   LockedDealV2: { address: "0xb16bbdf683ffd6d92290f7610bb10f22f9c71e9e", abi: LockedDealV2Abi, nameVersion: "LockedDeal@2.3.3" },
   CollateralProvider: { address: "0x9cfd8c7834Be0DfE41F3FE68C29124066D5Cd13b", abi: CollateralProviderAbi, nameVersion: "CollateralProvider@1.0.2" },
   RefundProvider: { address: "0xEE099538ED077F831cB9Af44fFD51Ec7Fd95c7DE", abi: RefundProviderAbi, nameVersion: "RefundProvider@1.0.2" },
-  SimpleRefundBuilder: { address: "0xff1f0872f5462b30acdA92a08D2388612F7Bf7EE", abi: SimpleRefundBuilderAbi, nameVersion: "SimpleRefundBuilder@1.2.2" }
+  SimpleRefundBuilder: { address: "0xff1f0872f5462b30acdA92a08D2388612F7Bf7EE", abi: SimpleRefundBuilderAbi, nameVersion: "SimpleRefundBuilder@1.2.2" },
+  Multicall3: { address: "0xcA11bde05977b3631167028862bE2a173976CA11", abi: Multicall3Abi, nameVersion: "Multicall3@1.0.0" }
 } as const;
