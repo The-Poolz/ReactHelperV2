@@ -1,9 +1,14 @@
 import { Hex } from "viem";
 
 // Allowed contract names for batch operations
-export const ALLOWED_CONTRACTS = ["LockDealNFT", "LockedDealV2", "Multicall3"] as const;
-
+export const ALLOWED_CONTRACTS = ["LockDealNFT", "LockedDealV2", "Multicall3", "DispenserProvider"] as const;
 export type AllowedContractName = typeof ALLOWED_CONTRACTS[number];
+
+// Contracts that can be used in multicall (subset of allowed contracts)
+export const MULTICALL_ELIGIBLE_CONTRACTS = ALLOWED_CONTRACTS.filter(
+  (c): c is Exclude<AllowedContractName, "Multicall3"> => c !== "Multicall3"
+);
+export type MulticallEligibleContract = typeof MULTICALL_ELIGIBLE_CONTRACTS[number];
 
 // Special type for multicall operations
 export type MulticallTarget = {

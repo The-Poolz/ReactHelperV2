@@ -12,7 +12,7 @@ export class BatchOperationBuilder {
    */
   createMulticallBatch(
     calls: Array<{
-      contractName: "LockDealNFT" | "LockedDealV2";
+      contractName: "LockDealNFT" | "LockedDealV2" | "DispenserProvider";
       functionName: string;
       args?: unknown[];
       value?: bigint;
