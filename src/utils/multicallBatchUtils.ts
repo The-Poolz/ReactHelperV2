@@ -1,11 +1,11 @@
-import { encodeFunctionData, Hex } from "viem";
+import { encodeFunctionData } from "viem";
 import { getPoolzContractInfo } from "./getPoolzContractInfo";
-import { BatchCall, MulticallTarget } from "../types/batchTypes";
+import { BatchCall, MulticallTarget, MulticallEligibleContract } from "../types/batchTypes";
 
 // Creates multicall targets from individual contract calls
 export function createMulticallTargets(
   calls: Array<{
-    contractName: "LockDealNFT" | "LockedDealV2";
+    contractName: MulticallEligibleContract;
     functionName: string;
     args?: unknown[];
     value?: bigint;
@@ -19,7 +19,7 @@ export function createMulticallTargets(
       chainId,
     });
 
-    if (!contractInfo || !contractInfo.abi) {
+    if (!contractInfo?.abi) {
       throw new Error(`Contract ${call.contractName} not found for chain ${chainId}`);
     }
 
@@ -30,7 +30,7 @@ export function createMulticallTargets(
     });
 
     return {
-      target: contractInfo.smcAddress as Hex,
+      target: contractInfo.smcAddress,
       allowFailure,
       callData,
       value: call.value,
@@ -41,7 +41,7 @@ export function createMulticallTargets(
 // Creates a multicall BatchCall that bundles multiple operations
 export function createMulticallBatch(
   calls: Array<{
-    contractName: "LockDealNFT" | "LockedDealV2";
+    contractName: MulticallEligibleContract;
     functionName: string;
     args?: unknown[];
     value?: bigint;
@@ -73,12 +73,12 @@ export function optimizeBatchCalls(
   // If we're within the limit, return as-is
   if (calls.length <= maxDirectCalls) return calls;
 
-  // Group eligible calls for multicall (LockDealNFT and LockedDealV2)
+  // Group eligible calls for multicall (LockDealNFT, LockedDealV2, and DispenserProvider)
   const eligibleForMulticall = directCalls.filter(call => 
-    call.contractName === "LockDealNFT" || call.contractName === "LockedDealV2"
+    call.contractName === "LockDealNFT" || call.contractName === "LockedDealV2" || call.contractName === "DispenserProvider"
   );
   const notEligibleForMulticall = directCalls.filter(call => 
-    call.contractName !== "LockDealNFT" && call.contractName !== "LockedDealV2"
+    call.contractName !== "LockDealNFT" && call.contractName !== "LockedDealV2" && call.contractName !== "DispenserProvider"
   );
 
   // If we have many eligible calls, group them into multicalls
@@ -90,7 +90,7 @@ export function optimizeBatchCalls(
     const chunk = eligibleForMulticall.slice(i, i + multicallChunkSize);
     const multicallBatch = createMulticallBatch(
       chunk.map(call => ({
-        contractName: call.contractName as "LockDealNFT" | "LockedDealV2",
+        contractName: call.contractName,
         functionName: call.functionName,
         args: call.args,
         value: call.value,

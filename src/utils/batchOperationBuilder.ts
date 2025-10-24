@@ -1,4 +1,4 @@
-import { BatchCall } from "../types/batchTypes";
+import { BatchCall, MulticallEligibleContract } from "../types/batchTypes";
 import { createMulticallBatch } from "./multicallBatchUtils";
 
 /**
@@ -12,7 +12,7 @@ export class BatchOperationBuilder {
    */
   createMulticallBatch(
     calls: Array<{
-      contractName: "LockDealNFT" | "LockedDealV2";
+      contractName: MulticallEligibleContract;
       functionName: string;
       args?: unknown[];
       value?: bigint;
