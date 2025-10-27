@@ -25,18 +25,20 @@ export class BatchOperationBuilder {
   }
 
   /**
-   * Create an approval-wrapped multicall batch for NFT operations
+   * Create an approval-wrapped multicall batch for NFT operations.
    * Automatically adds setApprovalForAll(true) before and setApprovalForAll(false) after
-   * the multicall operations for proper NFT handling with Multicall3
-   */
+   * the multicall operations for proper NFT handling with Multicall3.
+   * Optionally approves DispenserProvider if its address is provided.
+  */
   createApprovalWrappedBatch(
     nftCalls: Array<{
-      contractName: "LockDealNFT" | "LockedDealV2";
+      contractName: "LockDealNFT" | "LockedDealV2" | "DispenserProvider";
       functionName: string;
       args?: unknown[];
       value?: bigint;
     }>,
     multicall3Address: string,
+    DispenserProviderAddress?: string,
     options: {
       allowFailure?: boolean;
       chunkSize?: number; // Split large operations into chunks
@@ -44,6 +46,17 @@ export class BatchOperationBuilder {
   ): BatchCall[] {
     const { allowFailure = true, chunkSize = 20 } = options;
     const result: BatchCall[] = [];
+
+    if (!nftCalls.length) return result; // Early exit if no calls
+
+    // Step 0: Optionally approve DispenserProvider
+    if (DispenserProviderAddress) {
+      result.push({
+        contractName: "LockDealNFT",
+        functionName: "setApprovalForAll",
+        args: [DispenserProviderAddress, true],
+      });
+    }
 
     // Step 1: Enable approval for Multicall3
     result.push({
