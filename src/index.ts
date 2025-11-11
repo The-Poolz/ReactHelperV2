@@ -101,6 +101,8 @@ export type { TokenBalance, NativeBalance } from "./contexts/BalanceContext";
 export { useSidNameForAddress } from "./hooks/useSidNameForAddress";
 export { useWalletConnection } from "./hooks/useWalletConnection";
 export { useTheSiwe } from "./hooks/useTheSiwe";
+export { useMetaMaskLockState } from "./hooks/useMetaMaskLockState";
+export type { MetaMaskLockState } from "./hooks/useMetaMaskLockState";
 export { contractsByChain } from "./contracts";
 
 export type {

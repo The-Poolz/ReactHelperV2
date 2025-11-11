@@ -6,6 +6,7 @@ import { Address } from "viem";
 import type { UseSwitchChainReturnType } from "wagmi";
 import { getWalletClient } from "wagmi/actions";
 import { WalletClient } from "viem";
+import { useMetaMaskLockState } from "../hooks/useMetaMaskLockState";
 
 export const CUSTOMER_ACCOUNT_VARIABLE = "__CUSTOMER_ACCOUNT__";
 
@@ -20,6 +21,11 @@ export interface PoolzAppContextType {
   status: "connecting" | "reconnecting" | "connected" | "disconnected";
   chain?: Chain;
   chainId: number;
+
+  // MetaMask lock state
+  isWalletLocked: boolean;
+  isWalletUnlocked: boolean;
+  lastLockChangeTimestamp: number | null;
 
   switchChainAsync: UseSwitchChainReturnType['switchChainAsync'];
   isSwitching: boolean;
@@ -42,6 +48,7 @@ export const PoolzAppProvider: React.FC<PoolzAppProviderProps> = ({ children }) 
   const { switchChainAsync, isPending } = useSwitchChain();
   const watchAsset = useWatchAsset();
   const publicClient = usePublicClient()
+  const { isLocked, isUnlocked, lastChangeTimestamp } = useMetaMaskLockState();
 
   const [walletClient, setWalletClient] = useState<WalletClient | undefined>(undefined);
   // Customer account management
@@ -90,6 +97,11 @@ export const PoolzAppProvider: React.FC<PoolzAppProviderProps> = ({ children }) 
     connectedAccount: account.address,
     chain,
     chainId,
+
+    // MetaMask lock state
+    isWalletLocked: isLocked,
+    isWalletUnlocked: isUnlocked,
+    lastLockChangeTimestamp: lastChangeTimestamp,
 
     switchChainAsync,
     isSwitching: isPending,
