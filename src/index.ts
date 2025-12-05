@@ -102,11 +102,7 @@ export { useSidNameForAddress } from "./hooks/useSidNameForAddress";
 export { useWalletConnection } from "./hooks/useWalletConnection";
 export { useTheSiwe } from "./hooks/useTheSiwe";
 export { useContractReadOnChain } from "./hooks/useContractReadOnChain";
-export type {
-  ReadOnChainOptions,
-  MulticallOnChainOptions,
-  MulticallOnChainResult,
-} from "./hooks/useContractReadOnChain";
+export type { ReadOnChainOptions } from "./hooks/useContractReadOnChain";
 export { contractsByChain } from "./contracts";
 
 export type {
