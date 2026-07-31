@@ -65,8 +65,29 @@ export const customChain2632500 = {
   },
 } as const;
 
+export const customChain4663 = {
+  id: 4663,
+  name: "Robinhood Chain",
+  nativeCurrency: {
+    decimals: 18,
+    name: "ETH",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.mainnet.chain.robinhood.com/"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Robinhood Chain Scan",
+      url: "https://explorer-4663.example.com",
+    },
+  },
+} as const;
+
 import { getMetaMaskProvider, getProvider } from "./utils/connector-helper";
-import { bsc, manta, polygon, unichain, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, bscTestnet, telos, sepolia, oasys, neonMainnet, mainnet, fuse, linea, lukso, polygonAmoy, moonbeam, arbitrum, avalanche, base } from "wagmi/chains";
+import { arbitrum, polygon, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, sepolia, oasys, bsc, bscTestnet, neonMainnet, fuse, linea, lukso, polygonAmoy, manta, telos, mainnet, unichain, avalanche, moonbeam, base } from "wagmi/chains";
 
 const createConnectors = () => {
   return [
@@ -110,7 +131,7 @@ const createConnectors = () => {
 };
 
 export const config: any = createConfig({
-  chains: [bsc, manta, polygon, unichain, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, bscTestnet, telos, sepolia, oasys, neonMainnet, mainnet, fuse, linea, lukso, polygonAmoy, moonbeam, arbitrum, avalanche, base, customChain7082400, customChain0, customChain2632500], //poolz chains
+  chains: [arbitrum, polygon, mantaTestnet, optimism, abstract, avalancheFuji, viction, harmonyOne, mantaSepoliaTestnet, sepolia, oasys, bsc, bscTestnet, neonMainnet, fuse, linea, lukso, polygonAmoy, manta, telos, mainnet, unichain, avalanche, moonbeam, base, customChain7082400, customChain0, customChain2632500, customChain4663], //poolz chains
   connectors: createConnectors(),
   client({ chain }) {
     const provider = typeof window !== "undefined" && window.ethereum
